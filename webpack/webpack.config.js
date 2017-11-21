@@ -2,20 +2,21 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const rootDir = path.resolve(__dirname, '..');
+
 module.exports = {
   devtool: 'inline-source-map',
   entry: {
-    app: path.resolve(__dirname, './src', './app')
+    app: path.resolve(rootDir, './src', './main')
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(rootDir, './dist'),
     filename: 'bundle.js'
   },
   module: {
     rules: [
-      { test: /\.pug$/, use: 'pug-loader' },
       { test: /\.ts$/, use: 'awesome-typescript-loader' },
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.css$/, use: 'raw-loader' },
       { test: /\.html$/, use: 'html-loader' },
       {
         test: /\.(ttf|eot|svg|woff|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -26,7 +27,7 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['.pug', '.html', '.css', '.js', '.ts']
+    extensions: ['.js', '.ts']
   },
   devServer: {
     hot: true,

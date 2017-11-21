@@ -1,0 +1,7 @@
+.div-wrapper > p {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  font-family: 'Handlee', cursive;
+  color: #767676;
+}
