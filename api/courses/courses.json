@@ -1,0 +1,23 @@
+[
+  {
+      "id": 1,
+      "name": "Video course 1",
+      "duration": "1h 28 min",
+      "date": "date",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a scelerisque turpis. Sed ornare velit id molestie congue."
+  },
+  {
+      "id": 2,
+      "name": "Video course 2",
+      "duration": "15 min",
+      "date": "date",
+      "description": "Morbi ornare nunc sed tellus maximus pharetra. Cras sed lorem quis mi fermentum venenatis."
+  },
+  {
+      "id": 3,
+      "name": "Video course 3",
+      "duration": "2h 15 min",
+      "date": "date",
+      "description": "Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit."
+  }
+]

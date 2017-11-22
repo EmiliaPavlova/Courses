@@ -1,0 +1,31 @@
+.toolbox-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 400px;
+  padding: 10px 15px;
+  color: #767676;
+  font-size: 1em;
+  border: 1px solid #767676;
+  border-radius: 4px;
+  box-shadow: inset 0px 0px 4px #767676;
+  outline: none;
+}
+
+.plus {
+  content: url('../../assets/images/add-button.png');
+  vertical-align: bottom;
+  width: 16px;
+  height: 16px;
+  margin-bottom: 1px;
+  margin-right: 8px;
+}
+
+.button:active .plus {
+  content: url('../../assets/images/add-button-black.png');
+}

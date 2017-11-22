@@ -1,0 +1,17 @@
+<div class='div-wrapper course-wrapper'>
+  <div class='course-info'>
+    <div class='row'>
+      <div class='row-left'>
+        <p>Video course</p>
+        <h1>{{ courseDetail.name }}</h1>
+        <p>{{ courseDetail.duration }}</p>
+      </div>
+      <p>{{ courseDetail.date }}</p>
+    </div>
+    <p class='description'>{{ courseDetail.description }}</p>
+  </div>
+  <div class='course-buttons'>
+      <button type='button' class='button edit' (click)='onEdit()'>Edit course</button>
+      <button type='button' class='button' (click)='onDelete()'>Delete</button>
+  </div>
+</div>
