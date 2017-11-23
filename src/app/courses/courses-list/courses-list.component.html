@@ -2,6 +2,7 @@
   <!-- <div *ngIf='courses && courses.length'> -->
     <app-course-detail *ngFor='let course of courses'
       [course]='course'
+      (edit)='editCourse($event)'
       (delete)='deleteCourse($event)'></app-course-detail>
   <!-- </div> -->
 </div>

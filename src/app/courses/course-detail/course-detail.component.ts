@@ -7,9 +7,15 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 })
 export class CourseDetailComponent implements OnInit {
   @Input() course;
+  @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
 
   constructor() { }
+
+  onEdit() {
+    console.log('edited');
+    this.edit.emit(this.course);
+  }
 
   onDelete() {
     console.log('deleted');

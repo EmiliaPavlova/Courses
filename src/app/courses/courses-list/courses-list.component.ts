@@ -14,6 +14,10 @@ export class CoursesListComponent implements OnInit {
 
   constructor(private _courseService: CourseService) { }
 
+  editCourse(course) {
+    
+  }
+
   deleteCourse(course) {
     
   }
