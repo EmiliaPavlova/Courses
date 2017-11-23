@@ -3,6 +3,10 @@
   margin-bottom: 20px;
 }
 
+.course-info {
+  flex: 1;
+}
+
 .row {
   justify-content: space-between;
 }

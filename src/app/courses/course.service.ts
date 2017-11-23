@@ -15,7 +15,7 @@ export class CourseService {
   getCourses(): Observable<ICourse[]> {
     return this._http.get(this._courseUrl)
       .map((response: Response) => <ICourse[]> response.json())
-      .do(data => console.log('All: ' + JSON.stringify(data)))
+      // .do(data => console.log('All: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
 
