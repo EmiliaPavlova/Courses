@@ -1,7 +1,7 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
-module.exports = (config) => {
+module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular/cli'],
@@ -22,26 +22,12 @@ module.exports = (config) => {
     angularCli: {
       environment: 'dev'
     },
-    reporters: ['progress', 'kjhtml'], // ['dots'] outputs a single dot, unless the test fails, in which case we get a descriptive message
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'PhantomJS'],
-    singleRun: false,
-    files: [
-      '../node_modules/es6-shim/es6-shim.min.js',
-      'karma.entry.js'
-    ],
-    phantomJsLauncher: {
-      exitOnResourceError: true
-    },
-    preprocessors: {
-      'karma.entry.js': ['webpack', 'sourcemap']
-    },
-    webpack: require('../webpack/webpack.test'),
-    webpackServer: {
-        noInfo: true
-    }
+    browsers: ['Chrome'],
+    singleRun: false
   });
 };

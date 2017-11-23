@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import template from './footer.component.html';
-import styles from './footer.component.css';
 
 @Component({
   selector: 'app-footer',
-  template,
-  styles: [styles]
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.css']
 })
+
 export class FooterComponent implements OnInit {
 
   constructor() { }
