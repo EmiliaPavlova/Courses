@@ -18,7 +18,7 @@ input {
 }
 
 .plus {
-  content: url('../../assets/images/add-button.png');
+  content: url('/assets/images/add-button.png');
   vertical-align: bottom;
   width: 16px;
   height: 16px;
@@ -27,5 +27,5 @@ input {
 }
 
 .button:active .plus {
-  content: url('../../assets/images/add-button-black.png');
+  content: url('/assets/images/add-button-black.png');
 }

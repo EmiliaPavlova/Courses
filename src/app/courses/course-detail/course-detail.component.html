@@ -3,12 +3,12 @@
     <div class='row'>
       <div class='row-left'>
         <p>Video course</p>
-        <h1>{{ courseDetail.name }}</h1>
-        <p>{{ courseDetail.duration }}</p>
+        <h1>{{ course.name }}</h1>
+        <p>{{ course.duration }}</p>
       </div>
-      <p>{{ courseDetail.date }}</p>
+      <p>{{ course.date }}</p>
     </div>
-    <p class='description'>{{ courseDetail.description }}</p>
+    <p class='description'>{{ course.description }}</p>
   </div>
   <div class='course-buttons'>
       <button type='button' class='button edit' (click)='onEdit()'>Edit course</button>

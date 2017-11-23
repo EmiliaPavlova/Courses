@@ -1,12 +1,11 @@
-import { Component, OnInit, style } from '@angular/core';
-import template from './search-toolbox.component.html';
-import styles from './search-toolbox.component.css';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-search-toolbox',
-  template,
-  styles: [styles]
+  templateUrl: './search-toolbox.component.html',
+  styleUrls: ['./search-toolbox.component.css']
 })
+
 export class SearchToolboxComponent implements OnInit {
 
   constructor() { }

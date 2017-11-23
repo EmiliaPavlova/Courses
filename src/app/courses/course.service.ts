@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -9,7 +8,7 @@ import { ICourse } from './course';
 
 @Injectable()
 export class CourseService {
-  private _courseUrl = '../../../api/courses/courses.json';
+  private _courseUrl = '/assets/seed/courses.json';
 
   constructor(private _http: Http) {}
 
@@ -21,7 +20,7 @@ export class CourseService {
   }
 
   private handleError(error: Response) {
-    console.log(error);
+    console.log('error', error);
     return Observable.throw(error.json().error || 'Server error');
   }
 }

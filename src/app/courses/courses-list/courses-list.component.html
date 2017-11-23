@@ -1,11 +1,7 @@
 <div class='fill-height'>
-  <!-- <div *ngIf='courses && courses.length'>
-  <div *ngFor='let course of courses'> -->
+  <!-- <div *ngIf='courses && courses.length'> -->
     <app-course-detail
-      [courseDetail]='firstCourseDetail'
+      *ngFor='let course of courses'
       (delete)='deleteCourse($event)'></app-course-detail>
-  <!-- </div> -->
-    <!-- <app-course-detail></app-course-detail>
-    <app-course-detail></app-course-detail> -->
   <!-- </div> -->
 </div>
