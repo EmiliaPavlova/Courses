@@ -4,9 +4,9 @@
       <div class='row-left'>
         <p>Video course</p>
         <h1>{{ course.name }}</h1>
-        <p>{{ course.duration }}</p>
+        <p>{{ course.duration  }}</p>
       </div>
-      <p>{{ course.date }}</p>
+      <p>{{ course.date | date: 'd MMMM y' }}</p>
     </div>
     <p class='description'>{{ course.description }}</p>
   </div>

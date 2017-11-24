@@ -1,7 +1,7 @@
 export interface ICourse {
   id: number;
   name: string;
-  duration: string;
-  date: string;
+  duration: number;
+  date: Date;
   description: string;
 }
