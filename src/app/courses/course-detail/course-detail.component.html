@@ -4,7 +4,7 @@
       <div class='row-left'>
         <p>Video course</p>
         <h1>{{ course.name }}</h1>
-        <p>{{ course.duration  }}</p>
+        <p>{{ course.duration | hours }}</p>
       </div>
       <p>{{ course.date | date: 'd MMMM y' }}</p>
     </div>

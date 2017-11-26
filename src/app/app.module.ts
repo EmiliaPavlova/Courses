@@ -10,6 +10,7 @@ import { SearchToolboxComponent } from './search-toolbox/search-toolbox.componen
 import { CoursesListComponent } from './courses/courses-list/courses-list.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { CourseService } from './courses/course.service';
+import { HoursPipe } from './pipes/hours.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CourseService } from './courses/course.service';
     FooterComponent,
     SearchToolboxComponent,
     CoursesListComponent,
-    CourseDetailComponent
+    CourseDetailComponent,
+    HoursPipe
   ],
   imports: [
     BrowserModule,
