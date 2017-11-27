@@ -18,7 +18,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   onDelete() {
-    console.log('deleted');
+    console.log(`deleted course with id ${this.course.id}`);
     this.delete.emit(this.course);
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ICourse } from '../course';
+// import { ICourse } from '../course';
+import { Course } from '../course';
 import { CourseService } from '../course.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { CourseService } from '../course.service';
 })
 
 export class CoursesListComponent implements OnInit {
-  courses: ICourse[];
+  // courses: ICourse[];
+  courses: Course[];
   errorMessage: string;
 
   constructor(private _courseService: CourseService) { }
