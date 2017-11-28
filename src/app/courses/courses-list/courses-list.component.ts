@@ -14,7 +14,7 @@ export class CoursesListComponent implements OnInit {
   courses: Course[];
   errorMessage: string;
 
-  constructor(private _courseService: CourseService) { }
+  constructor(private courseService: CourseService) { }
 
   editCourse(course) {
     
@@ -25,9 +25,10 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._courseService.getCourses()
-      .subscribe(courses => this.courses = courses,
-        error => this.errorMessage = <any>error);
+    // this.courseService.getCourses()
+    //   .subscribe(courses => this.courses = courses,
+    //     error => this.errorMessage = <any>error);
+    this.courses = this.courseService.getCourses();
   }
 
 }
