@@ -11,6 +11,7 @@ import { CoursesListComponent } from './courses/courses-list/courses-list.compon
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { CourseService } from './courses/course.service';
 import { HoursPipe } from './pipes/hours.pipe';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HoursPipe } from './pipes/hours.pipe';
     SearchToolboxComponent,
     CoursesListComponent,
     CourseDetailComponent,
-    HoursPipe
+    HoursPipe,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
