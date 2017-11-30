@@ -34,8 +34,11 @@ export class CourseService {
     this.courses[index].description = description;
   }
 
-  deleteCourse(id: number) {
-    return this.courses.filter(course => course.id !== id);
+  deleteCourse(course) {
+    let index = this.courses.indexOf(course);
+    if (index >= 0) {
+      this.courses.splice(index, 1);
+    }
   }
 
   // TODO: remove this bullshit in the next branch

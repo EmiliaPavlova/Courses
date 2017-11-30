@@ -29,7 +29,11 @@ import { ModalComponent } from './modal/modal.component';
     FormsModule,
     HttpModule
   ],
-  providers: [CourseService],
-  bootstrap: [AppComponent]
+  providers: [
+    CourseService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { CourseService } from '../course.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -8,18 +9,18 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 export class CourseDetailComponent implements OnInit {
   @Input() course;
   @Output() edit = new EventEmitter();
-  @Output() delete = new EventEmitter();
 
-  constructor() { }
+  constructor(private courseService: CourseService) {
+  }
 
-  onEdit() {
+  onEdit(): void {
     console.log('edited');
     this.edit.emit(this.course);
   }
 
-  onDelete() {
+  onDelete(): void {
     console.log(`deleted course with id ${this.course.id}`);
-    this.delete.emit(this.course);
+    this.courseService.deleteCourse(this.course);
   }
 
   ngOnInit() {

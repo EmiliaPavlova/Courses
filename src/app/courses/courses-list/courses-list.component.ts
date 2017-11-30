@@ -20,10 +20,6 @@ export class CoursesListComponent implements OnInit {
     
   }
 
-  deleteCourse(course) {
-    
-  }
-
   ngOnInit(): void {
     // this.courseService.getCourses()
     //   .subscribe(courses => this.courses = courses,

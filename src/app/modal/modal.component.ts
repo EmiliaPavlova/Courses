@@ -13,17 +13,7 @@ export class ModalComponent {
 
   constructor() { }
 
-  show() {
-    this.visible = true;
-    setTimeout(() => this.visibleAnimate = true, 100);
-  }
-
-  hide() {
-    this.visibleAnimate = false;
-    setTimeout(() => this.visible = false, 300);
-  }
-
-  /*public show(): void {
+  public show(): void {
     this.visible = true;
     setTimeout(() => this.visibleAnimate = true, 100);
   }
@@ -33,7 +23,7 @@ export class ModalComponent {
     setTimeout(() => this.visible = false, 300);
   }
 
-  public onContainerClicked(event: MouseEvent): void {
+  /*public onContainerClicked(event: MouseEvent): void {
     if ((<HTMLElement>event.target).classList.contains('modal')) {
       this.hide();
     }
