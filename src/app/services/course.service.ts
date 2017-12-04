@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 // import { ICourse } from './course';
-import { Course } from './course';
+import { Course } from '../courses/course';
 
 @Injectable()
 export class CourseService {

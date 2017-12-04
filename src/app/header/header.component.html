@@ -2,10 +2,10 @@
   <div>
     <img src='/assets/images/owl-logo.png' />
     <h1>{{ title | titlecase }}</h1>
-    <button type='button' class='button'>Courses</button>
+    <button type='button' class='button' *ngIf='isAuthenticated'>Courses</button>
   </div>
-  <div class='user-login'>
-    <p>user login</p>
-    <a href='#'>logoff</a>
+  <div class='user-login' *ngIf='isAuthenticated'>
+    <p>{{ username }} user login</p>
+    <a href='/' (click)='onLogout()'>logoff</a>
   </div>
 </div>
