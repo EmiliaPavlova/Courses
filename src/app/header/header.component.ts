@@ -10,12 +10,13 @@ import { Observable } from 'rxjs/Observable';
 
 export class HeaderComponent implements OnInit {
   public title: string = 'Angular mentoring program Q4 2017';
-  public username: { username: string };
+  public username: string;
   public isAuthenticated: boolean;
   public isLogged: Observable<boolean>;
 
   constructor(private authService: AuthService) {
     this.isLogged = authService.isLoggedIn();
+    authService.changedUser().subscribe(data => this.username = data);
   }
 
   onLogout() {
