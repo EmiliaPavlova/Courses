@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class AuthService {
 
   isLoggedUser$ = new BehaviorSubject<boolean>(this.isAuthenticated());
+  changedUser$ = new BehaviorSubject<string>(this.getUserInfo());
 
   login(username, password) {
     localStorage.setItem('currentUser', JSON.stringify({ username: username }));
@@ -26,6 +27,10 @@ export class AuthService {
 
   isLoggedIn(): Observable<boolean> {
     return this.isLoggedUser$.asObservable();
+  }
+
+  changedUser(): Observable<string> {
+    return this.changedUser$.asObservable();
   }
 
 }
