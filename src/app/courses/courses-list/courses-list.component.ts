@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { ICourse } from '../course';
 import { Course } from '../course';
-import { CourseService } from '../course.service';
+import { CourseService } from '../../services/course.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -14,20 +14,17 @@ export class CoursesListComponent implements OnInit {
   courses: Course[];
   errorMessage: string;
 
-  constructor(private _courseService: CourseService) { }
+  constructor(private courseService: CourseService) { }
 
   editCourse(course) {
     
   }
 
-  deleteCourse(course) {
-    
-  }
-
   ngOnInit(): void {
-    this._courseService.getCourses()
-      .subscribe(courses => this.courses = courses,
-        error => this.errorMessage = <any>error);
+    // this.courseService.getCourses()
+    //   .subscribe(courses => this.courses = courses,
+    //     error => this.errorMessage = <any>error);
+    this.courses = this.courseService.getCourses();
   }
 
 }

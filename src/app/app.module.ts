@@ -9,8 +9,11 @@ import { FooterComponent } from './footer/footer.component';
 import { SearchToolboxComponent } from './search-toolbox/search-toolbox.component';
 import { CoursesListComponent } from './courses/courses-list/courses-list.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
-import { CourseService } from './courses/course.service';
+import { CourseService } from './services/course.service';
 import { HoursPipe } from './pipes/hours.pipe';
+import { ModalComponent } from './modal/modal.component';
+import { AuthService } from './services/auth.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,14 +23,21 @@ import { HoursPipe } from './pipes/hours.pipe';
     SearchToolboxComponent,
     CoursesListComponent,
     CourseDetailComponent,
-    HoursPipe
+    HoursPipe,
+    ModalComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [CourseService],
-  bootstrap: [AppComponent]
+  providers: [
+    CourseService,
+    AuthService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

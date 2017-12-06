@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class HeaderComponent implements OnInit {
-  title = 'Angular mentoring program Q4 2017';
+  public title: string = 'Angular mentoring program Q4 2017';
+  public username: { username: string };
+  public isAuthenticated: boolean;
+  public isLogged: Observable<boolean>;
 
-  constructor() { }
+  constructor(private authService: AuthService) {
+    this.isLogged = authService.isLoggedIn();
+  }
+
+  onLogout() {
+    this.authService.logout();
+    console.log('logged out');
+  }
 
   ngOnInit() {
+    this.username = this.authService.getUserInfo();
   }
 
 }
