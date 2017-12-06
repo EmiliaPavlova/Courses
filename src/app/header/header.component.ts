@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +9,14 @@ import { AuthService } from '../services/auth.service';
 })
 
 export class HeaderComponent implements OnInit {
-  @Input() username;
-  title = 'Angular mentoring program Q4 2017';
-  isAuthenticated = false;
+  public title: string = 'Angular mentoring program Q4 2017';
+  public username: { username: string };
+  public isAuthenticated: boolean;
+  public isLogged: Observable<boolean>;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+    this.isLogged = authService.isLoggedIn();
+  }
 
   onLogout() {
     this.authService.logout();
@@ -20,7 +24,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAuthenticated = !!this.authService.isAuthenticated;
+    this.username = this.authService.getUserInfo();
   }
 
 }

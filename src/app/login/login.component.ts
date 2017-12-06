@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -7,23 +7,25 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @Input() username;
-  @Input() password;
+  private username;
+  private password;
 
   constructor(private authService: AuthService) { }
 
   onSubmit() {
     this.authService.login(this.username, this.password);
     console.log(`logged ${this.username}`)
+    this.authService.isLoggedUser$.next(true);
     this.init();
   }
-  
+
   init() {
     this.username = '';
     this.password = '';
   }
 
   ngOnInit() {
+    this.username = this.authService.getUserInfo();
     this.init();
   }
 
