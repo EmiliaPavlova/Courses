@@ -12,7 +12,7 @@ export class CourseService {
   // private _courseUrl = '/assets/seed/courses.json';
   // private courses: Course[]; // Class or interface?
 
-  constructor() {}
+  constructor() { }
   // constructor(private _http: Http) {}
 
   getCourses() {
@@ -47,21 +47,21 @@ export class CourseService {
       id: 1,
       name: "1",
       duration: 88,
-      date: "Wed Nov 20 2017 00:00:00 GMT+0200 (EET)",
+      date: "2017-12-6",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sollicitudin iaculis arcu sit amet lobortis. Donec vehicula urna bibendum tincidunt auctor. Praesent eu sem blandit, placerat purus et, facilisis metus. Vestibulum et ante lorem. Suspendisse et ultrices leo. Suspendisse sagittis varius orci pretium mattis. Duis congue eros consequat neque gravida finibus. Suspendisse tortor leo, mattis sed velit non, pulvinar mollis massa. Nunc a porttitor ipsum."
     },
     {
       id: 2,
       name: "2",
       duration: 15,
-      date: "Wed Nov 22 2017 00:00:00 GMT+0200 (EET)",
+      date: "2017-11-22",
       description: "Integer viverra urna et accumsan volutpat. Sed eget nisi aliquet, mattis nisl ac, feugiat arcu. Maecenas interdum ipsum et purus rhoncus, et porttitor odio tempor. Mauris malesuada congue accumsan. Quisque dignissim, magna at tincidunt efficitur, ipsum ligula mattis lacus, sit amet ullamcorper lorem justo quis sem. Proin nec purus purus. In hac habitasse platea dictumst. Donec lectus ipsum, vulputate quis tristique quis, pulvinar eget ante."
     },
     {
       id: 3,
       name: "3",
       duration: 135,
-      date: "Wed Nov 24 2017 00:00:00 GMT+0200 (EET)",
+      date: "2017-10-18",
       description: "Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit."
     }
   ]

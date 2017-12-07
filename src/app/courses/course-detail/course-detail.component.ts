@@ -9,6 +9,8 @@ import { CourseService } from '../../services/course.service';
 export class CourseDetailComponent implements OnInit {
   @Input() course;
   @Output() edit = new EventEmitter();
+  public statusCourse: string;
+  color = '#1FB25A';
 
   constructor(private courseService: CourseService) {
   }

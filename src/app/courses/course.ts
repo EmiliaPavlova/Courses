@@ -13,5 +13,5 @@ export class Course implements ICourse {
     public duration: number,
     public date: string,
     public description: string
-  ) {}
+  ) { }
 }

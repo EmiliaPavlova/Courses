@@ -14,6 +14,7 @@ import { HoursPipe } from './pipes/hours.pipe';
 import { ModalComponent } from './modal/modal.component';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
+import { BorderColorDirective } from './directives/border-color.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginComponent } from './login/login.component';
     CourseDetailComponent,
     HoursPipe,
     ModalComponent,
-    LoginComponent
+    LoginComponent,
+    BorderColorDirective
   ],
   imports: [
     BrowserModule,
