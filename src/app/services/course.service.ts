@@ -6,6 +6,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 // import { ICourse } from './course';
 import { Course } from '../courses/course';
+import { transition } from '@angular/core/src/animation/dsl';
 
 @Injectable()
 export class CourseService {
@@ -41,26 +42,29 @@ export class CourseService {
     }
   }
 
-  // TODO: remove this bullshit in the next branch
+  // TODO: remove this
   courses = [
     {
       id: 1,
-      name: "1",
+      name: "Video course 1",
       duration: 88,
+      topRated: true,
       date: "2017-12-6",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sollicitudin iaculis arcu sit amet lobortis. Donec vehicula urna bibendum tincidunt auctor. Praesent eu sem blandit, placerat purus et, facilisis metus. Vestibulum et ante lorem. Suspendisse et ultrices leo. Suspendisse sagittis varius orci pretium mattis. Duis congue eros consequat neque gravida finibus. Suspendisse tortor leo, mattis sed velit non, pulvinar mollis massa. Nunc a porttitor ipsum."
     },
     {
       id: 2,
-      name: "2",
+      name: "Video course 2",
       duration: 15,
-      date: "2017-11-22",
+      topRated: false,
+      date: "2018-1-12",
       description: "Integer viverra urna et accumsan volutpat. Sed eget nisi aliquet, mattis nisl ac, feugiat arcu. Maecenas interdum ipsum et purus rhoncus, et porttitor odio tempor. Mauris malesuada congue accumsan. Quisque dignissim, magna at tincidunt efficitur, ipsum ligula mattis lacus, sit amet ullamcorper lorem justo quis sem. Proin nec purus purus. In hac habitasse platea dictumst. Donec lectus ipsum, vulputate quis tristique quis, pulvinar eget ante."
     },
     {
       id: 3,
-      name: "3",
+      name: "Video course 3",
       duration: 135,
+      topRated: true,
       date: "2017-10-18",
       description: "Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit."
     }

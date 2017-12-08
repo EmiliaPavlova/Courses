@@ -4,20 +4,29 @@ import { Directive, ElementRef, Input } from '@angular/core';
   selector: '[appBorderColor]'
 })
 export class BorderColorDirective {
-  @Input() color: string;
-  // default: #767676
-  // green: #1FB25A
-  // blue: #0078AD
+  @Input() date: string;
 
-  constructor(private el: ElementRef) {
-  }
+  constructor(private el: ElementRef) { }
 
   private borderColor(color: string) {
     this.el.nativeElement.style.borderColor = color;
   }
 
   ngAfterViewInit(): void {
-    this.borderColor(this.color);
+    const startDate = new Date(this.date).getTime();
+    const currentDate = new Date().getTime();
+    const twoWeeks = 14 * 24 * 60 * 60 * 1000;
+    const green = '#1FB25A';
+    const blue = '#0078AD';
+    let color = '#767676';
+
+    if (startDate < currentDate && startDate >= (currentDate - twoWeeks)) {
+      color = green;
+    } else if (startDate > currentDate) {
+      color = blue;
+    }
+
+    this.borderColor(color);
   }
 
 }

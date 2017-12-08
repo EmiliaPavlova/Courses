@@ -1,10 +1,10 @@
-<div appBorderColor color={{color}} class='div-wrapper course-wrapper'>
+<div appBorderColor date={{startDate}} class='div-wrapper course-wrapper' [ngClass]="{ 'topRated': course.topRated }">
   <div class='course-info'>
     <div class='row'>
       <div class='row-left'>
-        <p>Video course</p>
-        <h1>{{ course.name }}</h1>
+        <h1>{{ course.name | uppercase}}</h1>
         <p>{{ course.duration | hours }}</p>
+        <i class='fa fa-star-o star' *ngIf='course.topRated'></i>
       </div>
       <p>{{ course.date | date: 'd MMMM y' }}</p>
     </div>

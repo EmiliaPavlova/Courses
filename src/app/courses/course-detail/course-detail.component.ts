@@ -9,8 +9,7 @@ import { CourseService } from '../../services/course.service';
 export class CourseDetailComponent implements OnInit {
   @Input() course;
   @Output() edit = new EventEmitter();
-  public statusCourse: string;
-  color = '#1FB25A';
+  public startDate: DateTimeFormat;
 
   constructor(private courseService: CourseService) {
   }
@@ -26,6 +25,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.startDate = this.course.date;
   }
 
 }

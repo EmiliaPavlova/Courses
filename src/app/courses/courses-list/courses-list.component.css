@@ -1,3 +1,10 @@
 .fill-height {
   min-height: 500px;
 }
+
+.no-data {
+  padding: 10px;
+  background-color: #E7E7E7;
+  font-family: 'Handlee', cursive;
+  text-align: center;
+}
