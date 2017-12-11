@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
@@ -12,6 +12,8 @@ import { transition } from '@angular/core/src/animation/dsl';
 export class CourseService {
   // private _courseUrl = '/assets/seed/courses.json';
   // private courses: Course[]; // Class or interface?
+  private dataFilteredSource = new Subject<Array<Course>>();
+  dataFiltered$ = this.dataFilteredSource.asObservable();
 
   constructor() { }
   // constructor(private _http: Http) {}
@@ -40,6 +42,11 @@ export class CourseService {
     if (index >= 0) {
       this.courses.splice(index, 1);
     }
+  }
+
+  filterCourses(searchString) {
+    let filteredCourses = this.courses.filter(course => course.name.toLowerCase().indexOf(searchString.toLowerCase()) > -1);
+    this.dataFilteredSource.next(filteredCourses);
   }
 
   // TODO: remove this

@@ -24,6 +24,10 @@ export class CourseDetailComponent implements OnInit {
     this.courseService.deleteCourse(this.course);
   }
 
+  onFilter(searchString): void {
+    this.courseService.filterCourses(searchString);
+  }
+
   ngOnInit() {
     this.startDate = this.course.date;
   }
