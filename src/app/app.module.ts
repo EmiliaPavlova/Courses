@@ -10,10 +10,12 @@ import { SearchToolboxComponent } from './search-toolbox/search-toolbox.componen
 import { CoursesListComponent } from './courses/courses-list/courses-list.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { CourseService } from './services/course.service';
-import { HoursPipe } from './pipes/hours.pipe';
 import { ModalComponent } from './modal/modal.component';
-import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
+import { HoursPipe } from './pipes/hours.pipe';
+import { OrderByPipe } from './pipes/orderBy.pipe';
+import { AuthService } from './services/auth.service';
+import { BorderColorDirective } from './directives/border-color.directive';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,11 @@ import { LoginComponent } from './login/login.component';
     SearchToolboxComponent,
     CoursesListComponent,
     CourseDetailComponent,
-    HoursPipe,
     ModalComponent,
-    LoginComponent
+    LoginComponent,
+    HoursPipe,
+    OrderByPipe,
+    BorderColorDirective
   ],
   imports: [
     BrowserModule,

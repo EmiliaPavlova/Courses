@@ -9,6 +9,7 @@ import { CourseService } from '../../services/course.service';
 export class CourseDetailComponent implements OnInit {
   @Input() course;
   @Output() edit = new EventEmitter();
+  public startDate: DateTimeFormat;
 
   constructor(private courseService: CourseService) {
   }
@@ -23,7 +24,12 @@ export class CourseDetailComponent implements OnInit {
     this.courseService.deleteCourse(this.course);
   }
 
+  onFilter(searchString): void {
+    this.courseService.filterCourses(searchString);
+  }
+
   ngOnInit() {
+    this.startDate = this.course.date;
   }
 
 }
