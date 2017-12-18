@@ -11,7 +11,6 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
   providers: [OrderByPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class CoursesListComponent implements OnInit {
   // courses: ICourse[];
   courses: Course[];
