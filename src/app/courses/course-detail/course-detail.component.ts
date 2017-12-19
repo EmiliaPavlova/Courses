@@ -11,6 +11,7 @@ export class CourseDetailComponent implements OnInit {
   @Input() course;
   @Output() edit = new EventEmitter();
   public startDate: DateTimeFormat;
+  public showModal = false;
 
   constructor(private courseService: CourseService) {
   }
