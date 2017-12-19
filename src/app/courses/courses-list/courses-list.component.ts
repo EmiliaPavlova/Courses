@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Observable } from 'rxjs';
 // import { ICourse } from '../course';
 import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
@@ -14,15 +15,18 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
 export class CoursesListComponent implements OnInit {
   // courses: ICourse[];
   courses: Course[];
+  coursesObservable: Observable<Course[]>;
   errorMessage: string;
 
   constructor(
     private courseService: CourseService,
-    private orderBy: OrderByPipe
+    private orderBy: OrderByPipe,
+    private ref: ChangeDetectorRef
   ) {
     courseService.dataFiltered$.subscribe(
       courses => {
         this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
+        this.ref.detectChanges();
       }
     )
   }
@@ -32,9 +36,14 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.courseService.getCourses()
-    //   .subscribe(courses => this.courses = courses,
-    //     error => this.errorMessage = <any>error);
+    // this.coursesObservable = this.courseService.getCourses();
+    /* 
+    .subscribe(courses => {
+       this.courses = courses;
+       this.cdRef.detectChanges();
+     },
+     error => this.errorMessage = <any>error);
+   */
     this.courses = this.orderBy.transform(this.courseService.getCourses(), 'date');
   }
 

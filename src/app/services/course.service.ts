@@ -10,17 +10,25 @@ import { transition } from '@angular/core/src/animation/dsl';
 
 @Injectable()
 export class CourseService {
-  // private _courseUrl = '/assets/seed/courses.json';
+  private courseUrl = '/assets/seed/courses.json';
   // private courses: Course[]; // Class or interface?
   private dataFilteredSource = new Subject<Array<Course>>();
   dataFiltered$ = this.dataFilteredSource.asObservable();
 
-  constructor() { }
-  // constructor(private _http: Http) {}
+  constructor(private http: Http) { }
 
   getCourses() {
     return this.courses;
   }
+
+  /*
+  getCourses(): Observable<Course[]> {
+    return this.http.get(this.courseUrl)
+      .map((response: Response) => <Course[]>response.json())
+      // .do(data => console.log('All: ' + JSON.stringify(data)))
+      .catch(this.handleError);
+  }
+  */
 
   getCourseById(id: number) {
     return this.courses.find(course => course.id === id);
@@ -28,6 +36,8 @@ export class CourseService {
 
   addCourse(course) {
     this.courses.push(course);
+
+    // this.http.post(this.courseUrl, { body: { 'Name': 'New course'} });
   }
 
   editCourse(id: number, name: string, duration: number, description: string) {
@@ -76,13 +86,6 @@ export class CourseService {
       description: "Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit."
     }
   ]
-
-  /*getCourses(): Observable<ICourse[]> {
-    return this._http.get(this._courseUrl)
-      .map((response: Response) => <ICourse[]> response.json())
-      // .do(data => console.log('All: ' + JSON.stringify(data)))
-      .catch(this.handleError);
-  }*/
 
   private handleError(error: Response) {
     console.log('error', error);

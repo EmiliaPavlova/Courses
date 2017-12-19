@@ -9,7 +9,7 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 export class ModalComponent {
 
   public visible = false;
-  private visibleAnimate = false;
+  public visibleAnimate = false;
 
   constructor(private ref: ChangeDetectorRef) { }
 
@@ -19,8 +19,6 @@ export class ModalComponent {
       this.visibleAnimate = true;
       this.ref.detectChanges();
     }, 100);
-
-
   }
 
   public hide(): void {

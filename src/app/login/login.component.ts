@@ -8,8 +8,8 @@ import { AuthService } from '../services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-  private username;
-  private password;
+  public username;
+  public password;
 
   constructor(private authService: AuthService) { }
 
