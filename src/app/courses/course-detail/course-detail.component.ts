@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CourseService } from '../../services/course.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -10,24 +9,18 @@ import { CourseService } from '../../services/course.service';
 export class CourseDetailComponent implements OnInit {
   @Input() course;
   @Output() edit = new EventEmitter();
+  @Output() delete = new EventEmitter();
   public startDate: DateTimeFormat;
   public showModal = false;
 
-  constructor(private courseService: CourseService) {
-  }
+  constructor() { }
 
   onEdit(): void {
-    console.log('edited');
     this.edit.emit(this.course);
   }
 
   onDelete(): void {
-    console.log(`deleted course with id ${this.course.id}`);
-    this.courseService.deleteCourse(this.course);
-  }
-
-  onFilter(searchString): void {
-    this.courseService.filterCourses(searchString);
+    this.delete.emit(this.course);
   }
 
   ngOnInit() {

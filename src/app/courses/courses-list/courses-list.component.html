@@ -1,7 +1,7 @@
 <div class='fill-height'>
   <!-- <div *ngIf='coursesObservable | async as courses; else no_results'> -->
   <div *ngIf='courses && courses.length; else no_results'>
-    <app-course-detail *ngFor='let course of courses' [course]='course' (edit)='editCourse($event)' (delete)='deleteCourse($event)'></app-course-detail>
+    <app-course-detail *ngFor='let course of courses' [course]='course' (edit)='onEdit($event)' (delete)='onDelete(course)'></app-course-detail>
   </div>
   <ng-template #no_results>
     <div class='no-data'>No data. Feel free to add a new course.</div>

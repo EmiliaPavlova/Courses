@@ -31,8 +31,18 @@ export class CoursesListComponent implements OnInit {
     )
   }
 
-  editCourse(course) {
+  onEdit(course) {
+    // TODO: implement edit
+    console.log(`edited course with id ${course.id}`);
+  }
 
+  onDelete(course): void {
+    this.courseService.deleteCourse(course);
+    console.log(`deleted course with id ${course.id}`);
+  }
+
+  onFilter(searchString): void {
+    this.courseService.filterCourses(searchString);
   }
 
   ngOnInit(): void {
