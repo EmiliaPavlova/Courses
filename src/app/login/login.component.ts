@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-  private username;
-  private password;
+  public username;
+  public password;
 
   constructor(private authService: AuthService) { }
 
   onSubmit() {
     this.authService.login(this.username, this.password);
-    console.log(`logged ${this.username}`)
+    console.log(`logged ${this.username}`);
     this.authService.isLoggedUser$.next(true);
     this.authService.changedUser$.next(this.username);
     this.init();

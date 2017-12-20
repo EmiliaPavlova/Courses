@@ -12,14 +12,14 @@
   </div>
   <div class='course-buttons'>
     <button type='button' class='button edit' (click)='onEdit()'>Edit course</button>
-    <button type='button' class='button' (click)='modal.show()'>Delete</button>
+    <button type='button' class='button' (click)='showModal = !showModal'>Delete</button>
 
-    <app-modal #modal>
+    <app-modal [(visible)]="showModal">
       <div class='app-modal-body'>
         Are you sure you want to delete Video course {{course.name}}?
       </div>
       <div class='app-modal-footer'>
-        <button type='button' class='button button-cancel' (click)='modal.hide()'>Cancel</button>
+        <button type='button' class='button button-cancel' (click)='showModal = !showModal'>Cancel</button>
         <button type='button' class='button' (click)='onDelete()'>Delete</button>
       </div>
     </app-modal>

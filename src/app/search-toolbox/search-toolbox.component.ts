@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CourseService } from '../services/course.service';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
 
@@ -6,7 +6,8 @@ import { OrderByPipe } from '../pipes/orderBy.pipe';
   selector: 'app-search-toolbox',
   templateUrl: './search-toolbox.component.html',
   styleUrls: ['./search-toolbox.component.css'],
-  providers: [OrderByPipe]
+  providers: [OrderByPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class SearchToolboxComponent implements OnInit {
