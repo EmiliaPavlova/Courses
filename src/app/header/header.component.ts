@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class HeaderComponent implements OnInit {
-  public title: string = 'Angular mentoring program Q4 2017';
+  public title = 'Angular mentoring program Q4 2017';
   public username: string;
   public isAuthenticated: boolean;
   public isLogged: Observable<boolean>;

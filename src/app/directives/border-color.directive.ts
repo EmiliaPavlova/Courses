@@ -1,9 +1,9 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 @Directive({
   selector: '[appBorderColor]'
 })
-export class BorderColorDirective {
+export class BorderColorDirective implements AfterViewInit {
   @Input() date: string;
 
   constructor(private el: ElementRef) { }

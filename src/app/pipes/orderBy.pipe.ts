@@ -13,7 +13,7 @@ export class OrderByPipe implements PipeTransform {
             } else {
                 return 0;
             }
-        })
+        });
         return array;
     }
 }

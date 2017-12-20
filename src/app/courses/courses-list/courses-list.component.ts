@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 // import { ICourse } from '../course';
 import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
@@ -28,7 +28,7 @@ export class CoursesListComponent implements OnInit {
         this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
         this.ref.detectChanges();
       }
-    )
+    );
   }
 
   onEdit(course) {
@@ -47,13 +47,13 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit(): void {
     // this.coursesObservable = this.courseService.getCourses();
-    /* 
+    /*
     .subscribe(courses => {
        this.courses = courses;
        this.cdRef.detectChanges();
      },
      error => this.errorMessage = <any>error);
-   */
+    */
     this.courses = this.orderBy.transform(this.courseService.getCourses(), 'date');
   }
 
