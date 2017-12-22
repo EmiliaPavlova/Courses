@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+// import { ISubscription } from "rxjs/Subscription";
 // import { ICourse } from '../course';
 import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
@@ -14,21 +15,22 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
 })
 export class CoursesListComponent implements OnInit {
   // courses: ICourse[];
-  courses: Course[];
-  coursesObservable: Observable<Course[]>;
-  errorMessage: string;
+  public courses: Array<Course>;
+  private courses$: Observable<Array<Course>>;
+  private errorMessage: string;
 
   constructor(
     private courseService: CourseService,
     private orderBy: OrderByPipe,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    // private subscription: ISubscription
   ) {
-    courseService.dataFiltered$.subscribe(
-      courses => {
-        this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
-        this.ref.detectChanges();
-      }
-    );
+    // courseService.dataFiltered$.subscribe(
+    //   courses => {
+    //     this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
+    //     this.ref.detectChanges();
+    //   }
+    // );
   }
 
   onEdit(course) {
@@ -46,6 +48,14 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.courses$ = this.courseService.getCourses();
+    this.courses$.subscribe(courses => {
+      this.courses = this.orderBy.transform(courses, 'date');;
+      this.ref.detectChanges();
+    },
+      error => this.errorMessage = <any>error);
+
+
     // this.coursesObservable = this.courseService.getCourses();
     /*
     .subscribe(courses => {
@@ -54,7 +64,11 @@ export class CoursesListComponent implements OnInit {
      },
      error => this.errorMessage = <any>error);
     */
-    this.courses = this.orderBy.transform(this.courseService.getCourses(), 'date');
+
+  }
+
+  ngOnDestroy() {
+    // this.subscription.unsubscribe();
   }
 
 }

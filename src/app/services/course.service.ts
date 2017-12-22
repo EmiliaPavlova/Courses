@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 // import { ICourse } from './course';
 import { Course } from '../courses/course';
 import { transition } from '@angular/core/src/animation/dsl';
@@ -12,7 +13,7 @@ import { transition } from '@angular/core/src/animation/dsl';
 @Injectable()
 export class CourseService {
   private courseUrl = '/assets/seed/courses.json';
-  // private courses: Course[]; // Class or interface?
+  private courses$ = new Subject<Array<Course>>(); // Class or interface?
   private dataFilteredSource = new Subject<Array<Course>>();
   dataFiltered$ = this.dataFilteredSource.asObservable();
 
@@ -25,7 +26,7 @@ export class CourseService {
       name: 'Video course 1',
       duration: 88,
       topRated: true,
-      date: '2017-12-6',
+      date: '2017-12-21',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sollicitudin iaculis arcu sit amet lobortis. Donec vehicula urna bibendum tincidunt auctor. Praesent eu sem blandit, placerat purus et, facilisis metus. Vestibulum et ante lorem. Suspendisse et ultrices leo. Suspendisse sagittis varius orci pretium mattis. Duis congue eros consequat neque gravida finibus. Suspendisse tortor leo, mattis sed velit non, pulvinar mollis massa. Nunc a porttitor ipsum.'
     },
     {
@@ -47,8 +48,9 @@ export class CourseService {
   ];
 
 
-  getCourses() {
-    return this.courses;
+  getCourses(): Observable<Array<Course>> {
+    // return this.courses;
+    return Observable.of(this.courses)
   }
 
   /*
@@ -60,10 +62,12 @@ export class CourseService {
   }
   */
 
-  getCourseById(id: number) {
-    return this.courses.find(course => course.id === id);
+  getCourseById(id: number): Observable<Course> {
+    // return this.courses.find(course => course.id === id);
+    return Observable.of(this.courses.find(course => course.id === id));
   }
 
+  /*
   addCourse(course: Course) {
     this.courses.push(course);
 
@@ -76,6 +80,7 @@ export class CourseService {
     this.courses[index].duration = duration;
     this.courses[index].description = description;
   }
+  */
 
   deleteCourse(course: Course) {
     const index = this.courses.indexOf(course);

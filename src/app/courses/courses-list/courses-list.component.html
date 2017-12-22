@@ -1,6 +1,7 @@
 <div class='fill-height'>
-  <!-- <div *ngIf='coursesObservable | async as courses; else no_results'> -->
-  <div *ngIf='courses && courses.length; else no_results'>
+  <div *ngIf='courses; else no_results'>
+    <!-- <div> -->
+    <!-- <div *ngIf='courses && courses.length; else no_results'> -->
     <app-course-detail *ngFor='let course of courses' [course]='course' (edit)='onEdit($event)' (delete)='onDelete(course)'></app-course-detail>
   </div>
   <ng-template #no_results>
