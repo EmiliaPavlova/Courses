@@ -7,7 +7,7 @@ import { OrderByPipe } from '../pipes/orderBy.pipe';
   templateUrl: './search-toolbox.component.html',
   styleUrls: ['./search-toolbox.component.css'],
   providers: [OrderByPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class SearchToolboxComponent implements OnInit {
@@ -16,7 +16,7 @@ export class SearchToolboxComponent implements OnInit {
   constructor(private courseService: CourseService) { }
 
   onSearch() {
-    this.courseService.filterCourses(this.searchString);
+    this.courseService.filterCoursesByString(this.searchString);
   }
 
   ngOnInit() {

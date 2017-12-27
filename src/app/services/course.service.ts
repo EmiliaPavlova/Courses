@@ -6,6 +6,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/filter';
 // import { ICourse } from './course';
 import { Course } from '../courses/course';
 import { transition } from '@angular/core/src/animation/dsl';
@@ -50,7 +51,11 @@ export class CourseService {
 
   getCourses(): Observable<Array<Course>> {
     // return this.courses;
-    return Observable.of(this.courses)
+    // return Observable.of(this.courses);
+    let courses = Observable.of(this.courses);
+    debugger;
+    let asd = courses.filter(course => new Date(course['date']).getTime() < new Date().getTime() )
+    return asd;
   }
 
   /*
@@ -64,6 +69,7 @@ export class CourseService {
 
   getCourseById(id: number): Observable<Course> {
     // return this.courses.find(course => course.id === id);
+    this.courses.find(course => course.id === id)
     return Observable.of(this.courses.find(course => course.id === id));
   }
 
@@ -73,23 +79,25 @@ export class CourseService {
 
     // this.http.post(this.courseUrl, { body: { 'Name': 'New course'} });
   }
+  */
 
-  editCourse(id: number, name: string, duration: number, description: string) {
+  editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
     const index = this.courses.findIndex(course => course.id === id);
     this.courses[index].name = name;
     this.courses[index].duration = duration;
     this.courses[index].description = description;
+    return Observable.of(this.courses[index]);
   }
-  */
 
-  deleteCourse(course: Course) {
+  deleteCourse(course: Course): Observable<Array<Course>> {
     const index = this.courses.indexOf(course);
     if (index >= 0) {
-      this.courses.splice(index, 1);
+      this.courses.splice(index, 1)
+      return Observable.of(this.courses);
     }
   }
 
-  filterCourses(searchString: string) {
+  filterCoursesByString(searchString: string) {
     const filteredCourses = this.courses.filter(course => course.name.toLowerCase().indexOf(searchString.toLowerCase()) > -1);
     this.dataFilteredSource.next(filteredCourses);
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-// import { ISubscription } from "rxjs/Subscription";
+import { ISubscription } from "rxjs/Subscription";
 // import { ICourse } from '../course';
 import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
@@ -18,19 +18,19 @@ export class CoursesListComponent implements OnInit {
   public courses: Array<Course>;
   private courses$: Observable<Array<Course>>;
   private errorMessage: string;
+  private subscription: ISubscription;
 
   constructor(
     private courseService: CourseService,
     private orderBy: OrderByPipe,
-    private ref: ChangeDetectorRef,
-    // private subscription: ISubscription
+    private ref: ChangeDetectorRef
   ) {
-    // courseService.dataFiltered$.subscribe(
-    //   courses => {
-    //     this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
-    //     this.ref.detectChanges();
-    //   }
-    // );
+    this.subscription = courseService.dataFiltered$.subscribe(
+      courses => {
+        this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
+        this.ref.detectChanges();
+      }
+    );
   }
 
   onEdit(course) {
@@ -44,13 +44,13 @@ export class CoursesListComponent implements OnInit {
   }
 
   onFilter(searchString): void {
-    this.courseService.filterCourses(searchString);
+    this.courseService.filterCoursesByString(searchString);
   }
 
   ngOnInit(): void {
     this.courses$ = this.courseService.getCourses();
     this.courses$.subscribe(courses => {
-      this.courses = this.orderBy.transform(courses, 'date');;
+      this.courses = this.orderBy.transform(courses, 'date');
       this.ref.detectChanges();
     },
       error => this.errorMessage = <any>error);
@@ -68,7 +68,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }
