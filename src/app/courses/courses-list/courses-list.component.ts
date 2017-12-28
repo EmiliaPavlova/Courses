@@ -48,9 +48,23 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.courses$ = this.courseService.getCourses();
+    const currentDate = new Date().getTime();
+    const twoWeeks = 14 * 24 * 60 * 60 * 1000;
+    this.courses$ = this.courseService.getCourses()
+
+
     this.courses$.subscribe(courses => {
       this.courses = this.orderBy.transform(courses, 'date');
+      this.courses = this.courses
+        .filter(course => new Date(course.date).getTime() >= currentDate - twoWeeks)
+        .map(course => new Course(
+          course.id,
+          course.name,
+          course.duration,
+          course.topRated,
+          course.date,
+          course.description,
+        ));
       this.ref.detectChanges();
     },
       error => this.errorMessage = <any>error);

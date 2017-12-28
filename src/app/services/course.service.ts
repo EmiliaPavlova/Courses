@@ -51,11 +51,7 @@ export class CourseService {
 
   getCourses(): Observable<Array<Course>> {
     // return this.courses;
-    // return Observable.of(this.courses);
-    let courses = Observable.of(this.courses);
-    debugger;
-    let asd = courses.filter(course => new Date(course['date']).getTime() < new Date().getTime() )
-    return asd;
+    return Observable.of(this.courses);
   }
 
   /*
