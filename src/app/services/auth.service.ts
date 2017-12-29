@@ -35,3 +35,6 @@ export class AuthService {
   }
 
 }
+
+// http://jasonwatmore.com/post/2016/09/29/angular-2-user-registration-and-login-example-tutorial#authentication-service-ts
+// https://netbasal.com/angular-2-persist-your-login-status-with-behaviorsubject-45da9ec43243

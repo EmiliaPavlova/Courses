@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Handlee|Ubuntu');
-
 #wrapper {
   display: flex;
   flex-direction: column;
@@ -7,6 +6,10 @@
   margin: 20px 10px;
   font-size: 16px;
   font-family: 'Ubuntu', sans-serif;
+}
+
+.fill-height {
+  min-height: 500px;
 }
 
 .div-wrapper {
@@ -24,6 +27,24 @@ input {
   border-radius: 4px;
   box-shadow: inset 0px 0px 4px #767676;
   outline: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  line-height: 4em;
+}
+
+.row label {
+  flex-basis: 30%;
+  justify-content: flex-end;
+  margin-right: 20px;
+  text-align: right;
+}
+
+.row input {
+  /* width: 400px; */
+  height: 18px;
 }
 
 .button {
