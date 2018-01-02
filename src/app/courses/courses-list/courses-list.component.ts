@@ -6,7 +6,6 @@ import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
-import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-courses-list',
