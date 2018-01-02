@@ -4,7 +4,9 @@ import { ISubscription } from "rxjs/Subscription";
 // import { ICourse } from '../course';
 import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
+import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-courses-list',
@@ -22,6 +24,7 @@ export class CoursesListComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
+    private loaderService: LoaderService,
     private orderBy: OrderByPipe,
     private ref: ChangeDetectorRef
   ) {
@@ -54,6 +57,7 @@ export class CoursesListComponent implements OnInit {
 
 
     this.courses$.subscribe(courses => {
+      this.loaderService.display(true);
       this.courses = this.orderBy.transform(courses, 'date');
       this.courses = this.courses
         .filter(course => new Date(course.date).getTime() >= currentDate - twoWeeks)
@@ -66,6 +70,7 @@ export class CoursesListComponent implements OnInit {
           course.description,
         ));
       this.ref.detectChanges();
+      this.loaderService.display(false);
     },
       error => this.errorMessage = <any>error);
 

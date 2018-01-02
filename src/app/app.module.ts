@@ -19,6 +19,7 @@ import { AuthorsComponentComponent } from './inputs/authors-component/authors-co
 import { HoursPipe } from './pipes/hours.pipe';
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { AuthService } from './services/auth.service';
+import { LoaderService } from './services/loader.service';
 import { BorderColorDirective } from './directives/border-color.directive';
 
 @NgModule({
@@ -46,7 +47,8 @@ import { BorderColorDirective } from './directives/border-color.directive';
   ],
   providers: [
     CourseService,
-    AuthService
+    AuthService,
+    LoaderService
   ],
   bootstrap: [
     AppComponent
