@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
 
-  onSubmit() {
+  onLogin() {
     this.authService.login(this.username, this.password);
     console.log(`logged ${this.username}`);
     this.authService.isLoggedUser$.next(true);
