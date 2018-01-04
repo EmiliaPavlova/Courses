@@ -27,7 +27,7 @@ export class CourseService {
       name: 'Video course 1',
       duration: 88,
       topRated: true,
-      date: '2017-12-21',
+      date: '2018-02-6',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sollicitudin iaculis arcu sit amet lobortis. Donec vehicula urna bibendum tincidunt auctor. Praesent eu sem blandit, placerat purus et, facilisis metus. Vestibulum et ante lorem. Suspendisse et ultrices leo. Suspendisse sagittis varius orci pretium mattis. Duis congue eros consequat neque gravida finibus. Suspendisse tortor leo, mattis sed velit non, pulvinar mollis massa. Nunc a porttitor ipsum.'
     },
     {
@@ -43,7 +43,7 @@ export class CourseService {
       name: 'Video course 3',
       duration: 135,
       topRated: true,
-      date: '2017-10-18',
+      date: '2018-01-18',
       description: 'Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit.'
     }
   ];
@@ -86,9 +86,10 @@ export class CourseService {
   }
 
   deleteCourse(course: Course): Observable<Array<Course>> {
-    const index = this.courses.indexOf(course);
+    const deletedCourse = this.courses.find(c => c.id === course.id)
+    const index = this.courses.indexOf(deletedCourse);
     if (index >= 0) {
-      this.courses.splice(index, 1)
+      this.courses.splice(index, 1);
       return Observable.of(this.courses);
     }
   }
