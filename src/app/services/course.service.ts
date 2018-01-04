@@ -7,7 +7,6 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
-// import { ICourse } from './course';
 import { Course } from '../courses/course';
 import { transition } from '@angular/core/src/animation/dsl';
 

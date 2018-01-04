@@ -1,4 +1,4 @@
-export interface ICourse {
+export interface Course {
   id: number;
   name: string;
   duration: number;
@@ -7,7 +7,7 @@ export interface ICourse {
   description: string;
 }
 
-export class Course implements ICourse {
+export class Course implements Course {
   constructor(
     public id: number,
     public name: string,

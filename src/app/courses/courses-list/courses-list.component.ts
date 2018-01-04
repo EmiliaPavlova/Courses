@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ISubscription } from "rxjs/Subscription";
-// import { ICourse } from '../course';
 import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
@@ -15,7 +14,6 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
-  // courses: ICourse[];
   public courses: Array<Course>;
   private courses$: Observable<Array<Course>>;
   private errorMessage: string;
