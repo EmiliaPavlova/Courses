@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.authService.login(this.username, this.password);
     console.log(`logged ${this.username}`);
-    this.authService.isLoggedUser$.next(true);
+    // this.authService.isLoggedUser$.next(true);
     this.authService.changedUser$.next(this.username);
     this.init();
   }

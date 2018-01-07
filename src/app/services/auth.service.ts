@@ -10,12 +10,12 @@ export class AuthService {
 
   login(username, password) {
     localStorage.setItem('currentUser', JSON.stringify({ username: username }));
-    // this.isLoggedUser$.next(true);
+    this.isLoggedUser$.next(true);
   }
 
   logout() {
     localStorage.removeItem('currentUser');
-    // this.isLoggedUser$.next(false);
+    this.isLoggedUser$.next(false);
   }
 
   isAuthenticated() {

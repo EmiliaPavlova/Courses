@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
-    this.authService.isLoggedUser$.next(false);
+    // this.authService.isLoggedUser$.next(false);
     console.log('logged out');
   }
 

@@ -17,7 +17,8 @@ export class CourseService {
   private dataFilteredSource = new Subject<Array<Course>>();
   dataFiltered$ = this.dataFilteredSource.asObservable();
 
-  constructor(private http: Http) { }
+  constructor() { }
+  // constructor(private http: Http) { }
 
   // TODO: remove this
   courses = [
