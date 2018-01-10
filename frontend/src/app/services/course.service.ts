@@ -14,7 +14,7 @@ import { transition } from '@angular/core/src/animation/dsl';
 @Injectable()
 export class CourseService {
   // private courseUrl = '/assets/seed/courses.json';
-  private courseUrl = 'http://localhost:4204/api';
+  private courseUrl = 'http://localhost:4204';
   private courses$ = new Subject<Array<Course>>(); // Class or interface?
   private dataFilteredSource = new Subject<Array<Course>>();
   dataFiltered$ = this.dataFilteredSource.asObservable();

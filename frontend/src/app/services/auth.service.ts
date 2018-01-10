@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { debuglog } from 'util';
 
 @Injectable()
 export class AuthService {
 
   isLoggedUser$ = new BehaviorSubject<boolean>(this.isAuthenticated());
   changedUser$ = new BehaviorSubject<string>(this.getUserInfo());
+  private authUrl = 'http://localhost:4204';
+
+  constructor(private http: Http) {}
 
   login(username, password) {
-    localStorage.setItem('currentUser', JSON.stringify({ username: username }));
+    // this.http.post(this.authUrl + '/login', { username, password });
+    this.http.post(this.authUrl, { username, password })
+    debugger
+    localStorage.setItem('currentUser', JSON.stringify({ token: username }));
     this.isLoggedUser$.next(true);
   }
 
