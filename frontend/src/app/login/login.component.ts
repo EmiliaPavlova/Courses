@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
   public username;
   public password;
+  public isAuthenticated;
 
   constructor(private authService: AuthService) { }
 
@@ -22,8 +23,9 @@ export class LoginComponent implements OnInit {
   }
 
   init() {
-    this.username = '';
-    this.password = '';
+    this.username = null;
+    this.password = null;
+    this.isAuthenticated = this.authService.isAuthenticated();
   }
 
   ngOnInit() {

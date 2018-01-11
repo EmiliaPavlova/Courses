@@ -32,7 +32,7 @@ export class AuthService {
 
   getUserInfo() {
     return localStorage.getItem('currentUser')
-      ? JSON.parse(localStorage.getItem('currentUser')).username
+      ? JSON.parse(localStorage.getItem('currentUser')).token
       : null;
   }
 
