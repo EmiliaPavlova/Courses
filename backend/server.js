@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+// const courses = require('./courses.json');
 
 const courses = [{
     "id": 1,
@@ -23,7 +24,7 @@ const courses = [{
     "name": "Video course 2",
     "duration": 15,
     "topRated": false,
-    "date": "2018-1-12",
+    "date": "2018-01-12",
     "description": "Integer viverra urna et accumsan volutpat. Sed eget nisi aliquet, mattis nisl ac, feugiat arcu. Maecenas interdum ipsum et purus rhoncus, et porttitor odio tempor. Mauris malesuada congue accumsan. Quisque dignissim, magna at tincidunt efficitur, ipsum ligula mattis lacus, sit amet ullamcorper lorem justo quis sem. Proin nec purus purus. In hac habitasse platea dictumst. Donec lectus ipsum, vulputate quis tristique quis, pulvinar eget ante."
   },
   {
@@ -31,7 +32,7 @@ const courses = [{
     "name": "Video course 3",
     "duration": 135,
     "topRated": true,
-    "date": "2018-1-18",
+    "date": "2018-01-18",
     "description": "Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit."
   }
 ];
@@ -52,6 +53,9 @@ const api = express.Router();
 const auth = express.Router();
 
 api.get('/courses', (req, res) => {
+    let { page } = req.query;
+    let { size } = req.query;
+    console.log(req.query)
     res.json(courses);
 })
 
