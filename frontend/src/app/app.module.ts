@@ -22,6 +22,7 @@ import { OrderByPipe } from './pipes/orderBy.pipe';
 import { AuthService } from './services/auth.service';
 import { LoaderService } from './services/loader.service';
 import { BorderColorDirective } from './directives/border-color.directive';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { BorderColorDirective } from './directives/border-color.directive';
     AuthorsComponentComponent,
     HoursPipe,
     OrderByPipe,
-    BorderColorDirective
+    BorderColorDirective,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

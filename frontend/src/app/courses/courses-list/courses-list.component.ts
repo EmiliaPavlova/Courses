@@ -15,6 +15,10 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
 })
 export class CoursesListComponent implements OnInit {
   public courses: Array<Course>;
+  public loading = false;
+  public total = 0;
+  public page = 1;
+  public limit = 20;
   private courses$: Observable<Array<Course>>;
   private errorMessage: string;
   private subscription: ISubscription;
@@ -48,10 +52,14 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCourses();
+  }
+
+  getCourses(): void {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
-    this.courses$ = this.courseService.getCourses()
-
+    this.loading = true;
+    this.courses$ = this.courseService.getCourses();
 
     this.courses$.subscribe(courses => {
       this.loaderService.display(true);
@@ -68,6 +76,7 @@ export class CoursesListComponent implements OnInit {
         ));
       this.ref.detectChanges();
       this.loaderService.display(false);
+      this.loading = false;
     },
       error => this.errorMessage = <any>error);
 
@@ -82,6 +91,21 @@ export class CoursesListComponent implements OnInit {
     */
 
   }
+
+  goToPage(n: number): void {
+    this.page = n;
+    this.getCourses();
+  }
+
+  onNext(): void {
+    this.page++;
+    this.getCourses();
+  }
+
+  onPrev(): void {
+    this.page--;
+    this.getCourses();
+}
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
