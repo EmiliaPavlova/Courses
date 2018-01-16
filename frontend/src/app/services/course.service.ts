@@ -6,12 +6,16 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 import { Course } from '../courses/course';
 import { transition } from '@angular/core/src/animation/dsl';
 
 @Injectable()
 export class CourseService {
-  private courseUrl = 'http://localhost:4204/courses';
+  private courseUrl: string = 'http://localhost:4204/courses';
+  private queryUrl: string = '?search=';  
   private courses$ = new Subject<Array<Course>>();
   private dataFilteredSource = new Subject<Array<Course>>();
   dataFiltered$ = this.dataFilteredSource.asObservable();
@@ -54,6 +58,21 @@ export class CourseService {
     //   this.courses.splice(index, 1);
     //   return Observable.of(this.courses);
     // }
+  }
+
+  search(term: string) {
+    debugger
+    return this.http
+    .get(this.courseUrl + this.queryUrl + term);
+    // return terms.debounceTime(400)
+    //   .distinctUntilChanged()
+    //   .switchMap(term => this.searchEntries(term));
+  }
+
+  searchEntries(term) {
+    debugger
+    return this.http
+        .get(this.courseUrl + this.queryUrl + term);
   }
 
   filterCoursesByString(searchString: string) {
