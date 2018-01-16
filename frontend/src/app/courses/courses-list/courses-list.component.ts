@@ -18,7 +18,7 @@ export class CoursesListComponent implements OnInit {
   public loading = false;
   public total = 0;
   public page = 1;
-  public limit = 20;
+  public size = 3;
   private courses$: Observable<Array<Course>>;
   private errorMessage: string;
   private subscription: ISubscription;
@@ -31,7 +31,7 @@ export class CoursesListComponent implements OnInit {
   ) {
     this.subscription = courseService.dataFiltered$.subscribe(
       courses => {
-        this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
+        this.courses['courses'] = orderBy.transform(courses, 'name'); // on search courses are ordered by name
         this.ref.detectChanges();
       }
     );
@@ -43,8 +43,8 @@ export class CoursesListComponent implements OnInit {
   }
 
   onDelete(course): void {
-    this.courseService.deleteCourse(course).subscribe(data => this.courses = data);
     console.log(`deleted course with id ${course.id}`);
+    this.courseService.deleteCourse(course).subscribe(() => this.getCourses({ page: this.page, size: this.size} ));
   }
 
   onFilter(searchString): void {
@@ -52,18 +52,18 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCourses();
+    this.getCourses({ page: this.page, size: this.size});
   }
 
-  getCourses(): void {
+  getCourses({ page, size }): void {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
     this.loading = true;
-    this.courses$ = this.courseService.getCourses();
+    this.courses$ = this.courseService.getCourses(); // NOT WORKING
 
     this.courses$.subscribe(courses => {
       this.loaderService.display(true);
-      this.courses = this.orderBy.transform(courses, 'date');
+      this.courses = this.orderBy.transform(courses['courses'], 'date');
       this.courses = this.courses
         .filter(course => new Date(course.date).getTime() >= currentDate - twoWeeks)
         .map(course => new Course(
@@ -94,17 +94,17 @@ export class CoursesListComponent implements OnInit {
 
   goToPage(n: number): void {
     this.page = n;
-    this.getCourses();
+    // this.getCourses();
   }
 
   onNext(): void {
     this.page++;
-    this.getCourses();
+    // this.getCourses();
   }
 
   onPrev(): void {
     this.page--;
-    this.getCourses();
+    // this.getCourses();
 }
 
   ngOnDestroy() {

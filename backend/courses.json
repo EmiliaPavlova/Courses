@@ -30,6 +30,38 @@
             "topRated": true,
             "date": "2018-01-18",
             "description": "Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit."
+        },
+        {
+            "id": 5,
+            "name": "Video course with id = 5",
+            "duration": 21,
+            "topRated": true,
+            "date": "2018-01-20",
+            "description": "Mauris venenatis nibh quis orci faucibus, sit amet congue risus semper. Maecenas vel malesuada lorem. Donec id consectetur massa. Aenean posuere libero id massa cursus tincidunt. Mauris laoreet neque sed nunc efficitur, vitae fringilla nunc gravida. Phasellus id ligula tempus dolor dictum facilisis quis sit amet libero. Ut suscipit orci magna, vitae elementum mi condimentum vel. "
+        },
+        {
+            "id": 6,
+            "name": "The shortest video course",
+            "duration": 10,
+            "topRated": false,
+            "date": "2018-02-01",
+            "description": "Phasellus dictum magna at elementum auctor. Duis convallis semper tempor. Fusce at scelerisque orci. Fusce ac pharetra lacus. Morbi sed scelerisque ex. Nam sit amet augue nisl. Aliquam mollis augue lorem, nec maximus ipsum bibendum vitae. Aliquam ultricies erat vitae purus vehicula luctus."
+        },
+        {
+            "id": 7,
+            "name": "Video clip",
+            "duration": 60,
+            "topRated": false,
+            "date": "2018-01-08",
+            "description": "Proin erat dolor, auctor nec elementum et, vestibulum vel mi. Phasellus id tincidunt leo."
+        },
+        {
+            "id": 8,
+            "name": "Unwachable video course",
+            "duration": 336,
+            "topRated": true,
+            "date": "2018-01-29",
+            "description": "Suspendisse quis mauris est. Morbi suscipit quam eu metus gravida, a mollis nisl suscipit. Sed tincidunt tortor ac lorem varius pulvinar. Cras sed ligula id turpis placerat hendrerit. Phasellus consectetur bibendum neque, malesuada molestie lacus finibus at. Curabitur quis urna at ante aliquam rhoncus ut auctor turpis."
         }
     ]
 }

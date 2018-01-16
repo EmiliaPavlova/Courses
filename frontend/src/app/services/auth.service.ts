@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { debuglog } from 'util';
@@ -11,7 +11,7 @@ export class AuthService {
   changedUser$ = new BehaviorSubject<string>(this.getUserInfo());
   private authUrl = 'http://localhost:4204';
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   login(username, password) {
     // this.http.post(this.authUrl + '/login', { username, password });
