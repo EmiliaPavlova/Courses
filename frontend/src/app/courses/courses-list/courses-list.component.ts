@@ -52,6 +52,8 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.courseService.getAllCourses().subscribe(data =>
+      this.total = data['courses'].length);
     this.getCourses({ page: this.page, size: this.size});
   }
 

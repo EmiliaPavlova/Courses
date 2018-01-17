@@ -30,6 +30,10 @@ api.get('/courses', (req, res) => {
     res.json(slicedCourses);
 })
 
+api.get('/courses/all', (req, res) => {
+    res.json(courses);
+})
+
 api.get('/courses/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const result = courses.filter(course => course.id === id);

@@ -26,7 +26,7 @@ export class CourseService {
   courses = [];
 
   public getAllCourses(): Observable<Array<Course>> {
-    return this.http.get(this.courseUrl)
+    return this.http.get(`${this.courseUrl}/all`)
       // .do(data => console.log('All: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
@@ -35,7 +35,7 @@ export class CourseService {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
     let params = new HttpParams().set('page', options.page).set('size', options.size);;
     return this.http.get(url, options)
-      // .do(data => console.log('All: ' + JSON.stringify(data)))
+      // .do(data => console.log('By page: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
 
