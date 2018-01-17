@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
@@ -24,25 +24,31 @@ export class CourseService {
 
   // TODO: remove this
   courses = [];
-  
-  getCourses(): Observable<Array<Course>> {
-    // let pageParams = new URLSearchParams();
-    // pageParams.append('params', params);
+
+  public getAllCourses(): Observable<Array<Course>> {
     return this.http.get(this.courseUrl)
       // .do(data => console.log('All: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
 
-  getCourseById(id: number): Observable<Course> {
+  public getCourses(options?: any): Observable<Array<Course>> {
+    const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
+    let params = new HttpParams().set('page', options.page).set('size', options.size);;
+    return this.http.get(url, options)
+      // .do(data => console.log('All: ' + JSON.stringify(data)))
+      .catch(this.handleError);
+  }
+
+  public getCourseById(id: number): Observable<Course> {
     this.courses.find(course => course.id === id)
     return Observable.of(this.courses.find(course => course.id === id));
   }
 
-  addCourse(course: Course) {
+  public addCourse(course: Course) {
     return this.http.post(this.courseUrl, course);
   }
 
-  editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
+  public editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
     const index = this.courses.findIndex(course => course.id === id);
     this.courses[index].name = name;
     this.courses[index].duration = duration;
@@ -50,7 +56,7 @@ export class CourseService {
     return Observable.of(this.courses[index]);
   }
 
-  deleteCourse(course: Course) {
+  public deleteCourse(course: Course) {
     return this.http.delete(`${this.courseUrl}/${course.id}`);
     // const deletedCourse = this.getCourses().find(c => c.id === course.id)
     // const index = this.courses.indexOf(deletedCourse);
@@ -78,6 +84,34 @@ export class CourseService {
   filterCoursesByString(searchString: string) {
     const filteredCourses = this.courses.filter(course => course.name.toLowerCase().indexOf(searchString.toLowerCase()) > -1);
     this.dataFilteredSource.next(filteredCourses);
+  }
+
+  private setHeaders(options: any) {
+    if (!options) {
+      options = { headers: {} };
+    } else if (!options.headers) {
+      options.headers = {};
+    }
+
+    // TODO: set token
+
+    if (!options.headers['Content-Type']) {
+      options.headers['Content-Type'] = 'application/json; charset=utf-8';
+    }
+
+    if (options.params) {
+      let params = new HttpParams();
+      for (let key in options.params) {
+          if (options.params.hasOwnProperty(key)) {
+              params = params.set(key, options.params[key]);
+          }
+      }
+      options.params = params;
+    }
+
+    options.headers = new HttpHeaders(options.headers);
+
+    return options;
   }
 
   private handleError(error: Response) {

@@ -31,7 +31,7 @@ export class CoursesListComponent implements OnInit {
   ) {
     this.subscription = courseService.dataFiltered$.subscribe(
       courses => {
-        this.courses['courses'] = orderBy.transform(courses, 'name'); // on search courses are ordered by name
+        this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
         this.ref.detectChanges();
       }
     );
@@ -59,11 +59,11 @@ export class CoursesListComponent implements OnInit {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
     this.loading = true;
-    this.courses$ = this.courseService.getCourses(); // NOT WORKING
+    this.courses$ = this.courseService.getCourses({ page, size });
 
     this.courses$.subscribe(courses => {
       this.loaderService.display(true);
-      this.courses = this.orderBy.transform(courses['courses'], 'date');
+      this.courses = this.orderBy.transform(courses, 'date');
       this.courses = this.courses
         .filter(course => new Date(course.date).getTime() >= currentDate - twoWeeks)
         .map(course => new Course(
@@ -74,6 +74,7 @@ export class CoursesListComponent implements OnInit {
           course.date,
           course.description,
         ));
+      // this.total = getPagesCount();
       this.ref.detectChanges();
       this.loaderService.display(false);
       this.loading = false;
@@ -90,6 +91,13 @@ export class CoursesListComponent implements OnInit {
      error => this.errorMessage = <any>error);
     */
 
+  }
+
+  private getPagesCount(): any {
+    // NOT WORKING
+    return this.courseService.getAllCourses().subscribe(courses => {
+      this.total = courses.length;
+    });
   }
 
   goToPage(n: number): void {
