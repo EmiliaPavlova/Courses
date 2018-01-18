@@ -22,8 +22,8 @@ const auth = express.Router();
 
 api.get('/courses', (req, res) => {
     let { page, size } = req.query;
-    page = parseInt(page, 10);
-    size = parseInt(size, 10);
+    page = parseInt(page, 10) || 1;
+    size = parseInt(size, 10) || 3;
     const start = (page - 1) * size;
     const end = start + size;
     const slicedCourses = courses.courses.slice(start, end);
@@ -32,6 +32,13 @@ api.get('/courses', (req, res) => {
 
 api.get('/courses/all', (req, res) => {
     res.json(courses);
+})
+
+api.get('/courses/search', (req, res) => {
+    let { string } = req.query;
+    console.log(req.body);
+    console.log(string);
+    console.log(courses.courses);
 })
 
 api.get('/courses/:id', (req, res) => {

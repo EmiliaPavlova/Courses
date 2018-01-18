@@ -15,7 +15,7 @@ import { transition } from '@angular/core/src/animation/dsl';
 @Injectable()
 export class CourseService {
   private courseUrl: string = 'http://localhost:4204/courses';
-  private queryUrl: string = '?search=';  
+  private queryUrl: string = '/search?q=';
   private courses$ = new Subject<Array<Course>>();
   private dataFilteredSource = new Subject<Array<Course>>();
   dataFiltered$ = this.dataFilteredSource.asObservable();
@@ -33,7 +33,7 @@ export class CourseService {
 
   public getCourses(options?: any): Observable<Array<Course>> {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
-    let params = new HttpParams().set('page', options.page).set('size', options.size);;
+    let params = new HttpParams().set('page', options.page).set('size', options.size);
     return this.http.get(url, options)
       // .do(data => console.log('By page: ' + JSON.stringify(data)))
       .catch(this.handleError);
@@ -66,19 +66,10 @@ export class CourseService {
     // }
   }
 
-  search(term: string) {
+  public search(term: string) {
+    let params = new HttpParams().set('filter', term);
     debugger
-    return this.http
-    .get(this.courseUrl + this.queryUrl + term);
-    // return terms.debounceTime(400)
-    //   .distinctUntilChanged()
-    //   .switchMap(term => this.searchEntries(term));
-  }
-
-  searchEntries(term) {
-    debugger
-    return this.http
-        .get(this.courseUrl + this.queryUrl + term);
+    return this.http.get(this.courseUrl + this.queryUrl + term);
   }
 
   filterCoursesByString(searchString: string) {

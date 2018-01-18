@@ -15,7 +15,7 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
 })
 export class CoursesListComponent implements OnInit {
   public courses: Array<Course>;
-  public loading = false;
+  // public loading = false;
   public total = 0;
   public page = 1;
   public size = 3;
@@ -60,7 +60,7 @@ export class CoursesListComponent implements OnInit {
   getCourses({ page, size }): void {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
-    this.loading = true;
+    // this.loading = true;
     this.courses$ = this.courseService.getCourses({ page, size });
 
     this.courses$.subscribe(courses => {
@@ -78,7 +78,7 @@ export class CoursesListComponent implements OnInit {
         ));
         this.ref.detectChanges();
         this.loaderService.display(false);
-        this.loading = false;
+        // this.loading = false;
     },
       error => this.errorMessage = <any>error);
   }
