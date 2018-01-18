@@ -9,10 +9,12 @@
 
 .course-info {
   flex: 1;
+  width: 50%;
 }
 
 .row {
   justify-content: space-between;
+  height: 60px;
 }
 
 .row,
@@ -26,6 +28,7 @@ p {
 }
 
 h1 {
+  width: 40vh;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 10px;
@@ -34,6 +37,9 @@ h1 {
   font-family: 'Handlee', cursive;
   color: #767676;
   text-transform: capitalize;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .star {

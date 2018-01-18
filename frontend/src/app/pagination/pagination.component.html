@@ -5,5 +5,5 @@
     *ngFor="let pageNum of getPages()"
     (click)="onPage(pageNum)"
     [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button>
-    <button class="link" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">&gt;</button>
+    <button class="link" (click)="onNext()" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">&gt;</button>
 </div>

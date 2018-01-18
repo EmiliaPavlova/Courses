@@ -41,7 +41,7 @@
         },
         {
             "id": 6,
-            "name": "The shortest video course",
+            "name": "The shortest video course with the longest name",
             "duration": 10,
             "topRated": false,
             "date": "2018-02-01",

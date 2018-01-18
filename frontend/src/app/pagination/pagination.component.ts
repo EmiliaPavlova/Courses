@@ -9,15 +9,16 @@ export class PaginationComponent {
   @Input() page: number;
   @Input() count: number;
   @Input() perPage: number;
-  @Input() loading: boolean;
   @Input() pagesToShow: number;
+  @Input() loading = false;
 
-  @Output() goPrev = new EventEmitter<boolean>();
-  @Output() goNext = new EventEmitter<boolean>();
   @Output() goPage = new EventEmitter<number>();
-
+  @Output() goNext = new EventEmitter<boolean>();
+  @Output() goPrev = new EventEmitter<boolean>();
+  
   constructor() { }
 
+  /*
   getMin(): number {
     return ((this.perPage * this.page) - this.perPage) + 1;
   }
@@ -29,17 +30,18 @@ export class PaginationComponent {
     }
     return max;
   }
+  */
 
   onPage(n: number): void {
     this.goPage.emit(n);
   }
 
-  onPrev(): void {
-    this.goPrev.emit(true);
+  onNext(): void {
+    this.goNext.emit();
   }
 
-  onNext(next: boolean): void {
-    this.goNext.emit(next);
+  onPrev(): void {
+    this.goPrev.emit(true);
   }
 
   totalPages(): number {

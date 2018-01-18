@@ -76,27 +76,14 @@ export class CoursesListComponent implements OnInit {
           course.date,
           course.description,
         ));
-      // this.total = getPagesCount();
-      this.ref.detectChanges();
-      this.loaderService.display(false);
-      this.loading = false;
+        this.ref.detectChanges();
+        this.loaderService.display(false);
+        this.loading = false;
     },
       error => this.errorMessage = <any>error);
-
-
-    // this.coursesObservable = this.courseService.getCourses();
-    /*
-    .subscribe(courses => {
-       this.courses = courses;
-       this.cdRef.detectChanges();
-     },
-     error => this.errorMessage = <any>error);
-    */
-
   }
 
   private getPagesCount(): any {
-    // NOT WORKING
     return this.courseService.getAllCourses().subscribe(courses => {
       this.total = courses.length;
     });
@@ -104,17 +91,17 @@ export class CoursesListComponent implements OnInit {
 
   goToPage(n: number): void {
     this.page = n;
-    // this.getCourses();
+    this.getCourses({ page: this.page, size: this.size });
   }
 
   onNext(): void {
     this.page++;
-    // this.getCourses();
+    this.getCourses({ page: this.page, size: this.size });
   }
 
   onPrev(): void {
     this.page--;
-    // this.getCourses();
+    this.getCourses({ page: this.page, size: this.size });
 }
 
   ngOnDestroy() {
