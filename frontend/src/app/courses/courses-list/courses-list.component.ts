@@ -14,7 +14,7 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
-  public courses: Array<Course>;
+  public courses: Array<Course> = [];
   // public loading = false;
   public total = 0;
   public page = 1;
@@ -22,6 +22,7 @@ export class CoursesListComponent implements OnInit {
   private courses$: Observable<Array<Course>>;
   private errorMessage: string;
   private subscription: ISubscription;
+  private subscriptionAll: ISubscription;
 
   constructor(
     private courseService: CourseService,
@@ -29,44 +30,49 @@ export class CoursesListComponent implements OnInit {
     private orderBy: OrderByPipe,
     private ref: ChangeDetectorRef
   ) {
+    /*
     this.subscription = courseService.dataFiltered$.subscribe(
       courses => {
         this.courses = orderBy.transform(courses, 'name'); // on search courses are ordered by name
         this.ref.detectChanges();
       }
     );
+    */
   }
 
-  onEdit(course) {
-    // TODO: implement edit
-    console.log(`edited course with id ${course.id}`);
+  public goToPage(n: number): void {
+    this.page = n;
+    this.getCourses({ page: this.page, size: this.size });
   }
 
-  onDelete(course): void {
-    console.log(`deleted course with id ${course.id}`);
-    this.courseService.deleteCourse(course).subscribe(() => this.getCourses({ page: this.page, size: this.size} ));
+  public onNext(): void {
+    this.page++;
+    this.getCourses({ page: this.page, size: this.size });
   }
 
-  onFilter(searchString): void {
-    this.courseService.filterCoursesByString(searchString);
+  public onPrev(): void {
+    this.page--;
+    this.getCourses({ page: this.page, size: this.size });
   }
 
   ngOnInit(): void {
-    this.courseService.getAllCourses().subscribe(data =>
-      this.total = data['courses'].length);
-    this.getCourses({ page: this.page, size: this.size});
+    this.subscriptionAll = this.courseService.getAllCourses().subscribe(data => this.total = data['courses'].length);
+    this.getCourses({ page: this.page, size: this.size });
   }
 
-  getCourses({ page, size }): void {
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.subscriptionAll.unsubscribe();
+  }
+
+  private getCourses({ page, size }): void {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
-    // this.loading = true;
-    this.courses$ = this.courseService.getCourses({ page, size });
 
-    this.courses$.subscribe(courses => {
+    this.courseService.courses$.subscribe(courses => {
       this.loaderService.display(true);
-      this.courses = this.orderBy.transform(courses, 'date');
-      this.courses = this.courses
+      let coursesData = this.orderBy.transform(courses, 'date');
+      coursesData = coursesData
         .filter(course => new Date(course.date).getTime() >= currentDate - twoWeeks)
         .map(course => new Course(
           course.id,
@@ -76,36 +82,30 @@ export class CoursesListComponent implements OnInit {
           course.date,
           course.description,
         ));
-        this.ref.detectChanges();
-        this.loaderService.display(false);
-        // this.loading = false;
+
+      this.loaderService.display(false);
+      this.courses = coursesData;
+      this.ref.detectChanges();
     },
       error => this.errorMessage = <any>error);
+
+    this.courseService.getCourses({ page, size });
   }
 
   private getPagesCount(): any {
-    return this.courseService.getAllCourses().subscribe(courses => {
+    return this.subscription = this.courseService.getAllCourses().subscribe(courses => {
       this.total = courses.length;
     });
   }
 
-  goToPage(n: number): void {
-    this.page = n;
-    this.getCourses({ page: this.page, size: this.size });
+  private onEdit(course) {
+    // TODO: implement edit
+    console.log(`edited course with id ${course.id}`);
   }
 
-  onNext(): void {
-    this.page++;
-    this.getCourses({ page: this.page, size: this.size });
-  }
-
-  onPrev(): void {
-    this.page--;
-    this.getCourses({ page: this.page, size: this.size });
-}
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  private onDelete(course): void {
+    console.log(`deleted course with id ${course.id}`);
+    this.courseService.deleteCourse(course).subscribe(() => this.getCourses({ page: this.page, size: this.size} ));
   }
 
 }

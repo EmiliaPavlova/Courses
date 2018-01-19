@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { CourseService } from '../services/course.service';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
@@ -8,28 +8,23 @@ import { OrderByPipe } from '../pipes/orderBy.pipe';
   templateUrl: './search-toolbox.component.html',
   styleUrls: ['./search-toolbox.component.css'],
   providers: [OrderByPipe],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class SearchToolboxComponent implements OnInit {
+export class SearchToolboxComponent {
   @Input() searchString;
-  results: Object;
-  // searchTerm$ = new Subject<string>();
+  private total = 0;
+  private page = 1;
+  private size = 3;
 
   constructor(private courseService: CourseService) { }
 
-  onSearch() {
-    // this.courseService.filterCoursesByString(this.searchString);
-    debugger
-    this.courseService.search(this.searchString)
-      // .subscribe(results => {
-      //   this.results = results.results;
-      // });
+  public onSearch() {
+    this.courseService.search({page: this.page, size: this.size, term: this.searchString})
+      .subscribe(results => {
+        this.total = results.length;
+        this.courseService.courses$.next(results);
+      });
   }
-
-  ngOnInit() {
-  }
-
 }
 
 // https://alligator.io/angular/real-time-search-angular-rxjs/

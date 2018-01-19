@@ -13,12 +13,11 @@ import { Course } from '../courses/course';
 import { transition } from '@angular/core/src/animation/dsl';
 
 @Injectable()
-export class CourseService {
+export class CourseService  {
+  public courses$ = new Subject<any>();
+
   private courseUrl: string = 'http://localhost:4204/courses';
   private queryUrl: string = '/search?q=';
-  private courses$ = new Subject<Array<Course>>();
-  private dataFilteredSource = new Subject<Array<Course>>();
-  dataFiltered$ = this.dataFilteredSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -34,7 +33,15 @@ export class CourseService {
   public getCourses(options?: any): Observable<Array<Course>> {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
     let params = new HttpParams().set('page', options.page).set('size', options.size);
-    return this.http.get(url, options)
+
+    // let request = this.http.get(url, options).publishLast().refCount();
+    let request = this.http.get(url, options);
+
+    request.subscribe(courses => {
+      this.courses$.next(courses);
+    });
+
+    return request
       // .do(data => console.log('By page: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
@@ -66,15 +73,10 @@ export class CourseService {
     // }
   }
 
-  public search(term: string) {
-    let params = new HttpParams().set('filter', term);
-    debugger
-    return this.http.get(this.courseUrl + this.queryUrl + term);
-  }
-
-  filterCoursesByString(searchString: string) {
-    const filteredCourses = this.courses.filter(course => course.name.toLowerCase().indexOf(searchString.toLowerCase()) > -1);
-    this.dataFilteredSource.next(filteredCourses);
+  public search(options?: any): Observable<any> {
+    const url = this.courseUrl + this.queryUrl + options.term;
+    let params = new HttpParams().set('q', options.term);
+    return this.http.get(url, options);
   }
 
   private setHeaders(options: any) {

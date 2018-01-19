@@ -35,10 +35,11 @@ api.get('/courses/all', (req, res) => {
 })
 
 api.get('/courses/search', (req, res) => {
-    let { string } = req.query;
-    console.log(req.body);
-    console.log(string);
-    console.log(courses.courses);
+    const { q } = req.query;
+    const filteredCourses = courses.courses.filter(course =>
+        course.name && course.name.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
+        course.description && course.description.toLowerCase().indexOf(q.toLowerCase()) > -1);
+    res.json(filteredCourses);
 })
 
 api.get('/courses/:id', (req, res) => {
