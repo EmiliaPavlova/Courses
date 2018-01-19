@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ISubscription } from "rxjs/Subscription";
+import { ISubscription } from 'rxjs/Subscription';
 import { Course } from '../course';
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
@@ -13,7 +13,7 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
   providers: [OrderByPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: Array<Course> = [];
   // public loading = false;
   public total = 0;
@@ -60,7 +60,7 @@ export class CoursesListComponent implements OnInit {
     this.getCourses({ page: this.page, size: this.size });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.subscriptionAll.unsubscribe();
   }

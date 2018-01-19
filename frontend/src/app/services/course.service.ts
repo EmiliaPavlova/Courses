@@ -16,8 +16,8 @@ import { transition } from '@angular/core/src/animation/dsl';
 export class CourseService  {
   public courses$ = new Subject<any>();
 
-  private courseUrl: string = 'http://localhost:4204/courses';
-  private queryUrl: string = '/search?q=';
+  private courseUrl = 'http://localhost:4204/courses';
+  private queryUrl = '/search?q=';
 
   constructor(private http: HttpClient) { }
 
@@ -32,10 +32,10 @@ export class CourseService  {
 
   public getCourses(options?: any): Observable<Array<Course>> {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
-    let params = new HttpParams().set('page', options.page).set('size', options.size);
+    const params = new HttpParams().set('page', options.page).set('size', options.size);
 
     // let request = this.http.get(url, options).publishLast().refCount();
-    let request = this.http.get(url, options);
+    const request = this.http.get(url, options);
 
     request.subscribe(courses => {
       this.courses$.next(courses);
@@ -75,7 +75,7 @@ export class CourseService  {
 
   public search(options?: any): Observable<any> {
     const url = this.courseUrl + this.queryUrl + options.term;
-    let params = new HttpParams().set('q', options.term);
+    const params = new HttpParams().set('q', options.term);
     return this.http.get(url, options);
   }
 
@@ -94,7 +94,7 @@ export class CourseService  {
 
     if (options.params) {
       let params = new HttpParams();
-      for (let key in options.params) {
+      for (const key in options.params) {
           if (options.params.hasOwnProperty(key)) {
               params = params.set(key, options.params[key]);
           }
