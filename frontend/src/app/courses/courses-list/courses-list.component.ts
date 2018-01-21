@@ -15,11 +15,10 @@ import { OrderByPipe } from '../../pipes/orderBy.pipe';
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: Array<Course> = [];
-  // public loading = false;
   public total = 0;
   public page = 1;
   public size = 3;
-  private courses$: Observable<Array<Course>>;
+  public hidePages = false;
   private errorMessage: string;
   private subscription: ISubscription;
   private subscriptionAll: ISubscription;
@@ -73,7 +72,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
       this.loaderService.display(true);
       let coursesData = this.orderBy.transform(courses, 'date');
       coursesData = coursesData
-        .filter(course => new Date(course.date).getTime() >= currentDate - twoWeeks)
+        // .filter(course => new Date(course.date).getTime() >= currentDate - twoWeeks) // nonsense after adding pagination
         .map(course => new Course(
           course.id,
           course.name,
@@ -83,11 +82,15 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           course.description,
         ));
 
-      this.loaderService.display(false);
-      this.courses = coursesData;
-      this.ref.detectChanges();
-    },
+        this.loaderService.display(false);
+        this.courses = coursesData;
+        this.ref.detectChanges();
+      },
       error => this.errorMessage = <any>error);
+
+      this.courseService.search$.subscribe(data => {
+        this.hidePages = data;
+      });
 
     this.courseService.getCourses({ page, size });
   }

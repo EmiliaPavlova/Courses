@@ -1,9 +1,15 @@
 .toolbox-wrapper {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+input {
+  box-sizing: border-box;
+  padding-right: 34px;
 }
 
 .plus {
@@ -17,4 +23,21 @@
 
 .button:active .plus {
   content: url('/assets/images/add-button-black.png');
+}
+
+.clear {
+  position: absolute;
+  top: 10px;
+  left: 375px;
+}
+
+.clear:before {
+  align-self: center;
+  width: 16px;
+  height: 16px;
+  content: '\f00d';
+  font-family: FontAwesome;
+  color: #767676;
+  font-size: 16px;
+  cursor: pointer;
 }

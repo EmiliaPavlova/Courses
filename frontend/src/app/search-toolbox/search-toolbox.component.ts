@@ -12,18 +12,21 @@ import { OrderByPipe } from '../pipes/orderBy.pipe';
 
 export class SearchToolboxComponent {
   @Input() searchString;
-  private total = 0;
-  private page = 1;
-  private size = 3;
 
   constructor(private courseService: CourseService) { }
 
   public onSearch() {
-    this.courseService.search({page: this.page, size: this.size, term: this.searchString})
+    this.courseService.search({term: this.searchString})
       .subscribe(results => {
-        this.total = results.length;
         this.courseService.courses$.next(results);
+        this.courseService.search$.next(true);
       });
+    }
+    
+    clearString() {
+      this.searchString = '';
+      this.courseService.getCourses(1);
+      this.courseService.search$.next(false);
   }
 }
 

@@ -15,6 +15,7 @@ import { transition } from '@angular/core/src/animation/dsl';
 @Injectable()
 export class CourseService  {
   public courses$ = new Subject<any>();
+  public search$ = new Subject<boolean>();
 
   private courseUrl = 'http://localhost:4204/courses';
   private queryUrl = '/search?q=';
@@ -64,7 +65,7 @@ export class CourseService  {
   }
 
   public deleteCourse(course: Course) {
-    return this.http.delete(`${this.courseUrl}/${course.id}`);
+    return this.http.delete(`${this.courseUrl}/${course.id}`, this.setHeaders());
     // const deletedCourse = this.getCourses().find(c => c.id === course.id)
     // const index = this.courses.indexOf(deletedCourse);
     // if (index >= 0) {
@@ -76,10 +77,17 @@ export class CourseService  {
   public search(options?: any): Observable<any> {
     const url = this.courseUrl + this.queryUrl + options.term;
     const params = new HttpParams().set('q', options.term);
-    return this.http.get(url, options);
+    // return this.http.get(url, options);
+    const request = this.http.get(url, options);
+    request.subscribe(() => {
+      this.search$.next(true);
+    });
+    return request
+      // .do(data => console.log('search: ' + JSON.stringify(data)))
+      .catch(this.handleError);
   }
 
-  private setHeaders(options: any) {
+  private setHeaders(options?: any) {
     if (!options) {
       options = { headers: {} };
     } else if (!options.headers) {
@@ -88,8 +96,18 @@ export class CourseService  {
 
     // TODO: set token
 
-    if (!options.headers['Content-Type']) {
-      options.headers['Content-Type'] = 'application/json; charset=utf-8';
+    // options.headers['Content-Type'] = 'application/json; charset=utf-8');
+    // options.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS');
+    // options.headers['Access-Control-Allow-Origin'] = '*';
+    // options.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Z-Key';
+
+    if (options.headers) {
+      let headers = new HttpHeaders();
+      headers = headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+      headers = headers.set('Access-Control-Allow-Origin', '*');
+      headers = headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key');
+      options.headers = headers;
     }
 
     if (options.params) {
@@ -102,7 +120,10 @@ export class CourseService  {
       options.params = params;
     }
 
-    options.headers = new HttpHeaders(options.headers);
+    // options.headers = new HttpHeaders(options.headers);
+    console.log(options.headers);
+    console.log(options.params);
+    debugger;
 
     return options;
   }

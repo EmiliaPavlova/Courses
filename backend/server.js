@@ -44,7 +44,7 @@ api.get('/courses/search', (req, res) => {
 
 api.get('/courses/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
-    const result = courses.filter(course => course.id === id);
+    const result = courses.courses.filter(course => course.id === id);
     res.json(result);
 })
 

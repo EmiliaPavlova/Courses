@@ -10,6 +10,7 @@
     </ng-template>
   </div>
   <app-pagination
+    [hidden]='hidePages'
     (goPage)="goToPage($event)"
     (goNext)="onNext()"
     (goPrev)="onPrev()"
