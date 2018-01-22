@@ -65,7 +65,15 @@ export class CourseService  {
   }
 
   public deleteCourse(course: Course) {
-    return this.http.delete(`${this.courseUrl}/delete/${course.id}`, this.setHeaders());
+    const request = this.http.delete(`${this.courseUrl}/delete/${course.id}`, this.setHeaders());
+    request.subscribe(courses => {
+      this.courses$.next(courses);
+    });
+
+    return request
+      // .do(data => console.log('By page: ' + JSON.stringify(data)))
+      .catch(this.handleError);
+
     // const deletedCourse = this.getCourses().find(c => c.id === course.id)
     // const index = this.courses.indexOf(deletedCourse);
     // if (index >= 0) {

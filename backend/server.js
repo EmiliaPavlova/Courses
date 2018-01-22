@@ -51,8 +51,8 @@ api.get('/courses/:id', (req, res) => {
 })
 
 api.delete('/courses/delete/:id', (req, res) => {
-    const result = courses.courses.filter((item) => item.id !== req.body.id);
-    console.log(result);
+    const id = parseInt(req.params.id, 10);
+    const result = courses.courses.filter(course => course.id !== id);
     res.json(result);
 })
 
