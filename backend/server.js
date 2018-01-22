@@ -12,7 +12,8 @@ app.use(bodyParser.json());
 // middleware for course 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "*");
+    res.header("Access-Control-Allow-Headers", "*");
     next();
 })
 
@@ -42,9 +43,16 @@ api.get('/courses/search', (req, res) => {
     res.json(filteredCourses);
 })
 
+
 api.get('/courses/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const result = courses.courses.filter(course => course.id === id);
+    res.json(result);
+})
+
+api.delete('/courses/delete/:id', (req, res) => {
+    const result = courses.courses.filter((item) => item.id !== req.body.id);
+    console.log(result);
     res.json(result);
 })
 

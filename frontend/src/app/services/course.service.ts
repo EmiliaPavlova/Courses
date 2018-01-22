@@ -48,7 +48,7 @@ export class CourseService  {
   }
 
   public getCourseById(id: number): Observable<Course> {
-    this.courses.find(course => course.id === id)
+    this.courses.find(course => course.id === id);
     return Observable.of(this.courses.find(course => course.id === id));
   }
 
@@ -65,7 +65,7 @@ export class CourseService  {
   }
 
   public deleteCourse(course: Course) {
-    return this.http.delete(`${this.courseUrl}/${course.id}`, this.setHeaders());
+    return this.http.delete(`${this.courseUrl}/delete/${course.id}`, this.setHeaders());
     // const deletedCourse = this.getCourses().find(c => c.id === course.id)
     // const index = this.courses.indexOf(deletedCourse);
     // if (index >= 0) {
@@ -119,11 +119,6 @@ export class CourseService  {
       }
       options.params = params;
     }
-
-    // options.headers = new HttpHeaders(options.headers);
-    console.log(options.headers);
-    console.log(options.params);
-    debugger;
 
     return options;
   }

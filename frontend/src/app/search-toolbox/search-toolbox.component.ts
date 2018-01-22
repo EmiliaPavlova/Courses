@@ -22,7 +22,7 @@ export class SearchToolboxComponent {
         this.courseService.search$.next(true);
       });
     }
-    
+
     clearString() {
       this.searchString = '';
       this.courseService.getCourses(1);
