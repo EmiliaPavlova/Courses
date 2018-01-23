@@ -19,11 +19,9 @@ export class CourseService  {
 
   private courseUrl = 'http://localhost:4204/courses';
   private queryUrl = '/search?q=';
+  private courses: Array<Course> = [];
 
   constructor(private http: HttpClient) { }
-
-  // TODO: remove this
-  courses = [];
 
   public getAllCourses(): Observable<Array<Course>> {
     return this.http.get(`${this.courseUrl}/all`)
@@ -34,7 +32,7 @@ export class CourseService  {
   public getCourses(options?: any): Observable<Array<Course>> {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
     const params = new HttpParams().set('page', options.page).set('size', options.size);
-
+    options.responseType = 'json';
     // let request = this.http.get(url, options).publishLast().refCount();
     const request = this.http.get(url, options);
 
@@ -65,14 +63,16 @@ export class CourseService  {
   }
 
   public deleteCourse(course: Course) {
-    const request = this.http.delete(`${this.courseUrl}/delete/${course.id}`, this.setHeaders());
-    request.subscribe(courses => {
-      this.courses$.next(courses);
-    });
-
-    return request
-      // .do(data => console.log('By page: ' + JSON.stringify(data)))
-      .catch(this.handleError);
+    // console.log(this.getCourses({}));
+    // let asd = [];
+    // const deletedCourse = asd.find(item => item.id === course.id);
+    // const index = this.courses.indexOf(deletedCourse);
+    // debugger;
+    // if (index >= 0) {
+    //     this.courses.splice(index, 1);
+    //     return Observable.of(this.courses);
+    //   }
+    return this.http.delete(`${this.courseUrl}/delete/${course.id}`);
 
     // const deletedCourse = this.getCourses().find(c => c.id === course.id)
     // const index = this.courses.indexOf(deletedCourse);
@@ -104,18 +104,24 @@ export class CourseService  {
 
     // TODO: set token
 
-    // options.headers['Content-Type'] = 'application/json; charset=utf-8');
-    // options.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS');
-    // options.headers['Access-Control-Allow-Origin'] = '*';
-    // options.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Z-Key';
+    if (!options.headers['Content-Type']) {
+      options.headers['Content-Type'] = 'application/json; charset=utf-8';
+    }
 
-    if (options.headers) {
-      let headers = new HttpHeaders();
-      headers = headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-      headers = headers.set('Access-Control-Allow-Origin', '*');
-      headers = headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key');
-      options.headers = headers;
+    if (!options.headers['Access-Control-Allow-Methods']) {
+      options.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
+    }
+
+    if (!options.headers['Access-Control-Allow-Origin']) {
+      options.headers['Access-Control-Allow-Origin'] = '*';
+    }
+
+    if (!options.headers['Access-Control-Allow-Headers']) {
+      options.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Z-Key';
+    }
+
+    if (!options.responseType) {
+      options.responseType = 'json';
     }
 
     if (options.params) {

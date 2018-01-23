@@ -15,7 +15,7 @@ export class AuthService {
 
   login(username, password) {
     // this.http.post(this.authUrl + '/login', { username, password });
-    this.http.post(this.authUrl, { username, password })
+    this.http.post(this.authUrl, { username, password });
     localStorage.setItem('currentUser', JSON.stringify({ token: username }));
     this.isLoggedUser$.next(true);
   }

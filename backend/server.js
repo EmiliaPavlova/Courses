@@ -1,9 +1,9 @@
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const courses = require('./courses.json');
 
+const app = express();
 const users = [];
 
 // body-parser middleware
@@ -11,9 +11,9 @@ app.use(bodyParser.json());
 
 // middleware for course 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "*");
-    res.header("Access-Control-Allow-Headers", "*");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key');
     next();
 })
 
@@ -73,6 +73,13 @@ auth.post('/login', (req, res) => {
 app.use('/', api);
 app.use('/auth', auth);
 
-app.listen(4204, () => {
-    console.log('Server is running on 4204');
+const port = process.env.PORT || '4204';
+app.set('port', port);
+
+app.listen(port, () => {
+    console.log(`Server is running on ${port}`);
 });
+
+app.use((req, res) => res.render('index'));
+
+// https://malcoded.com/posts/angular-backend-express

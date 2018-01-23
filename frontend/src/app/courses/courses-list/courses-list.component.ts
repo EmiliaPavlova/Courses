@@ -108,8 +108,12 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   private onDelete(course): void {
     console.log(`deleted course with id ${course.id}`);
-    this.courseService.deleteCourse(course).subscribe(() => {
-      this.getCourses({ page: this.page, size: this.size} )
+    debugger
+    this.courseService.deleteCourse(course).subscribe(data => {
+      console.log(data)
+      console.log(this.courses)
+      debugger
+      this.courses.filter(c => c !== data);
     });
   }
 
