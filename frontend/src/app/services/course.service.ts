@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
@@ -62,24 +62,8 @@ export class CourseService  {
     return Observable.of(this.courses[index]);
   }
 
-  public deleteCourse(course: Course) {
-    // console.log(this.getCourses({}));
-    // let asd = [];
-    // const deletedCourse = asd.find(item => item.id === course.id);
-    // const index = this.courses.indexOf(deletedCourse);
-    // debugger;
-    // if (index >= 0) {
-    //     this.courses.splice(index, 1);
-    //     return Observable.of(this.courses);
-    //   }
+  public deleteCourse(course: Course): Observable<Object> {
     return this.http.delete(`${this.courseUrl}/delete/${course.id}`);
-
-    // const deletedCourse = this.getCourses().find(c => c.id === course.id)
-    // const index = this.courses.indexOf(deletedCourse);
-    // if (index >= 0) {
-    //   this.courses.splice(index, 1);
-    //   return Observable.of(this.courses);
-    // }
   }
 
   public search(options?: any): Observable<any> {

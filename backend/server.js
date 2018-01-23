@@ -52,8 +52,14 @@ api.get('/courses/:id', (req, res) => {
 
 api.delete('/courses/delete/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
-    const result = courses.courses.filter(course => course.id !== id);
-    res.json(result);
+    const course = courses.courses.find(c => c.id === id);
+    if (!course) {
+        res.status(500).send('Course not found')
+    } else {
+        res.status(200).send('Course deleted');
+    }
+    // const result = courses.courses.filter(course => course.id !== id);
+    // res.json(result);
 })
 
 api.post('/courses', (req, res) => {
