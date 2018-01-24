@@ -1,35 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { debuglog } from 'util';
+
+import { User } from '../login/user';
 
 @Injectable()
 export class AuthService {
 
   isLoggedUser$ = new BehaviorSubject<boolean>(this.isAuthenticated());
   changedUser$ = new BehaviorSubject<string>(this.getUserInfo());
-  private authUrl = 'http://localhost:4204';
+  private authUrl = 'http://localhost:4204/auth';
 
   constructor(private http: HttpClient) {}
 
-  login(username, password) {
+  login(user: User): void {
     // this.http.post(this.authUrl + '/login', { username, password });
-    this.http.post(this.authUrl, { username, password });
-    localStorage.setItem('currentUser', JSON.stringify({ token: username }));
+
+    const body = JSON.stringify(user);
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    this.http.post(this.authUrl, body, { headers: headers });
+    localStorage.setItem('currentUser', JSON.stringify({ token: user.username }));
     this.isLoggedUser$.next(true);
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('currentUser');
     this.isLoggedUser$.next(false);
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     return !!localStorage.getItem('currentUser');
   }
 
-  getUserInfo() {
+  getUserInfo(): string {
     return localStorage.getItem('currentUser')
       ? JSON.parse(localStorage.getItem('currentUser')).token
       : null;
@@ -49,9 +54,4 @@ export class AuthService {
 // https://medium.com/@ryanchenkie_40935/angular-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
 // https://alligator.io/angular/httpclient-intro/
 
-/*
-www.udemy.com
-user: stojansto@abv.bg
-pass: guitar
-https://www.udemy.com/angular-2-and-nodejs-the-practical-guide/learn/v4/content
-*/
+// https://www.udemy.com/angular-2-and-nodejs-the-practical-guide/learn/v4/content

@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { User } from '../login/user';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,11 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   onLogin() {
-    this.authService.login(this.username, this.password);
+    const user = new User(
+      this.username,
+      this.password
+    );
+    this.authService.login(user);
     console.log(`logged ${this.username}`);
     // this.authService.isLoggedUser$.next(true);
     this.authService.changedUser$.next(this.username);

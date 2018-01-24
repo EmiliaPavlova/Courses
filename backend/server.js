@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
 
 const api = require('./routes/courses');
 const auth = require('./routes/auth');
