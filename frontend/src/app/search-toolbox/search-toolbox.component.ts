@@ -25,7 +25,7 @@ export class SearchToolboxComponent {
 
     clearString() {
       this.searchString = '';
-      this.courseService.getCourses(1);
+      this.courseService.getCourses({});
       this.courseService.search$.next(false);
   }
 }

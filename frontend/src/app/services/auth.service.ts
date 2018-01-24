@@ -48,3 +48,10 @@ export class AuthService {
 // https://netbasal.com/angular-2-persist-your-login-status-with-behaviorsubject-45da9ec43243
 // https://medium.com/@ryanchenkie_40935/angular-authentication-using-the-http-client-and-http-interceptors-2f9d1540eb8
 // https://alligator.io/angular/httpclient-intro/
+
+/*
+www.udemy.com
+user: stojansto@abv.bg
+pass: guitar
+https://www.udemy.com/angular-2-and-nodejs-the-practical-guide/learn/v4/content
+*/

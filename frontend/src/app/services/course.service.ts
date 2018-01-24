@@ -1,25 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+
 import { Course } from '../courses/course';
-import { transition } from '@angular/core/src/animation/dsl';
 
 @Injectable()
 export class CourseService  {
   public courses$ = new Subject<any>();
   public search$ = new Subject<boolean>();
 
+  private courses: Array<Course> = [];
   private courseUrl = 'http://localhost:4204/courses';
   private queryUrl = '/search?q=';
-  private courses: Array<Course> = [];
 
   constructor(private http: HttpClient) { }
 
@@ -32,9 +29,8 @@ export class CourseService  {
   public getCourses(options?: any): Observable<Array<Course>> {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
     const params = new HttpParams().set('page', options.page).set('size', options.size);
-    options.responseType = 'json';
     // let request = this.http.get(url, options).publishLast().refCount();
-    const request = this.http.get(url, options);
+    const request = this.http.get(url, this.setHeaders(options));
 
     request.subscribe(courses => {
       this.courses$.next(courses);
@@ -51,7 +47,7 @@ export class CourseService  {
   }
 
   public addCourse(course: Course) {
-    return this.http.post(this.courseUrl, course);
+    return this.http.post(this.courseUrl, course, this.setHeaders());
   }
 
   public editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
@@ -63,14 +59,14 @@ export class CourseService  {
   }
 
   public deleteCourse(course: Course): Observable<Object> {
-    return this.http.delete(`${this.courseUrl}/delete/${course.id}`);
+    return this.http.delete(`${this.courseUrl}/delete/${course.id}`, this.setHeaders());
   }
 
   public search(options?: any): Observable<any> {
     const url = this.courseUrl + this.queryUrl + options.term;
     const params = new HttpParams().set('q', options.term);
     // return this.http.get(url, options);
-    const request = this.http.get(url, options);
+    const request = this.http.get(url, this.setHeaders(options));
     request.subscribe(() => {
       this.search$.next(true);
     });
@@ -101,7 +97,7 @@ export class CourseService  {
     }
 
     if (!options.headers['Access-Control-Allow-Headers']) {
-      options.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Z-Key';
+      options.headers['Access-Control-Allow-Headers'] = '*';
     }
 
     if (!options.responseType) {
