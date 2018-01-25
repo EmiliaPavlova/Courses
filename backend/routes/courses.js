@@ -36,7 +36,10 @@ api.delete('/courses/delete/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const course = courses.courses.find(c => c.id === id);
     if (!course) {
-        res.status(500).send('Course not found')
+        res.status(500).json({
+            title: 'Course not found',
+            error: { message: 'The course could not be found'}
+        });
     } else {
         res.status(200).send('Course deleted');
     }

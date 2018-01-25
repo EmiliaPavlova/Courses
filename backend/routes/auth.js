@@ -1,20 +1,22 @@
 var express = require('express');
 const auth = express.Router();
 const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
-auth.post('/auth', (req, res) => {
+auth.post('/login', (req, res) => {
     const user = {
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10),
     };
     console.log('login');
     console.log(req.body);
-    // const index = users.push(req.body) - 1;
-    // const user = users[index];
-    // user.id = index;
-    // const token = jwt.sign(user.id, 'theMostSecretStringEver');
-    // res.json(token);
+
+    const token = jwt.sign({ user: user }, 'theMostSecretStringEver', { expiresIn: 7200 });
+    res.status(200).json({
+        message: 'Successfully logged in',
+        token: token,
+        user: user.username
+    });
 })
 
 module.exports = auth;

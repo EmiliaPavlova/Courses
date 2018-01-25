@@ -11,7 +11,7 @@ export class AuthService {
 
   isLoggedUser$ = new BehaviorSubject<boolean>(this.isAuthenticated());
   changedUser$ = new BehaviorSubject<string>(this.getUserInfo());
-  private authUrl = 'http://localhost:4204/auth';
+  private authUrl = 'http://localhost:4204/login';
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +26,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('currentUser');
+    // localStorage.removeItem('currentUser');
+    localStorage.clear();
     this.isLoggedUser$.next(false);
   }
 
