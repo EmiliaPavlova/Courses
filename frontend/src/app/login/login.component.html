@@ -1,0 +1,13 @@
+<div class='login-wrapper' *ngIf='!isLoggedIn'>
+  <div class='row'>
+    <label>Username</label>
+    <input [(ngModel)]='username' class='credentials' type='text' required />
+  </div>
+  <div class='row'>
+    <label>Password</label>
+    <input [(ngModel)]='password' class='credentials' type='password' required />
+  </div>
+  <div class='row submit'>
+    <button class='button' type='submit' (click)='onLogin()'>Submit</button>
+  </div>
+</div>

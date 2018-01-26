@@ -1,0 +1,22 @@
+<div>
+  <div class='fill-height'>
+    <div *ngIf='courses && courses.length; else no_results'>
+      <!-- <div> -->
+      <!-- <div *ngIf='courses && courses.length; else no_results'> -->
+      <app-course-detail *ngFor='let course of courses' [course]='course' (edit)='onEdit($event)' (delete)='onDelete(course)'></app-course-detail>
+    </div>
+    <ng-template #no_results>
+      <div class='no-data'>No data. Feel free to add a new course.</div>
+    </ng-template>
+  </div>
+  <app-pagination
+    [hidden]='hidePages'
+    (goPage)="goToPage($event)"
+    (goNext)="onNext()"
+    (goPrev)="onPrev()"
+    [pagesToShow]="3"
+    [page]="page"
+    [perPage]="size"
+    [count]="total">
+  </app-pagination>
+</div>
