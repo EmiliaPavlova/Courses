@@ -18,8 +18,8 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/', api);
-app.use('/auth', auth);
+app.use('/courses', api);
+app.use('/login', auth);
 
 const port = process.env.PORT || '4204';
 app.set('port', port);

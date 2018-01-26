@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
 import { AuthService } from '../services/auth.service';
 import { User } from '../login/user';
 
@@ -11,9 +13,11 @@ import { User } from '../login/user';
 export class LoginComponent implements OnInit {
   public username;
   public password;
-  public isAuthenticated;
+  public isAuthenticated: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+    authService.isLoggedIn().subscribe(data => this.isAuthenticated = data);
+  }
 
   onLogin() {
     const user = new User(
@@ -22,7 +26,7 @@ export class LoginComponent implements OnInit {
     );
     this.authService.login(user);
     console.log(`logged ${this.username}`);
-    // this.authService.isLoggedUser$.next(true);
+    this.authService.isLoggedUser$.next(true);
     this.authService.changedUser$.next(this.username);
     this.init();
   }
@@ -30,7 +34,6 @@ export class LoginComponent implements OnInit {
   init() {
     this.username = null;
     this.password = null;
-    this.isAuthenticated = this.authService.isAuthenticated();
   }
 
   ngOnInit() {
@@ -39,3 +42,5 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
+// https://netbasal.com/angular-2-persist-your-login-status-with-behaviorsubject-45da9ec43243

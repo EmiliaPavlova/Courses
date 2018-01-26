@@ -1,10 +1,9 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const api = express.Router();
 
 const courses = require('../courses.json');
 
-api.get('/courses', (req, res) => {
+api.get('/', (req, res) => {
     let { page, size } = req.query;
     page = parseInt(page, 10) || 1;
     size = parseInt(size, 10) || 3;
@@ -14,11 +13,11 @@ api.get('/courses', (req, res) => {
     res.json(slicedCourses);
 })
 
-api.get('/courses/all', (req, res) => {
+api.get('/all', (req, res) => {
     res.json(courses);
 })
 
-api.get('/courses/search', (req, res) => {
+api.get('/search', (req, res) => {
     const { q } = req.query;
     const filteredCourses = courses.courses.filter(course =>
         course.name && course.name.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -27,13 +26,13 @@ api.get('/courses/search', (req, res) => {
 })
 
 
-api.get('/courses/:id', (req, res) => {
+api.get('/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const result = courses.courses.filter(course => course.id === id);
     res.json(result);
 })
 
-api.delete('/courses/delete/:id', (req, res) => {
+api.delete('/delete/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const course = courses.courses.find(c => c.id === id);
     if (!course) {
@@ -48,22 +47,9 @@ api.delete('/courses/delete/:id', (req, res) => {
     // res.json(result);
 })
 
-api.post('/courses', (req, res) => {
+api.post('/', (req, res) => {
     courses.push(req.body);
     res.sendStatus(200);
 })
-
-api.use('/', function (req, res) {
-    // jwt.verify(req.query.token, 'theMostSecretStringEver', (err, decoded) => {
-    jwt.verify(req.query.token, 'theMostSecretStringEver', (err, decoded) => {
-        if (err) {
-            return res.status(401).json({
-                title: 'Not Authenticated',
-                error: err
-            });
-        }
-        next();
-    })
-});
 
 module.exports = api;

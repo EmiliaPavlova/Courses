@@ -1,19 +1,16 @@
 var express = require('express');
 const auth = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 
-auth.post('/login', (req, res) => {
+auth.post('/', (req, res) => {
     const user = {
         username: req.body.username,
-        password: bcrypt.hashSync(req.body.password, 10),
+        password: bcrypt.hashSync(req.body.password, 8),
     };
-    console.log('login');
-    console.log(req.body);
-
-    const token = jwt.sign({ user: user }, 'theMostSecretStringEver', { expiresIn: 7200 });
+    const token = jwt.sign({user: user.username}, 'secret', {expiresIn: 7200});
     res.status(200).json({
-        message: 'Successfully logged in',
+        Message: 'Successfully logged in',
         token: token,
         user: user.username
     });

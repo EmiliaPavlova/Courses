@@ -30,7 +30,7 @@ export class CourseService  {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
     const params = new HttpParams().set('page', options.page).set('size', options.size);
     // let request = this.http.get(url, options).publishLast().refCount();
-    const request = this.http.get(url, this.setHeaders(options));
+    const request = this.http.get(url);
 
     request.subscribe(courses => {
       this.courses$.next(courses);
@@ -47,7 +47,7 @@ export class CourseService  {
   }
 
   public addCourse(course: Course) {
-    return this.http.post(this.courseUrl, course, this.setHeaders());
+    return this.http.post(this.courseUrl, course);
   }
 
   public editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
@@ -59,62 +59,20 @@ export class CourseService  {
   }
 
   public deleteCourse(course: Course): Observable<Object> {
-    return this.http.delete(`${this.courseUrl}/delete/${course.id}`, this.setHeaders());
+    return this.http.delete(`${this.courseUrl}/delete/${course.id}`);
   }
 
   public search(options?: any): Observable<any> {
     const url = this.courseUrl + this.queryUrl + options.term;
     const params = new HttpParams().set('q', options.term);
     // return this.http.get(url, options);
-    const request = this.http.get(url, this.setHeaders(options));
+    const request = this.http.get(url);
     request.subscribe(() => {
       this.search$.next(true);
     });
     return request
       // .do(data => console.log('search: ' + JSON.stringify(data)))
       .catch(this.handleError);
-  }
-
-  private setHeaders(options?: any) {
-    if (!options) {
-      options = { headers: {} };
-    } else if (!options.headers) {
-      options.headers = {};
-    }
-
-    // TODO: set token
-
-    if (!options.headers['Content-Type']) {
-      options.headers['Content-Type'] = 'application/json; charset=utf-8';
-    }
-
-    if (!options.headers['Access-Control-Allow-Methods']) {
-      options.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
-    }
-
-    if (!options.headers['Access-Control-Allow-Origin']) {
-      options.headers['Access-Control-Allow-Origin'] = '*';
-    }
-
-    if (!options.headers['Access-Control-Allow-Headers']) {
-      options.headers['Access-Control-Allow-Headers'] = '*';
-    }
-
-    if (!options.responseType) {
-      options.responseType = 'json';
-    }
-
-    if (options.params) {
-      let params = new HttpParams();
-      for (const key in options.params) {
-          if (options.params.hasOwnProperty(key)) {
-              params = params.set(key, options.params[key]);
-          }
-      }
-      options.params = params;
-    }
-
-    return options;
   }
 
   private handleError(error: Response) {
