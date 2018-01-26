@@ -11,12 +11,12 @@ import { User } from '../login/user';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-  public username;
-  public password;
-  public isAuthenticated: boolean;
+  public username: string;
+  public password: string;
+  public isLoggedIn: boolean;
 
   constructor(private authService: AuthService) {
-    authService.isLoggedIn().subscribe(data => this.isAuthenticated = data);
+    authService.isLoggedIn().subscribe(logged => this.isLoggedIn = logged);
   }
 
   onLogin() {
@@ -25,9 +25,10 @@ export class LoginComponent implements OnInit {
       this.password
     );
     this.authService.login(user);
-    console.log(`logged ${this.username}`);
     this.authService.isLoggedUser$.next(true);
     this.authService.changedUser$.next(this.username);
+
+    console.log(`logged ${this.username}`);
     this.init();
   }
 

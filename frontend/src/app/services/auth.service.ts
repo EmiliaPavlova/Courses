@@ -19,9 +19,7 @@ export class AuthService {
     request.subscribe(data => {
       localStorage.setItem('User', data['user']);
       localStorage.setItem('Authorization', data['token']);
-      // this.isLoggedUser$.next(true);
     });
-    // this.isLoggedUser$.next(true);
     return request;
   }
 
@@ -31,11 +29,11 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('Authorization');
   }
 
   getUserInfo(): string {
-    return localStorage.getItem('user');
+    return localStorage.getItem('User');
   }
 
   isLoggedIn(): Observable<boolean> {
