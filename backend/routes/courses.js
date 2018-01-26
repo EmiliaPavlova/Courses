@@ -1,5 +1,6 @@
-var express = require('express');
-var api = express.Router();
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const api = express.Router();
 
 const courses = require('../courses.json');
 
@@ -51,5 +52,18 @@ api.post('/courses', (req, res) => {
     courses.push(req.body);
     res.sendStatus(200);
 })
+
+api.use('/', function (req, res) {
+    // jwt.verify(req.query.token, 'theMostSecretStringEver', (err, decoded) => {
+    jwt.verify(req.query.token, 'theMostSecretStringEver', (err, decoded) => {
+        if (err) {
+            return res.status(401).json({
+                title: 'Not Authenticated',
+                error: err
+            });
+        }
+        next();
+    })
+});
 
 module.exports = api;
