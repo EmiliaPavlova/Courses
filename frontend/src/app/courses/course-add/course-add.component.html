@@ -1,17 +1,28 @@
 <div class='fill-height'>
-  <div class='row'>
-    <label>Title</label>
-    <input />
-  </div>
-  <div class='row'>
-    <label>Description</label>
-    <textarea></textarea>
-  </div>
-  <app-date-input></app-date-input>
-  <app-duration-input></app-duration-input>
-  <app-authors-component></app-authors-component>
-  <div class='buttons-block'>
-    <button type='button' class='button button-cancel' (click)='{}'>Cancel</button>
-    <button type='button' class='button' (click)='{}'>Save</button>
-  </div>
+  <form [formGroup]='addCourseForm' (ngSubmit)='onSubmit(addCourseForm)'>
+    <div class='row'>
+      <label>Title</label>
+      <input formControlName='title' ([ngModel])='title' [ngClass]='{"red-border": addCourseForm.get("title").errors}' />
+      <div class='error-text' *ngIf='addCourseForm.get("title").touched && addCourseForm.get("title").hasError("required")'>
+        Title is required!
+      </div>
+      <!-- <div class='error-text' *ngIf='addCourseForm.controls.title.errors.maxlength'>
+        Title must be no longer than 50 symbols!
+      </div> -->
+    </div>
+      <div class='row'>
+      <label>Description</label>
+      <textarea formControlName='description' ></textarea>
+      <div class='error-text' *ngIf='addCourseForm.get("description").touched && addCourseForm.get("description").hasError("required")'>
+        Description is required!
+      </div>
+    </div>
+    <app-date-input></app-date-input>
+    <app-duration-input></app-duration-input>
+    <app-authors-component></app-authors-component>
+    <div class='buttons-block'>
+      <button type='reset' class='button button-cancel' (click)='{}'>Cancel</button>
+      <button type='submit' class='button' [disabled]='addCourseForm.invalid' (click)='{}'>Save</button>
+    </div>
+  </form>
 </div>
