@@ -13,7 +13,7 @@ export class CourseAddComponent implements OnInit {
 
   ngOnInit() {
     this.addCourseForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(5)]],
+      title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]]
     });
   }

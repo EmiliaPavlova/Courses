@@ -3,18 +3,31 @@
     <div class='row'>
       <label>Title</label>
       <input formControlName='title' ([ngModel])='title' [ngClass]='{"red-border": addCourseForm.get("title").errors}' />
-      <div class='error-text' *ngIf='addCourseForm.get("title").touched && addCourseForm.get("title").hasError("required")'>
-        Title is required!
+      <div class='error-text'
+        *ngIf='addCourseForm.get("title").touched &&
+        addCourseForm.get("title").hasError("required")'>
+          Title is required!
       </div>
-      <!-- <div class='error-text' *ngIf='addCourseForm.controls.title.errors.maxlength'>
-        Title must be no longer than 50 symbols!
-      </div> -->
+      <div class='error-text'
+        *ngIf='addCourseForm.get("title").touched &&
+        !addCourseForm.get("title").hasError("required") &&
+        addCourseForm.controls.title.invalid'>
+          Title must be no longer than 50 symbols!
+      </div>
     </div>
       <div class='row'>
       <label>Description</label>
       <textarea formControlName='description' ></textarea>
-      <div class='error-text' *ngIf='addCourseForm.get("description").touched && addCourseForm.get("description").hasError("required")'>
+      <div class='error-text'
+        *ngIf='addCourseForm.get("description").touched &&
+        addCourseForm.get("description").hasError("required")'>
         Description is required!
+      </div>
+      <div class='error-text'
+        *ngIf='addCourseForm.get("description").touched &&
+        !addCourseForm.get("description").hasError("required") &&
+        addCourseForm.controls.description.invalid'>
+          Description must be no longer than 500 symbols!
       </div>
     </div>
     <app-date-input></app-date-input>
