@@ -18,10 +18,13 @@ export class CourseAddComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup) {
+  public onSubmit(form: FormGroup) {
     console.log('Valid?', form.valid); // true or false
-    console.log('Title', form.value.title);
-    console.log('description', form.value.description);
+    console.log(form.value);
+  }
+
+  public onType(date) {
+    this.addCourseForm.value.date = date;
   }
 
 }

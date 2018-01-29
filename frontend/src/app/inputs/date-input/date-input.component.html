@@ -1,4 +1,17 @@
-<div class='row'>
-  <label>Date</label>
-  <input />
-</div>
+<form [formGroup]='addCourseForm'>
+  <div class='row'>
+    <label>Date</label>
+    <input formControlName='date' [ngClass]='{"red-border": addCourseForm.get("date").errors}' (keyup)='onType(addCourseForm.get("date").value)' />
+    <div class='error-text'
+      *ngIf='addCourseForm.get("date").touched &&
+      addCourseForm.get("date").hasError("required")'>
+        Date is required!
+    </div>
+    <div class='error-text'
+      *ngIf='addCourseForm.get("date").touched &&
+      !addCourseForm.get("date").hasError("required") &&
+      addCourseForm.controls.date.hasError("pattern")'>
+        Date must be in format dd/MM/yyyy!
+    </div>
+  </div>
+</form>

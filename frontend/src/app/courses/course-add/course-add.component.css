@@ -15,6 +15,7 @@ textarea {
   border-radius: 4px;
   box-shadow: inset 0px 0px 4px #767676;
   outline: none;
+  overflow: hidden;
 }
 
 .buttons-block {
@@ -23,15 +24,4 @@ textarea {
 
 .button:first-child {
   margin-left: 20px;
-}
-
-.error-text {
-  margin-left: 10px;
-  color: #FF0000;
-}
-
-input.ng-invalid.ng-touched,
-textarea.ng-invalid.ng-touched {
-  border: 1px solid #FF0000;
-  box-shadow: inset 0px 0px 4px #FF0000;
 }
