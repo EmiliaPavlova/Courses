@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../services/auth.service';
@@ -11,11 +12,19 @@ import { User } from '../login/user';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
+  public loginForm: FormGroup;
   public username: string;
   public password: string;
   public isLoggedIn: boolean;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
     authService.isLoggedIn().subscribe(logged => this.isLoggedIn = logged);
   }
 

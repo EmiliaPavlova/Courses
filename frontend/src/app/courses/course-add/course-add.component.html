@@ -30,8 +30,8 @@
           Description must be no longer than 500 symbols!
       </div>
     </div>
-    <app-date-input [date]='date' (type)='onType($event)'></app-date-input>
-    <app-duration-input [duration]='duration' (type)='onType($event)'></app-duration-input>
+    <app-date-input [date]='date' (type)='onDate($event)'></app-date-input>
+    <app-duration-input [duration]='duration' (type)='onDuration($event)'></app-duration-input>
     <app-authors-component></app-authors-component>
     <div class='buttons-block'>
       <button type='reset' class='button button-cancel' (click)='{}'>Cancel</button>

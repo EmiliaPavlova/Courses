@@ -14,14 +14,12 @@ export class DateInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // debugger
     this.addCourseForm = new FormGroup({
-      date: new FormControl(null, [Validators.required, Validators.pattern('^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\d\d$')])
+      date: new FormControl(null, [Validators.required, Validators.pattern('^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)[0-9]{2}')])
     });
   }
 
   public onType(value): void {
-    console.log(this.addCourseForm.controls.date);
     this.type.emit(value);
   }
 

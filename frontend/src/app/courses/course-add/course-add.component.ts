@@ -7,7 +7,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./course-add.component.css']
 })
 export class CourseAddComponent implements OnInit {
-  addCourseForm: FormGroup;
+  
+  public addCourseForm: FormGroup;
+  private date: string;
+  private duration: number;
 
   constructor(private fb: FormBuilder) { }
 
@@ -19,12 +22,18 @@ export class CourseAddComponent implements OnInit {
   }
 
   public onSubmit(form: FormGroup) {
+    this.addCourseForm.value.date = this.date;
+    this.addCourseForm.value.duration = this.duration;
     console.log('Valid?', form.valid); // true or false
     console.log(form.value);
   }
 
-  public onType(date) {
-    this.addCourseForm.value.date = date;
+  public onDate(date) {
+    this.date = date;
+  }
+
+  public onDuration(duration) {
+    this.duration = duration;
   }
 
 }

@@ -1,13 +1,25 @@
 <div class='login-wrapper' *ngIf='!isLoggedIn'>
-  <div class='row'>
-    <label>Username</label>
-    <input [(ngModel)]='username' class='credentials' type='text' required />
-  </div>
-  <div class='row'>
-    <label>Password</label>
-    <input [(ngModel)]='password' class='credentials' type='password' required />
-  </div>
-  <div class='row submit'>
-    <button class='button' type='submit' (click)='onLogin()'>Submit</button>
-  </div>
+  <form [formGroup]='loginForm' (ngSubmit)='onLogin(loginForm)'>
+    <div class='row'>
+      <label>Username</label>
+      <input [(ngModel)]='username' class='credentials' type='text' formControlName='username' [ngClass]='{"red-border": loginForm.get("username").errors}' />
+      <div class='error-text'
+        *ngIf='loginForm.get("username").touched &&
+        loginForm.get("username").hasError("required")'>
+          Username is required!
+      </div>
+    </div>
+    <div class='row'>
+      <label>Password</label>
+      <input [(ngModel)]='password' class='credentials' type='password' formControlName='password' [ngClass]='{"red-border": loginForm.get("password").errors}' />
+      <div class='error-text'
+        *ngIf='loginForm.get("password").touched &&
+        loginForm.get("password").hasError("required")'>
+          Password is required!
+      </div>
+    </div>
+    <div class='row submit'>
+      <button class='button' type='submit' [disabled]='loginForm.invalid' (click)='onLogin()'>Submit</button>
+    </div>
+  </form>
 </div>
