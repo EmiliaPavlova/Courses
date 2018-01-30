@@ -1,3 +1,8 @@
 <div class='row'>
   <label>Authors</label>
+  <div class='authors'>
+    <ul *ngFor='let author of authors'>
+      <li>{{author.firstName}} {{author.lastName}}</li>
+    </ul>
+  </div>
 </div>

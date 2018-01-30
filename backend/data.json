@@ -63,5 +63,46 @@
             "date": "2018-01-29",
             "description": "Suspendisse quis mauris est. Morbi suscipit quam eu metus gravida, a mollis nisl suscipit. Sed tincidunt tortor ac lorem varius pulvinar. Cras sed ligula id turpis placerat hendrerit. Phasellus consectetur bibendum neque, malesuada molestie lacus finibus at. Curabitur quis urna at ante aliquam rhoncus ut auctor turpis."
         }
+    ],
+    "authors": [
+        {
+            "id": 1,
+            "firstName": "Jim",
+            "lastName": "Morrison"
+        }, {
+            "id": 2,
+            "firstName": "Ritchie",
+            "lastName": "Blackmore"
+        },
+        {
+            "id": 3,
+            "firstName": "Bruce",
+            "lastName": "Dickinson"
+        },
+        {
+            "id": 4,
+            "firstName": "Alice",
+            "lastName": "Cooper"
+        },
+        {
+            "id": 5,
+            "firstName": "Jon",
+            "lastName": "Bon Jovi"
+        },
+        {
+            "id": 6,
+            "firstName": "James",
+            "lastName": "Hetfield"
+        },
+        {
+            "id": 7,
+            "firstName": "Kurt",
+            "lastName": "Cobain"
+        },
+        {
+            "id": 8,
+            "firstName": "Axl",
+            "lastName": "Rose"
+        }
     ]
 }

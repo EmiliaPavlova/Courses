@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ISubscription } from 'rxjs/Subscription';
-import { Course } from '../course';
+
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
+import { Course } from '../../models/course';
 
 @Component({
   selector: 'app-courses-list',
@@ -55,7 +56,9 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptionAll = this.courseService.getAllCourses().subscribe(data => this.total = data['courses'].length);
+    this.subscriptionAll = this.courseService.getAllCourses().subscribe(data => {
+      this.total = data.length;
+    });
     this.getCourses({ page: this.page, size: this.size });
   }
 

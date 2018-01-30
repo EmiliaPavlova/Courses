@@ -7,7 +7,8 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/of';
 
-import { Course } from '../courses/course';
+import { Course } from '../models/course';
+import { Author } from '../models/author';
 
 @Injectable()
 export class CourseService  {
@@ -48,6 +49,12 @@ export class CourseService  {
 
   public addCourse(course: Course) {
     return this.http.post(this.courseUrl, course);
+  }
+
+  public getAuthors(): Observable<Array<Author>> {
+    return this.http.get(`${this.courseUrl}/authors`)
+      .do(data => console.log('Authors: ' + JSON.stringify(data)))
+      .catch(this.handleError);
   }
 
   public editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
