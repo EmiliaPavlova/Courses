@@ -83,6 +83,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           course.topRated,
           course.date,
           course.description,
+          course.authors
         ));
 
         this.loaderService.display(false);

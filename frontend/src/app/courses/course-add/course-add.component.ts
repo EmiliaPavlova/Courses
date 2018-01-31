@@ -10,6 +10,7 @@ export class CourseAddComponent implements OnInit {
   public addCourseForm: FormGroup;
   public duration: number;
   private date: string;
+  private authors: Array<string>;
 
   constructor(private fb: FormBuilder) { }
 
@@ -23,6 +24,7 @@ export class CourseAddComponent implements OnInit {
   public onSubmit(form: FormGroup) {
     this.addCourseForm.value.date = this.date;
     this.addCourseForm.value.duration = this.duration;
+    this.addCourseForm.value.authors = this.authors;
     console.log('Valid?', form.valid); // true or false
     console.log(form.value);
   }
@@ -33,6 +35,10 @@ export class CourseAddComponent implements OnInit {
 
   public onDuration(duration) {
     this.duration = duration;
+  }
+
+  public onCheck(authors) {
+    this.authors = authors;
   }
 
 }

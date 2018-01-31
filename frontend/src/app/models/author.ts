@@ -1,6 +1,5 @@
-export class Author {
-  constructor(
-    public firstName: string,
-    public lastName: string,
-  ) { }
+export interface Author {
+  id: number;
+  firstName: string;
+  lastName: string;
 }

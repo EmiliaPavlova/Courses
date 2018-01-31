@@ -2,7 +2,7 @@
   <label>Authors</label>
   <div class='authors'>
     <ul *ngFor='let author of authors'>
-      <input [(ngModel)]='author.isChecked' (change)='{}' type='checkbox' id={{author.id}} >
+      <input [(ngModel)]='author.isChecked' (change)='toggleCheckbox($event.target.id)' type='checkbox' id={{author.id}} >
       <li>{{author.firstName}} {{author.lastName}}</li>
     </ul>
   </div>
