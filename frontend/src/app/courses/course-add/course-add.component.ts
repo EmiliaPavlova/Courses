@@ -7,10 +7,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./course-add.component.css']
 })
 export class CourseAddComponent implements OnInit {
-  
   public addCourseForm: FormGroup;
+  public duration: number;
   private date: string;
-  private duration: number;
 
   constructor(private fb: FormBuilder) { }
 
