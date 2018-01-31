@@ -18,7 +18,7 @@ export function ValidateDate(string: AbstractControl) {
     } else if (shortMonths.indexOf(results[2]) > -1 && parseInt(results[1], 10) > 30 ||
                 (results[2] === '02' && parseInt(results[3], 10) % 4 !== 0) && parseInt(results[1], 10) > 28) {
         isValid = false;
-        message.message = 'Date is invalid';
+        message.message = 'Date is invalid!';
     } else {
         isValid = true;
     }

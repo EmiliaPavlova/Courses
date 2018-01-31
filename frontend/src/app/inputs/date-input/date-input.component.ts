@@ -1,6 +1,5 @@
 import { Component, forwardRef, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValidateDate } from '../../validators/date.validator';
 
 @Component({
