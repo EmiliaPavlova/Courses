@@ -53,7 +53,7 @@ export class CourseService  {
 
   public getAuthors(): Observable<Array<Author>> {
     return this.http.get(`${this.courseUrl}/authors`)
-      .do(data => console.log('Authors: ' + JSON.stringify(data)))
+      // .do(data => console.log('Authors: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
 
@@ -72,7 +72,6 @@ export class CourseService  {
   public search(options?: any): Observable<any> {
     const url = this.courseUrl + this.queryUrl + options.term;
     const params = new HttpParams().set('q', options.term);
-    // return this.http.get(url, options);
     const request = this.http.get(url);
     request.subscribe(() => {
       this.search$.next(true);
