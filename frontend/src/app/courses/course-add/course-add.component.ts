@@ -9,12 +9,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CourseAddComponent implements OnInit {
   public addCourseForm: FormGroup;
   public duration: number;
+  public isFormValid = false;
   private date: string;
   private authors: Array<string>;
 
   constructor(private fb: FormBuilder) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.addCourseForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]]
@@ -25,20 +26,27 @@ export class CourseAddComponent implements OnInit {
     this.addCourseForm.value.date = this.date;
     this.addCourseForm.value.duration = this.duration;
     this.addCourseForm.value.authors = this.authors;
-    console.log('Valid?', form.valid); // true or false
     console.log(form.value);
   }
 
-  public onDate(date) {
+  public onDate(date): void {
     this.date = date;
+    this.checkForm();
   }
 
-  public onDuration(duration) {
+  public onDuration(duration): void {
     this.duration = duration;
+    this.checkForm();
   }
 
-  public onCheck(authors) {
+  public onCheck(authors): void {
     this.authors = authors;
+    this.checkForm();
+  }
+
+  private checkForm(): boolean {
+    this.isFormValid = this.addCourseForm.valid && !!this.date && !!this.duration && !!this.authors && !!this.authors.length;
+    return this.isFormValid;
   }
 
 }

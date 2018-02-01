@@ -1,9 +1,18 @@
-<div class='row'>
-  <label>Authors</label>
-  <div class='authors'>
-    <ul *ngFor='let author of authors'>
-      <input [(ngModel)]='author.isChecked' (change)='toggleCheckbox($event.target.id)' type='checkbox' id={{author.id}} >
-      <li>{{author.firstName}} {{author.lastName}}</li>
-    </ul>
+<form [formGroup]='authorsForm'>
+  <div class='row'>
+    <label>Authors</label>
+    <div class='authors'>
+      <ul *ngFor='let author of authors'>
+        <input formControlName='author' [(ngModel)]='author.isChecked' [ngClass]='{"red-border": authorsForm.get("author").errors}' (change)='toggleCheckbox($event.target.id)' type='checkbox' name={{author.id}} >
+        <li>{{author.firstName}} {{author.lastName}}</li>
+      </ul>
+    </div>
+    <small class='error-text'>
+      <!-- *ngIf='authorsForm.get("author").touched &&
+      !authorsForm.get("author").hasError("required") &&
+      authorsForm.controls.author.hasError("message")'> -->
+        <!-- {{authorsForm.controls.author.errors.message}} -->
+        Error
+    </small>
   </div>
-</div>
+</form>

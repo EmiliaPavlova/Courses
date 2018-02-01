@@ -37,7 +37,7 @@
       <button type='reset' class='button button-cancel' (click)='{}'>Cancel</button>
 
       <!-- TODO: disable submit button if invalid field -->
-      <button type='submit' class='button' [disabled]='addCourseForm.invalid' (click)='{}'>Save</button>
+      <button type='submit' class='button' [disabled]='!isFormValid' (click)='{}'>Save</button>
     </div>
   </form>
 </div>
