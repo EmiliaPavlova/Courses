@@ -67,42 +67,34 @@
     "authors": [
         {
             "id": 1,
-            "firstName": "Jim",
-            "lastName": "Morrison"
+            "name": "Jim Morrison"
         }, {
             "id": 2,
-            "firstName": "Ritchie",
-            "lastName": "Blackmore"
+            "name": "Ritchie Blackmore"
         },
         {
             "id": 3,
-            "firstName": "Bruce",
-            "lastName": "Dickinson"
+            "name": "Bruce Dickinson"
         },
         {
             "id": 4,
-            "firstName": "Alice",
-            "lastName": "Cooper"
+            "name": "Alice Cooper"
         },
         {
             "id": 5,
-            "firstName": "Jon",
-            "lastName": "Bon Jovi"
+            "name": "Jon Bon Jovi"
         },
         {
             "id": 6,
-            "firstName": "James",
-            "lastName": "Hetfield"
+            "name": "James Hetfield"
         },
         {
             "id": 7,
-            "firstName": "Kurt",
-            "lastName": "Cobain"
+            "name": "Kurt Cobain"
         },
         {
             "id": 8,
-            "firstName": "Axl",
-            "lastName": "Rose"
+            "name": "Axl Rose"
         }
     ]
 }

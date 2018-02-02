@@ -8,7 +8,7 @@
     box-shadow: inset 0px 0px 4px #767676;
 }
 
-ul {
+.authors > div {
     display: flex;
     justify-content: space-between;
     padding-left: 0;
