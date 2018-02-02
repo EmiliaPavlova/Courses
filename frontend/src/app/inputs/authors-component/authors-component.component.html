@@ -3,16 +3,29 @@
     <label>Authors</label>
     <div class='authors'>
       <ul *ngFor='let author of authors'>
-        <input formControlName='author' [(ngModel)]='author.isChecked' [ngClass]='{"red-border": authorsForm.get("author").errors}' (change)='toggleCheckbox($event.target.id)' type='checkbox' name={{author.id}} >
+        <input formControlName='author' [(ngModel)]='author.isChecked' [ngClass]='{"red-border": authorsForm.get("author").errors}' (change)='toggleCheckbox($event.target.id)' type='checkbox' value={{author.id}} >
         <li>{{author.firstName}} {{author.lastName}}</li>
       </ul>
     </div>
-    <small class='error-text'>
+    <small class='error-text' *ngIf='authorsForm.touched' >
       <!-- *ngIf='authorsForm.get("author").touched &&
       !authorsForm.get("author").hasError("required") &&
       authorsForm.controls.author.hasError("message")'> -->
-        <!-- {{authorsForm.controls.author.errors.message}} -->
-        Error
+      At least one author must be selected!
     </small>
   </div>
 </form>
+
+<!-- <form [formGroup]="modelForm">
+  <div [formArrayName]="'items'" [class.invalid]="!modelForm.controls.selectedItems.valid">
+    <div *ngFor="let language of modelForm.controls.items.controls; let i = index;" [formGroup]="language">
+      <input type="checkbox" formControlName="checked" id="language_{{ language.controls.key.value }}">
+      <label attr.for="language_{{ language.controls.key.value }}">{{ language.controls.value.value }}</label>
+    </div>
+  </div>
+  <div [class.invalid]="!modelForm.controls.selectedItems.valid" *ngIf="!modelForm.controls.selectedItems.valid">
+    checkbox group is required!
+  </div>
+  <hr>
+  <pre>{{modelForm.controls.selectedItems.value | json}}</pre>
+</form> -->

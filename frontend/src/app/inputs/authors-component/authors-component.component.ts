@@ -28,6 +28,7 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
     this.authorsForm = new FormGroup({
       author: new FormControl(null, [Validators.required, ValidateAuthors])
     });
+    debugger
   }
 
   ngOnDestroy(): void {
