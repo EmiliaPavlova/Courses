@@ -20,10 +20,7 @@ export class CourseAddComponent implements OnInit {
   ngOnInit(): void {
     this.addCourseForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(500)]],
-      date: [],
-      duration: [],
-      authors: []
+      description: ['', [Validators.required, Validators.maxLength(500)]]
     });
   }
 
@@ -34,12 +31,7 @@ export class CourseAddComponent implements OnInit {
     this.addCourseForm.value.authors = this.authors;
     this.addedCourses.push(form.value);
     console.log('New courses: ', this.addedCourses);
-    debugger
     this.addCourseForm.reset();
-    this.addCourseForm.controls.date.reset();
-    this.addCourseForm.controls.date = null;
-    this.addCourseForm.value.duration = null;
-    this.addCourseForm.value.authors = null;
   }
 
   public onDate(date): void {
@@ -63,3 +55,5 @@ export class CourseAddComponent implements OnInit {
   }
 
 }
+
+// http://brophy.org/post/nested-reactive-forms-in-angular2/
