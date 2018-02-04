@@ -14,21 +14,21 @@ import { ValidateDate } from '../../validators/date.validator';
     }
   ]
 })
-export class DateInputComponent implements OnInit  {
+export class DateInputComponent implements OnInit {
   @Input() date: string;
+  @Input() addCourseForm: FormGroup;
   @Output() type = new EventEmitter();
-  public dateForm: FormGroup;
 
   constructor() { }
 
   ngOnInit() {
-    this.dateForm = new FormGroup({
+    this.addCourseForm = new FormGroup({
       date: new FormControl(null, [Validators.required, ValidateDate])
     });
   }
 
   public onType(value: string): void {
-    this.type.emit(value);
+    this.addCourseForm.controls.date.valid ? this.type.emit(value) : this.type.emit(null);
   }
 
 }

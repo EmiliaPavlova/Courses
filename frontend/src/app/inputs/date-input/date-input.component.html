@@ -1,17 +1,15 @@
-<form [formGroup]='dateForm'>
-  <div class='row'>
-    <label>Date</label>
-    <input formControlName='date' [ngClass]='{"red-border": dateForm.get("date").errors}' (blur)='onType(dateForm.get("date").value)' />
-    <small class='error-text'
-      *ngIf='dateForm.get("date").touched &&
-      dateForm.get("date").hasError("required")'>
-        Date is required!
-    </small>
-    <small class='error-text'
-      *ngIf='dateForm.get("date").touched &&
-      !dateForm.get("date").hasError("required") &&
-      dateForm.controls.date.hasError("message")'>
-        {{dateForm.controls.date.errors.message}}
-    </small>
-  </div>
-</form>
+<div class='row' [formGroup]='addCourseForm'>
+  <label>Date</label>
+  <input formControlName='date' [ngClass]='{"red-border": addCourseForm.controls.date.errors}' (keyup)='onType(addCourseForm.controls.date.value)' />
+  <small class='error-text'
+    *ngIf='addCourseForm.controls.date.touched &&
+    addCourseForm.controls.date.hasError("required")'>
+      Date is required!
+  </small>
+  <small class='error-text'
+    *ngIf='addCourseForm.controls.date.touched &&
+    !addCourseForm.controls.date.hasError("required") &&
+    addCourseForm.controls.date.hasError("message")'>
+      {{addCourseForm.controls.date.errors.message}}
+  </small>
+</div>

@@ -1,14 +1,12 @@
-<form [formGroup]='authorsForm'>
-  <div class='row'>
-    <label>Authors</label>
-    <div formArrayName='authors' class='authors' [class.invalid]='!authorsForm.controls.selectedAuthors.valid'>
-      <div *ngFor='let author of authorsForm.controls.authors.controls; let i = index;' [formGroup]='author'>
-        <input type='checkbox' formControlName='checked' id='{{ author.controls.id.value }}' (change)='toggleCheckbox($event.target.id)'>
-        <label attr.for='{{ author.controls.id.value }}'>{{ author.controls.name.value }}</label>
-      </div>
-    </div>
-    <div class='error-text' *ngIf='!authorsForm.controls.selectedAuthors.valid'>
-      At least one author must be selected!
+<div class='row' [formGroup]='addCourseForm'>
+  <label>Authors</label>
+  <div formArrayName='authors' class='authors' [class.invalid]='!addCourseForm.controls.selectedAuthors.valid'>
+    <div *ngFor='let author of addCourseForm.controls.authors.controls; let i = index;' [formGroup]='author'>
+      <input type='checkbox' formControlName='checked' id='{{ author.controls.id.value }}' (change)='toggleCheckbox($event.target.id)'>
+      <label attr.for='{{ author.controls.id.value }}'>{{ author.controls.name.value }}</label>
     </div>
   </div>
-</form>
+  <small class='error-text' *ngIf='showErrorMessage && !addCourseForm.controls.selectedAuthors.valid'>
+    At least one author must be selected!
+  </small>
+</div>

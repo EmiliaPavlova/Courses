@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Course } from '../../models/course';
 
 @Component({
   selector: 'app-course-add',
@@ -12,21 +13,33 @@ export class CourseAddComponent implements OnInit {
   public isFormValid = false;
   private date: string;
   private authors: Array<string>;
+  private addedCourses: Array<Course> = [];
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.addCourseForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(500)]]
+      description: ['', [Validators.required, Validators.maxLength(500)]],
+      date: [],
+      duration: [],
+      authors: []
     });
   }
 
   public onSubmit(form: FormGroup) {
+    // this.checkForm();
     this.addCourseForm.value.date = this.date;
     this.addCourseForm.value.duration = this.duration;
     this.addCourseForm.value.authors = this.authors;
-    console.log(form.value);
+    this.addedCourses.push(form.value);
+    console.log('New courses: ', this.addedCourses);
+    debugger
+    this.addCourseForm.reset();
+    this.addCourseForm.controls.date.reset();
+    this.addCourseForm.controls.date = null;
+    this.addCourseForm.value.duration = null;
+    this.addCourseForm.value.authors = null;
   }
 
   public onDate(date): void {
@@ -45,7 +58,7 @@ export class CourseAddComponent implements OnInit {
   }
 
   private checkForm(): boolean {
-    this.isFormValid = this.addCourseForm.valid && !!this.date && !!this.duration && !!this.authors && !!this.authors.length;
+    this.isFormValid = this.addCourseForm.valid && !!this.date && !!this.duration && (!!this.authors && !!this.authors.length);
     return this.isFormValid;
   }
 

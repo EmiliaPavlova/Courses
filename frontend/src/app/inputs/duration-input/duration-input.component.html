@@ -1,18 +1,16 @@
-<form [formGroup]='addCourseForm'>
-  <div class='row'>
-    <label>Duration</label>
-    <input [(ngModel)]='duration' formControlName='duration' [ngClass]='{"red-border": addCourseForm.get("duration").errors}' (keyup)='onType(addCourseForm.get("duration").value)' />
-    <div class='duration'>{{duration && (duration | hours)}}</div>
-    <small class='error-text'
-      *ngIf='addCourseForm.get("duration").touched &&
-      addCourseForm.get("duration").hasError("required")'>
-        Duration is required!
-    </small>
-    <small class='error-text'
-      *ngIf='addCourseForm.get("duration").touched &&
-      !addCourseForm.get("duration").hasError("required") &&
-      addCourseForm.controls.duration.hasError("pattern")'>
-      Duration must be a number!
-    </small>
-  </div>
-</form>
+<div class='row' [formGroup]='addCourseForm'>
+  <label>Duration</label>
+  <input [(ngModel)]='duration' formControlName='duration' [ngClass]='{"red-border": addCourseForm.get("duration").errors}' (keyup)='onType(addCourseForm.get("duration").value)' />
+  <div class='duration'>{{duration && (duration | hours)}}</div>
+  <small class='error-text'
+    *ngIf='addCourseForm.get("duration").touched &&
+    addCourseForm.get("duration").hasError("required")'>
+      Duration is required!
+  </small>
+  <small class='error-text'
+    *ngIf='addCourseForm.get("duration").touched &&
+    !addCourseForm.get("duration").hasError("required") &&
+    addCourseForm.controls.duration.hasError("pattern")'>
+    Duration must be a number!
+  </small>
+</div>

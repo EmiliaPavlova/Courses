@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ControlValueAccessor } from '@angular/forms';
 
 
 @Component({
@@ -9,8 +9,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class DurationInputComponent implements OnInit {
   @Input() duration: number;
+  @Input() addCourseForm: FormGroup;
   @Output() type = new EventEmitter();
-  public addCourseForm: FormGroup;
 
   constructor() { }
 
@@ -21,7 +21,7 @@ export class DurationInputComponent implements OnInit {
   }
 
   public onType(value): void {
-    this.type.emit(value);
+    this.addCourseForm.controls.duration.valid ? this.type.emit(value) : this.type.emit(null);
   }
 
 }

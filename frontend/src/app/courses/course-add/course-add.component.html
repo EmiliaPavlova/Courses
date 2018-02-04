@@ -1,5 +1,5 @@
 <div class='fill-height'>
-  <form [formGroup]='addCourseForm' (ngSubmit)='onSubmit(addCourseForm)'>
+  <form [formGroup]='addCourseForm' (ngSubmit)='onSubmit()'>
     <div class='row'>
       <label>Title</label>
       <input formControlName='title' [ngClass]='{"red-border": addCourseForm.get("title").errors}' />
@@ -15,7 +15,7 @@
           Title must be no longer than 50 symbols!
       </small>
     </div>
-      <div class='row'>
+    <div class='row'>
       <label>Description</label>
       <textarea formControlName='description' ></textarea>
       <small class='error-text'
@@ -30,14 +30,12 @@
           Description must be no longer than 500 symbols!
       </small>
     </div>
-    <app-date-input (type)='onDate($event)'></app-date-input>
-    <app-duration-input (type)='onDuration($event)'></app-duration-input>
-    <app-authors-component (check)=onCheck($event)></app-authors-component>
+    <app-date-input [addCourseForm]='addCourseForm.controls.date' (type)='onDate($event)'></app-date-input>
+    <app-duration-input [addCourseForm]='addCourseForm.controls.duration' (type)='onDuration($event)'></app-duration-input>
+    <app-authors-component [addCourseForm]='addCourseForm.controls.authors' (check)=onCheck($event)></app-authors-component>
     <div class='buttons-block'>
-      <button type='reset' class='button button-cancel' (click)='{}'>Cancel</button>
-
-      <!-- TODO: disable submit button if invalid field -->
-      <button type='submit' class='button' [disabled]='!isFormValid' (click)='{}'>Save</button>
+      <button type='reset' class='button button-cancel'>Cancel</button>
+      <button type='submit' class='button' [disabled]='!isFormValid || !addCourseForm.valid' (click)='onSubmit(addCourseForm)'>Save</button>
     </div>
   </form>
 </div>

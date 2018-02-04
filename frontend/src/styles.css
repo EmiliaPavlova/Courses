@@ -86,6 +86,7 @@ input {
 }
 
 .error-text {
+  flex-basis: 30%;
   margin-left: 10px;
   color: #FF0000;
 }

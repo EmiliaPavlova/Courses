@@ -15,6 +15,10 @@
     list-style-type: none;
 }
 
+.authors label {
+    flex-basis: 80%;
+}
+
 input[type='checkbox'] {
     width: 20px;
     border: none;
