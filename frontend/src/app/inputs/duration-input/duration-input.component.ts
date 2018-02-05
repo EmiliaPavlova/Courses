@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ControlValueAccessor } from '@angular/forms';
-
+import { FormsService } from '../../services/forms.service';
 
 @Component({
   selector: 'app-duration-input',
@@ -8,11 +8,13 @@ import { FormGroup, FormControl, Validators, ControlValueAccessor } from '@angul
   styleUrls: ['./duration-input.component.css']
 })
 export class DurationInputComponent implements OnInit {
-  @Input() duration: number;
   @Input() addCourseForm: FormGroup;
   @Output() type = new EventEmitter();
+  public resetData = false;
 
-  constructor() { }
+  constructor(private formsService: FormsService) {
+    formsService.resetForm().subscribe(data => this.resetData = data);
+  }
 
   ngOnInit() {
     this.addCourseForm = new FormGroup({

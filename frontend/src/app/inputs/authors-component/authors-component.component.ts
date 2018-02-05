@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, FormArray, Va
 import { ISubscription } from 'rxjs/Subscription';
 
 import { CourseService } from '../../services/course.service';
+import { FormsService } from '../../services/forms.service';
 import { Author } from '../../models/author';
 
 @Component({
@@ -15,13 +16,19 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
   @Output() check = new EventEmitter();
   public authors: Array<any> = [];
   public showErrorMessage = false;
+  public resetData = false;
   private selectedAuthors: Array<Author> = [];
   private subscription: ISubscription;
 
   constructor(
     private fb: FormBuilder,
-    private courseService: CourseService
-  ) { }
+    private courseService: CourseService,
+    private formsService: FormsService
+  ) {
+    formsService.resetForm().subscribe(data => {
+      this.resetData = data;
+    });
+  }
 
   ngOnInit() {
     this.addCourseForm = this.fb.group({

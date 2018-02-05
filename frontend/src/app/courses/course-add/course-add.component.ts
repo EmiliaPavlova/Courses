@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsService } from '../../services/forms.service';
 import { Course } from '../../models/course';
 
 @Component({
@@ -15,7 +16,10 @@ export class CourseAddComponent implements OnInit {
   private authors: Array<string>;
   private addedCourses: Array<Course> = [];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private formsService: FormsService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.addCourseForm = this.fb.group({
@@ -32,6 +36,7 @@ export class CourseAddComponent implements OnInit {
     this.addedCourses.push(form.value);
     console.log('New courses: ', this.addedCourses);
     this.addCourseForm.reset();
+    this.formsService.clearForm$.next(true);
   }
 
   public onDate(date): void {

@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsService } from '../../services/forms.service';
 import { ValidateDate } from '../../validators/date.validator';
 
 @Component({
@@ -15,11 +16,13 @@ import { ValidateDate } from '../../validators/date.validator';
   ]
 })
 export class DateInputComponent implements OnInit {
-  @Input() date: string;
   @Input() addCourseForm: FormGroup;
   @Output() type = new EventEmitter();
+  public resetData = false;
 
-  constructor() { }
+  constructor(private formsService: FormsService) {
+    formsService.resetForm().subscribe(data => this.resetData = data);
+  }
 
   ngOnInit() {
     this.addCourseForm = new FormGroup({
@@ -28,6 +31,7 @@ export class DateInputComponent implements OnInit {
   }
 
   public onType(value: string): void {
+    this.formsService.clearForm$.next(false);
     this.addCourseForm.controls.date.valid ? this.type.emit(value) : this.type.emit(null);
   }
 
