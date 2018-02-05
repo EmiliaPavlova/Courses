@@ -1,5 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, ControlValueAccessor } from '@angular/forms';
+import { ISubscription } from 'rxjs/Subscription';
+
 import { FormsService } from '../../services/forms.service';
 
 @Component({
@@ -7,13 +9,14 @@ import { FormsService } from '../../services/forms.service';
   templateUrl: './duration-input.component.html',
   styleUrls: ['./duration-input.component.css']
 })
-export class DurationInputComponent implements OnInit {
+export class DurationInputComponent implements OnInit, OnDestroy {
   @Input() addCourseForm: FormGroup;
   @Output() type = new EventEmitter();
   public resetData = false;
+  private subscriptionDuration: ISubscription;
 
   constructor(private formsService: FormsService) {
-    formsService.resetForm().subscribe(data => this.resetData = data);
+    this.subscriptionDuration = formsService.resetForm().subscribe(data => this.resetData = data);
   }
 
   ngOnInit() {
@@ -22,7 +25,12 @@ export class DurationInputComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscriptionDuration.unsubscribe();
+  }
+
   public onType(value): void {
+    // this.formsService.clearForm$.next(false);
     this.addCourseForm.controls.duration.valid ? this.type.emit(value) : this.type.emit(null);
   }
 

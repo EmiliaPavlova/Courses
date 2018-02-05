@@ -71,7 +71,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
 
-    this.courseService.courses$.subscribe(courses => {
+    this.subscription = this.courseService.courses$.subscribe(courses => {
       this.loaderService.display(true);
       let coursesData = this.orderBy.transform(courses, 'date');
       coursesData = coursesData
@@ -97,12 +97,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
       });
 
     this.courseService.getCourses({ page, size });
-  }
-
-  private getPagesCount(): any {
-    return this.subscription = this.courseService.getAllCourses().subscribe(courses => {
-      this.total = courses.length;
-    });
   }
 
   private onEdit(course) {

@@ -18,16 +18,17 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
   public showErrorMessage = false;
   public resetData = false;
   private selectedAuthors: Array<Author> = [];
-  private subscription: ISubscription;
+  private subscriptionAuthors: ISubscription;
+  private subscriptionReset: ISubscription;
 
   constructor(
     private fb: FormBuilder,
     private courseService: CourseService,
     private formsService: FormsService
   ) {
-    formsService.resetForm().subscribe(data => {
-      this.resetData = data;
-    });
+    // formsService.resetForm().subscribe(data => {
+    //   this.resetData = data;
+    // });
   }
 
   ngOnInit() {
@@ -37,7 +38,7 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
       selectedAuthors: new FormControl()
     });
 
-    this.subscription = this.courseService.getAuthors().subscribe(data => {
+    this.subscriptionAuthors = this.courseService.getAuthors().subscribe(data => {
       this.authors = data;
 
       const group = [];
@@ -64,22 +65,33 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptionAuthors.unsubscribe();
+    this.subscriptionReset.unsubscribe();
   }
 
   public toggleCheckbox(idString: string) {
     const id = parseInt(idString, 10);
-    this.authors
-      .filter(data => data.id === id)
-      .map(author => {
-        const index = this.selectedAuthors.findIndex(obj => obj.id === id);
-        index > -1
-        ? this.selectedAuthors.splice(index, 1)
-        : this.selectedAuthors.push({
-          id: author.id,
-          name: author.name
-        });
-      });
+    this.subscriptionReset = this.formsService.resetForm().subscribe(data => {
+      this.resetData = data;
+      console.log('this.resetData', this.resetData)
+    });
+    if (this.resetData) {
+      this.selectedAuthors = [];
+    } else {
+      this.authors
+        .filter(data => data.id === id)
+        .map(author => {
+          const index = this.selectedAuthors.findIndex(obj => obj.id === id);
+          index > -1
+            ? this.selectedAuthors.splice(index, 1)
+            : this.selectedAuthors.push({
+              id: author.id,
+              name: author.name
+            });
+          });
+    }
+    console.log(this.resetData, this.selectedAuthors);
+
     this.check.emit(this.selectedAuthors);
     this.showErrorMessage = true;
   }
