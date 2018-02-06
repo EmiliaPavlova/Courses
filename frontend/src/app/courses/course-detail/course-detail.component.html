@@ -1,26 +1,26 @@
-<div appBorderColor date={{startDate}} class='div-wrapper course-wrapper' [ngClass]="{ 'topRated': course.topRated }">
-  <div class='course-info'>
-    <div class='row'>
-      <div class='row-left'>
-        <h1>{{ course.name | uppercase}}</h1>
+<div appBorderColor date={{startDate}} class="div-wrapper course-wrapper" [ngClass]="{ 'topRated': course.topRated }">
+  <div class="course-info">
+    <div class="row">
+      <div class="row-left">
+        <h1>{{ course.name | uppercase }}</h1>
         <p>{{ course.duration | hours }}</p>
-        <i class='fa fa-star-o star' *ngIf='course.topRated'></i>
+        <i class="fa fa-star-o star" *ngIf="course.topRated"></i>
       </div>
       <p>{{ course.date | date: 'd MMMM y' }}</p>
     </div>
-    <p class='description'>{{ course.description }}</p>
+    <p class="description">{{ course.description }}</p>
   </div>
-  <div class='course-buttons'>
-    <button type='button' class='button edit' (click)='onEdit()'>Edit course</button>
-    <button type='button' class='button' (click)='showModal = !showModal'>Delete</button>
+  <div class="course-buttons">
+    <button type="button" class="button edit" (click)="onEdit()">Edit course</button>
+    <button type="button" class="button" (click)="showModal = !showModal">Delete</button>
 
     <app-modal [(visible)]="showModal">
-      <div class='app-modal-body'>
-        Are you sure you want to delete {{course.name}}?
+      <div class="app-modal-body">
+        Are you sure you want to delete {{ course.name }}?
       </div>
-      <div class='app-modal-footer'>
-        <button type='button' class='button button-cancel' (click)='showModal = !showModal'>Cancel</button>
-        <button type='button' class='button' (click)='onDelete()'>Delete</button>
+      <div class="app-modal-footer">
+        <button type="button" class="button button-cancel" (click)="showModal = !showModal">Cancel</button>
+        <button type="button" class="button" (click)="onDelete()">Delete</button>
       </div>
     </app-modal>
   </div>

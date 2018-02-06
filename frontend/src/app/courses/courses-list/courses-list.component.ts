@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ISubscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
@@ -21,8 +21,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   public size = 3;
   public hidePages = false;
   private errorMessage: string;
-  private subscription: ISubscription;
-  private subscriptionAll: ISubscription;
+  private subscriptions: Array<Subscription> = [];
 
   constructor(
     private courseService: CourseService,
@@ -56,22 +55,21 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptionAll = this.courseService.getAllCourses().subscribe(data => {
+    this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
       this.total = data.length;
-    });
+    }));
     this.getCourses({ page: this.page, size: this.size });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    this.subscriptionAll.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   private getCourses({ page, size }): void {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
 
-    this.subscription = this.courseService.courses$.subscribe(courses => {
+    this.subscriptions.push(this.courseService.courses$.subscribe(courses => {
       this.loaderService.display(true);
       let coursesData = this.orderBy.transform(courses, 'date');
       coursesData = coursesData
@@ -90,11 +88,11 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         this.courses = coursesData;
         this.ref.detectChanges();
       },
-      error => this.errorMessage = <any>error);
+      error => this.errorMessage = <any>error));
 
-      this.courseService.search$.subscribe(data => {
-        this.hidePages = data;
-      });
+    this.courseService.search$.subscribe(data => {
+      this.hidePages = data;
+    });
 
     this.courseService.getCourses({ page, size });
   }

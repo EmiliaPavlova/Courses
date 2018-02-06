@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, ControlValueAccessor } from '@angular/forms';
-import { ISubscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 import { FormsService } from '../../services/forms.service';
 
@@ -13,7 +13,7 @@ export class DurationInputComponent implements OnInit, OnDestroy {
   @Input() addCourseForm: FormGroup;
   @Output() type = new EventEmitter();
   public resetData = false;
-  private subscriptionDuration: ISubscription;
+  private subscriptionDuration: Subscription;
 
   constructor(private formsService: FormsService) {
     this.subscriptionDuration = formsService.resetForm().subscribe(data => this.resetData = data);

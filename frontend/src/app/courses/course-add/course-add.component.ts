@@ -35,6 +35,7 @@ export class CourseAddComponent implements OnInit {
     this.addCourseForm.value.authors = this.authors;
     this.addedCourses.push(form.value);
     console.log('New courses: ', this.addedCourses);
+
     this.addCourseForm.reset();
     this.formsService.clearForm$.next(true);
   }

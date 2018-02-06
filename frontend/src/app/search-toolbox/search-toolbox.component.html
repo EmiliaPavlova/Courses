@@ -1,9 +1,9 @@
-<div class='toolbox-wrapper'>
+<div class="toolbox-wrapper">
   <div>
-    <input [(ngModel)]='searchString' type='text' placeholder='name, fragment or date' />
-    <div class='clear' *ngIf='searchString' (click)=clearString($event)></div>
-    <button type='button' class='button' (click)='onSearch()'>Find</button>
+    <input [(ngModel)]="searchString" type="text" placeholder="name, fragment or date" />
+    <div class="clear" *ngIf="searchString" (click)="clearString($event)"></div>
+    <button type="button" class="button" (click)="onSearch()">Find</button>
   </div>
-  <button type='button' class='button'>
-    <span class='plus'></span>Add course</button>
+  <button type="button" class="button">
+    <span class="plus"></span>Add course</button>
 </div>
