@@ -15,22 +15,8 @@ export class PaginationComponent {
   @Output() goPage = new EventEmitter<number>();
   @Output() goNext = new EventEmitter<boolean>();
   @Output() goPrev = new EventEmitter<boolean>();
-  
+
   constructor() { }
-
-  /*
-  getMin(): number {
-    return ((this.perPage * this.page) - this.perPage) + 1;
-  }
-
-  getMax(): number {
-    let max = this.perPage * this.page;
-    if (max > this.count) {
-      max = this.count;
-    }
-    return max;
-  }
-  */
 
   onPage(n: number): void {
     this.goPage.emit(n);

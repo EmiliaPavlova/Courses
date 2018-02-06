@@ -1,0 +1,26 @@
+.authors {
+    width: 300px;
+    padding: 10px 15px;
+    color: #767676;
+    font-size: 1em;
+    border: 1px solid #767676;
+    border-radius: 4px;
+    box-shadow: inset 0px 0px 4px #767676;
+}
+
+.authors > div {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.authors label {
+    flex-basis: 80%;
+}
+
+input[type='checkbox'] {
+    width: 20px;
+    border: none;
+    box-shadow: none;
+}

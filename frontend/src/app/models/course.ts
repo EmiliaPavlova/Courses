@@ -1,3 +1,5 @@
+import { Author } from './author';
+
 export interface Course {
   id: number;
   name: string;
@@ -5,6 +7,7 @@ export interface Course {
   topRated: boolean;
   date: string;
   description: string;
+  authors: Array<Author>;
 }
 
 export class Course implements Course {
@@ -14,6 +17,7 @@ export class Course implements Course {
     public duration: number,
     public topRated: boolean,
     public date: string,
-    public description: string
+    public description: string,
+    public authors: Array<Author>
   ) { }
 }

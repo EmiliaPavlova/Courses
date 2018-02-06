@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ISubscription } from 'rxjs/Subscription';
-import { Course } from '../course';
+import { Subscription } from 'rxjs/Subscription';
+
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
+import { Course } from '../../models/course';
 
 @Component({
   selector: 'app-courses-list',
@@ -20,8 +21,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   public size = 3;
   public hidePages = false;
   private errorMessage: string;
-  private subscription: ISubscription;
-  private subscriptionAll: ISubscription;
+  private subscriptions: Array<Subscription> = [];
 
   constructor(
     private courseService: CourseService,
@@ -55,20 +55,21 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptionAll = this.courseService.getAllCourses().subscribe(data => this.total = data['courses'].length);
+    this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
+      this.total = data.length;
+    }));
     this.getCourses({ page: this.page, size: this.size });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    this.subscriptionAll.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   private getCourses({ page, size }): void {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
 
-    this.courseService.courses$.subscribe(courses => {
+    this.subscriptions.push(this.courseService.courses$.subscribe(courses => {
       this.loaderService.display(true);
       let coursesData = this.orderBy.transform(courses, 'date');
       coursesData = coursesData
@@ -80,25 +81,20 @@ export class CoursesListComponent implements OnInit, OnDestroy {
           course.topRated,
           course.date,
           course.description,
+          course.authors
         ));
 
         this.loaderService.display(false);
         this.courses = coursesData;
         this.ref.detectChanges();
       },
-      error => this.errorMessage = <any>error);
+      error => this.errorMessage = <any>error));
 
-      this.courseService.search$.subscribe(data => {
-        this.hidePages = data;
-      });
+    this.courseService.search$.subscribe(data => {
+      this.hidePages = data;
+    });
 
     this.courseService.getCourses({ page, size });
-  }
-
-  private getPagesCount(): any {
-    return this.subscription = this.courseService.getAllCourses().subscribe(courses => {
-      this.total = courses.length;
-    });
   }
 
   private onEdit(course) {

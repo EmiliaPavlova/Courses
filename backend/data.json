@@ -63,5 +63,38 @@
             "date": "2018-01-29",
             "description": "Suspendisse quis mauris est. Morbi suscipit quam eu metus gravida, a mollis nisl suscipit. Sed tincidunt tortor ac lorem varius pulvinar. Cras sed ligula id turpis placerat hendrerit. Phasellus consectetur bibendum neque, malesuada molestie lacus finibus at. Curabitur quis urna at ante aliquam rhoncus ut auctor turpis."
         }
+    ],
+    "authors": [
+        {
+            "id": 1,
+            "name": "Jim Morrison"
+        }, {
+            "id": 2,
+            "name": "Ritchie Blackmore"
+        },
+        {
+            "id": 3,
+            "name": "Bruce Dickinson"
+        },
+        {
+            "id": 4,
+            "name": "Alice Cooper"
+        },
+        {
+            "id": 5,
+            "name": "Jon Bon Jovi"
+        },
+        {
+            "id": 6,
+            "name": "James Hetfield"
+        },
+        {
+            "id": 7,
+            "name": "Kurt Cobain"
+        },
+        {
+            "id": 8,
+            "name": "Axl Rose"
+        }
     ]
 }
