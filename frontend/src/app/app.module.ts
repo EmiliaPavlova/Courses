@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -24,6 +25,7 @@ import { HoursPipe } from './pipes/hours.pipe';
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { BorderColorDirective } from './directives/border-color.directive';
 import { Interceptor } from './login/interceptor';
+import { AppRoutingModule } from './routing/app-routing.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { Interceptor } from './login/interceptor';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     CourseService,

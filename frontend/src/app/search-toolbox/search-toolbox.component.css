@@ -25,6 +25,12 @@ input {
   content: url('/assets/images/add-button-black.png');
 }
 
+a {
+  color: #000000;
+  text-decoration: none;
+  background: #DDDDDD;
+}
+
 .clear {
   position: absolute;
   top: 10px;
