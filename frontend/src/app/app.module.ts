@@ -26,6 +26,7 @@ import { OrderByPipe } from './pipes/orderBy.pipe';
 import { BorderColorDirective } from './directives/border-color.directive';
 import { Interceptor } from './login/interceptor';
 import { AppRoutingModule } from './routing/app-routing.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AppRoutingModule } from './routing/app-routing.module';
     HoursPipe,
     OrderByPipe,
     BorderColorDirective,
-    PaginationComponent
+    PaginationComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

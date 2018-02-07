@@ -42,9 +42,8 @@ export class CourseService  {
       .catch(this.handleError);
   }
 
-  public getCourseById(id: number): Observable<Course> {
-    this.courses.find(course => course.id === id);
-    return Observable.of(this.courses.find(course => course.id === id));
+  public getCourseById(id: number): Observable<Object> {
+    return this.http.get(`${this.courseUrl}/${id}`);
   }
 
   public addCourse(course: Course) {

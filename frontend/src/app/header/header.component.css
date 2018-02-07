@@ -13,7 +13,11 @@ h1 {
   margin-left: 20px;
   font-size: 2em;
   font-family: 'Handlee', cursive;
+}
+
+h1 > a {
   color: #767676;
+  text-decoration: none;
 }
 
 .user-login {
@@ -32,4 +36,12 @@ h1 {
 
 .user-login > a {
   color: #1C9ED3;
+}
+
+.login {
+  margin-top: 15px;
+  margin-right: 10px;
+  color: #1C9ED3;
+  font-family: 'Handlee', cursive;
+  text-align: right;
 }

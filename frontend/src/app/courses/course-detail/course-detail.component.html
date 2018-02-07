@@ -11,7 +11,7 @@
     <p class="description">{{ course.description }}</p>
   </div>
   <div class="course-buttons">
-    <button type="button" class="button edit" (click)="onEdit()">Edit course</button>
+    <a routerLink="/courses/{{course.id}}" class="button edit" (click)="onEdit()">Edit course</a>
     <button type="button" class="button" (click)="showModal = !showModal">Delete</button>
 
     <app-modal [(visible)]="showModal">

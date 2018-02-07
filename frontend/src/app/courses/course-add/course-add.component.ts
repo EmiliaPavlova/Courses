@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { CourseService } from '../../services/course.service';
 import { FormsService } from '../../services/forms.service';
 import { Course } from '../../models/course';
 
@@ -10,18 +13,31 @@ import { Course } from '../../models/course';
 })
 export class CourseAddComponent implements OnInit {
   public addCourseForm: FormGroup;
+  public course: Course;
   public duration: number;
   public isFormValid = false;
+
   private date: string;
   private authors: Array<string>;
   private addedCourses: Array<Course> = [];
 
   constructor(
+    private route: ActivatedRoute,
+    private courseService: CourseService,
     private formsService: FormsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    if (id) {
+      this.courseService.getCourseById(id).subscribe(course => {
+        this.course = course[0];
+        console.log(this.course);
+        });
+    }
+
     this.addCourseForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]]
@@ -38,6 +54,9 @@ export class CourseAddComponent implements OnInit {
 
     this.addCourseForm.reset();
     this.formsService.clearForm$.next(true);
+
+    // TODO: call corresponding api method
+    this.router.navigate(['/courses']);
   }
 
   public onDate(date): void {

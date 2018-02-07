@@ -72,6 +72,14 @@ input {
   cursor: pointer;
 }
 
+a.button {
+  box-sizing: border-box;
+  color: #000000;
+  text-align: center;
+  text-decoration: none;
+  background: #DDDDDD;
+}
+
 .button:hover {
   background: #E7E7E7;
 }
