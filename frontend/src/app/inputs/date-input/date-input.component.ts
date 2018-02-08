@@ -31,6 +31,7 @@ export class DateInputComponent implements OnInit, OnDestroy {
     this.addCourseForm = new FormGroup({
       date: new FormControl(null, [Validators.required, ValidateDate])
     });
+    console.log(this.addCourseForm);
   }
 
   ngOnDestroy(): void {

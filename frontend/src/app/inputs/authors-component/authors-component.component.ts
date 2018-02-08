@@ -23,7 +23,7 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
   private subscriptions: Array<Subscription> = [];
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private courseService: CourseService,
     private formsService: FormsService
   ) {
@@ -33,7 +33,7 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.addCourseForm = this.fb.group({
+    this.addCourseForm = this.formBuilder.group({
       checked: false,
       authors: new FormArray([]),
       selectedAuthors: new FormControl()
@@ -45,7 +45,7 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
       const group = [];
 
       this.authors.forEach(author => {
-        group.push(this.fb.group({
+        group.push(this.formBuilder.group({
           id: author.id,
           name: author.name,
           checked: false,

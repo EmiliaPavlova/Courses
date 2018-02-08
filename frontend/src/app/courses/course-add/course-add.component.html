@@ -2,7 +2,7 @@
   <form [formGroup]="addCourseForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <label>Title</label>
-      <input formControlName="title" [(ngModel)]="title" [ngClass]="{'red-border': addCourseForm.controls.title.errors}" [value]="course ? course.name : null" />
+      <input formControlName="title" [ngClass]="{'red-border': addCourseForm.controls.title.errors}" [value]="course ? course.name : null" />
       <small class="error-text"
         *ngIf="addCourseForm.controls.title.touched &&
         addCourseForm.controls.title.hasError('required')">

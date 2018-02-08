@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CourseService } from '../../services/course.service';
@@ -13,6 +13,7 @@ import { Course } from '../../models/course';
 })
 export class CourseAddComponent implements OnInit {
   public addCourseForm: FormGroup;
+  public courseFormControls: FormArray;
   public course: Course;
   public duration: number;
   public isFormValid = false;
@@ -25,9 +26,11 @@ export class CourseAddComponent implements OnInit {
     private route: ActivatedRoute,
     private courseService: CourseService,
     private formsService: FormsService,
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router
-  ) { }
+  ) {
+    this.buildForm();
+  }
 
   ngOnInit(): void {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
@@ -38,17 +41,42 @@ export class CourseAddComponent implements OnInit {
         });
     }
 
-    this.addCourseForm = this.fb.group({
+    this.addCourseForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]]
     });
   }
 
+  private buildForm() {
+    this.addCourseForm = this.formBuilder.group({
+      title: this.formBuilder.control(null),
+      description: this.formBuilder.control(null),
+      date: this.formBuilder.control(null),
+      duration: this.formBuilder.control(null),
+      authors: this.formBuilder.array([
+        this.formBuilder.group({
+          id: this.formBuilder.control(null),
+          name: this.formBuilder.control(null),
+          checked: this.formBuilder.control(null),
+        })
+      ])
+    });
+    this.courseFormControls = this.addCourseForm.get('authors') as FormArray;
+  }
+
+  private onAddRequest() {
+    this.courseFormControls.push(this.formBuilder.control(null));
+  }
+
+  private onRemoveRequest(index) {
+    this.courseFormControls.removeAt(index);
+  }
+
   public onSubmit(form: FormGroup) {
-    // this.checkForm();
-    this.addCourseForm.value.date = this.date;
-    this.addCourseForm.value.duration = this.duration;
-    this.addCourseForm.value.authors = this.authors;
+    this.addCourseForm.value.date = this.date || this.course.date;
+    this.addCourseForm.value.duration = this.duration || this.course.duration;
+    this.addCourseForm.value.authors = this.authors || this.course.authors;
+
     this.addedCourses.push(form.value);
     console.log('New courses: ', this.addedCourses);
 
@@ -75,10 +103,15 @@ export class CourseAddComponent implements OnInit {
   }
 
   private checkForm(): boolean {
-    this.isFormValid = this.addCourseForm.valid && !!this.date && !!this.duration && (!!this.authors && !!this.authors.length);
+    debugger;
+    this.isFormValid = this.addCourseForm.valid &&
+      !!this.addCourseForm.value.date &&
+      !!this.addCourseForm.value.duration &&
+      (!!this.addCourseForm.value.authors && !!this.addCourseForm.value.authors.length);
     return this.isFormValid;
   }
 
 }
 
 // http://brophy.org/post/nested-reactive-forms-in-angular2/
+// https://www.lynda.com/AngularJS-tutorials/FormControl/461451/570542-4.html?srchtrk=index%3a3%0alinktypeid%3a2%0aq%3aangular+forms%0apage%3a1%0as%3arelevance%0asa%3atrue%0aproducttypeid%3a2
