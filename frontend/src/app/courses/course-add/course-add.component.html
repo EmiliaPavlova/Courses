@@ -34,8 +34,9 @@
     <app-duration-input [addCourseForm]="addCourseForm.controls.duration" (type)="onDuration($event)"></app-duration-input>
     <app-authors-component [addCourseForm]="addCourseForm.controls.authors" (check)="onCheck($event)"></app-authors-component>
     <div class="buttons-block">
-      <a routerLink="/courses" type="reset" class="button button-cancel">Cancel</a>
+      <a routerLink="/courses" type="reset" class="button button-cancel" (click)=onReset()>Cancel</a>
       <button type="submit" class="button" [disabled]="!isFormValid || !addCourseForm.valid" (click)="onSubmit(addCourseForm)">Save</button>
     </div>
   </form>
 </div>
+<!-- <debug-panel [data]="addCourseForm.value"></debug-panel> -->

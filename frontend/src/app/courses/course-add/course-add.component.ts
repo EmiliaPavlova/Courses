@@ -57,7 +57,7 @@ export class CourseAddComponent implements OnInit {
         this.formBuilder.group({
           id: this.formBuilder.control(null),
           name: this.formBuilder.control(null),
-          checked: this.formBuilder.control(null),
+          checked: this.formBuilder.control(false),
         })
       ])
     });
@@ -70,6 +70,10 @@ export class CourseAddComponent implements OnInit {
 
   private onRemoveRequest(index) {
     this.courseFormControls.removeAt(index);
+  }
+
+  public onReset() {
+    this.courseFormControls.reset();
   }
 
   public onSubmit(form: FormGroup) {
