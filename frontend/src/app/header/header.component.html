@@ -1,8 +1,14 @@
 <div class="div-wrapper">
-  <div>
-    <a routerLink="/courses"><img src="/assets/images/owl-logo.png" title="home" /></a>
-    <h1><a routerLink="/courses">{{ title | titlecase }}</a></h1>
-    <button type="button" class="button" *ngIf="(isLogged | async)">Courses</button>
+  <div class="flex">
+    <div>
+      <a routerLink="/courses"><img src="/assets/images/owl-logo.png" title="home" /></a>
+      <h1><a routerLink="/courses">{{ title | titlecase }}</a></h1>
+    </div>
+    <div class="flex">
+      <a routerLink="/courses" class="breadcrumbs" *ngIf="(isLogged | async)" (click)="this.courseService.editCourse$.next(null);">Courses</a>
+      <p *ngIf="editedCourseName" class="breadcrumbs">-></p>
+      <p class="breadcrumbs">{{editedCourseName}}</p>
+    </div>
   </div>
   <div class="user-login" *ngIf="(isLogged | async); else login">
     <p>{{ username }}</p>

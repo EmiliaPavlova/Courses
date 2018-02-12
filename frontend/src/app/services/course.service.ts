@@ -14,6 +14,7 @@ import { Author } from '../models/author';
 export class CourseService  {
   public courses$ = new Subject<any>();
   public search$ = new Subject<boolean>();
+  public editCourse$ = new Subject<string>();
 
   private courses: Array<Course> = [];
   private courseUrl = 'http://localhost:4204/courses';
@@ -78,6 +79,10 @@ export class CourseService  {
     return request
       // .do(data => console.log('search: ' + JSON.stringify(data)))
       .catch(this.handleError);
+  }
+
+  public showCourseName(): Observable<string> {
+    return this.editCourse$.asObservable();
   }
 
   private handleError(error: Response) {

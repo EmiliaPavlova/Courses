@@ -1,6 +1,8 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { CourseService } from '../services/course.service';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +15,20 @@ export class HeaderComponent implements OnInit {
   public title = 'Angular mentoring program Q4 2017';
   public username: string;
   public isLogged: Observable<boolean>;
+  public editedCourseName: string;
 
-  constructor(private authService: AuthService) {
+  private subscription: Subscription;
+
+  constructor(
+    private authService: AuthService,
+    private courseService: CourseService,
+    private ref: ChangeDetectorRef
+  ) {
+    this.subscription = courseService.showCourseName().subscribe(name => {
+      this.editedCourseName = name;
+      this.ref.detectChanges();
+    });
+    console.log('editedCourseName', this.editedCourseName);
   }
 
   onLogout() {

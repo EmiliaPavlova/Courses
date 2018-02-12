@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CourseService } from '../../services/course.service';
@@ -16,6 +16,7 @@ export class CourseAddComponent implements OnInit {
   public courseFormControls: FormArray;
   public course: Course;
   public duration: number;
+  // public duration: AbstractControl;
   public isFormValid = false;
 
   private date: string;
@@ -28,9 +29,7 @@ export class CourseAddComponent implements OnInit {
     private formsService: FormsService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {
-    this.buildForm();
-  }
+  ) { }
 
   ngOnInit(): void {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
@@ -41,27 +40,29 @@ export class CourseAddComponent implements OnInit {
         });
     }
 
-    this.addCourseForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(500)]]
-    });
+    this.buildForm();
+    // this.addCourseForm = this.formBuilder.group({
+    //   title: ['', [Validators.required, Validators.maxLength(50)]],
+    //   description: ['', [Validators.required, Validators.maxLength(500)]]
+    // });
   }
 
   private buildForm() {
     this.addCourseForm = this.formBuilder.group({
-      title: this.formBuilder.control(null),
-      description: this.formBuilder.control(null),
-      date: this.formBuilder.control(null),
-      duration: this.formBuilder.control(null),
-      authors: this.formBuilder.array([
-        this.formBuilder.group({
-          id: this.formBuilder.control(null),
-          name: this.formBuilder.control(null),
-          checked: this.formBuilder.control(false),
-        })
-      ])
+      title: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(500)]],
+      // date: this.formBuilder.control(null),
+      // duration: ['', [Validators.required]],
+      // authors: this.formBuilder.array([
+      //   this.formBuilder.group({
+      //     id: this.formBuilder.control(null),
+      //     name: this.formBuilder.control(null),
+      //     checked: this.formBuilder.control(false),
+      //   })
+      // ])
     });
-    this.courseFormControls = this.addCourseForm.get('authors') as FormArray;
+    // this.courseFormControls = this.addCourseForm.get('authors') as FormArray;
+    this.duration = this.addCourseForm.controls['duration'];
   }
 
   private onAddRequest() {
@@ -107,7 +108,7 @@ export class CourseAddComponent implements OnInit {
   }
 
   private checkForm(): boolean {
-    debugger;
+    // debugger
     this.isFormValid = this.addCourseForm.valid &&
       !!this.addCourseForm.value.date &&
       !!this.addCourseForm.value.duration &&
