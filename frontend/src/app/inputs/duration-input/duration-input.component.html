@@ -1,16 +1,16 @@
 <div class="row" [formGroup]="addCourseForm">
   <label>Duration</label>
-  <input value="{{ resetData ? null : addCourseForm.controls.duration.value }}" formControlName="duration" [ngClass]="{'red-border': addCourseForm.controls.duration.errors}" (keyup)="onType(addCourseForm.controls.duration.value)" />
+  <input formControlName="duration" [ngClass]="{'red-border': addCourseForm.get('duration').errors}" (keyup)="onType(addCourseForm.get('duration').value)" />
   <div class="duration">{{ duration && resetData ? null : (duration | hours) }}</div>
   <small class="error-text"
-    *ngIf="addCourseForm.controls.duration.touched &&
-    addCourseForm.controls.duration.hasError('required')">
+    *ngIf="addCourseForm.get('duration').touched &&
+    addCourseForm.get('duration').hasError('required')">
       Duration is required!
   </small>
   <small class="error-text"
-    *ngIf="addCourseForm.controls.duration.touched &&
-    !addCourseForm.controls.duration.hasError('required') &&
-    addCourseForm.controls.duration.hasError('pattern')">
+    *ngIf="addCourseForm.get('duration').touched &&
+    !addCourseForm.get('duration').hasError('required') &&
+    addCourseForm.get('duration').hasError('pattern')">
     Duration must be a number!
   </small>
 </div>

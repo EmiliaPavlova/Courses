@@ -1,8 +1,8 @@
-<div class="fill-height">
+<div class="fill-height" *ngIf="addCourseForm">
   <form [formGroup]="addCourseForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <label>Title</label>
-      <input formControlName="title" [ngClass]="{'red-border': addCourseForm.controls.title.errors}" [value]="course ? course.name : null" />
+      <input formControlName="title" [ngClass]="{'red-border': addCourseForm.controls.title.errors}" />
       <small class="error-text"
         *ngIf="addCourseForm.controls.title.touched &&
         addCourseForm.controls.title.hasError('required')">
@@ -17,7 +17,7 @@
     </div>
     <div class="row">
       <label>Description</label>
-      <textarea formControlName="description" [value]="course ? course.description : null"></textarea>
+      <textarea formControlName="description"></textarea>
       <small class="error-text"
         *ngIf="addCourseForm.controls.description.touched &&
         addCourseForm.controls.description.hasError('required')">
@@ -30,12 +30,15 @@
           Description must be no longer than 500 symbols!
       </small>
     </div>
-    <app-date-input [addCourseForm]="addCourseForm.controls.date" (type)="onDate($event)"></app-date-input>
-    <app-duration-input [addCourseForm]="addCourseForm.controls.duration" (type)="onDuration($event)"></app-duration-input>
-    <app-authors-component [addCourseForm]="addCourseForm.controls.authors" (check)="onCheck($event)"></app-authors-component>
+    <app-date-input [addCourseForm]="addCourseForm" (type)="onDate($event)"></app-date-input>
+    <app-duration-input [addCourseForm]="addCourseForm" (type)="onDuration($event)"></app-duration-input>
+    <app-authors-component [addCourseForm]="addCourseForm" [selected]="selectedAuthors" (check)="onCheck($event)"></app-authors-component>
     <div class="buttons-block">
       <a routerLink="/courses" type="reset" class="button button-cancel" (click)=onReset()>Cancel</a>
-      <button type="submit" class="button" [disabled]="!addCourseForm.valid" (click)="onSubmit(addCourseForm)">Save</button>
+      <button type="submit" class="button" [disabled]="!addCourseForm.valid">Save</button>
     </div>
+    <pre>{{addCourseForm.value | json}}</pre>
+    <pre>{{addCourseForm.valid | json}}</pre>
+    <pre>{{checkValidationOfForm() | json}}</pre>
   </form>
 </div>

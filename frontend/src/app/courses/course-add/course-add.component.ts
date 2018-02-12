@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import dateFormat from 'dateFormat';
 
 import { CourseService } from '../../services/course.service';
 import { FormsService } from '../../services/forms.service';
 import { Course } from '../../models/course';
+import { ValidateDate } from '../../validators/date.validator';
 
 @Component({
   selector: 'app-course-add',
@@ -16,12 +18,18 @@ export class CourseAddComponent implements OnInit {
   public courseFormControls: FormArray;
   public course: Course;
   public duration: number;
-  // public duration: AbstractControl;
-  public isFormValid = false;
+  public selectedAuthors: Array<any> = [];
 
   private date: string;
   private authors: Array<string>;
   private addedCourses: Array<Course> = [];
+  private defaultValues: any = {
+    title: '',
+    description: '',
+    date: '',
+    duration: null,
+    authors: new FormArray([]),
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -31,91 +39,72 @@ export class CourseAddComponent implements OnInit {
     private router: Router
   ) { }
 
+
   ngOnInit(): void {
     const id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     if (id) {
       this.courseService.getCourseById(id).subscribe(course => {
         this.course = course[0];
-        console.log(this.course);
-        });
+        // this.isEditMode = true;
+        this.buildForm(this.course);
+        this.selectedAuthors = this.course.authors || [];
+      });
     }
-
     this.buildForm();
-    // this.addCourseForm = this.formBuilder.group({
-    //   title: ['', [Validators.required, Validators.maxLength(50)]],
-    //   description: ['', [Validators.required, Validators.maxLength(500)]]
-    // });
   }
 
-  private buildForm() {
+  private buildForm(formValues: any = {}) {
     this.addCourseForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(500)]],
-      // date: this.formBuilder.control(null),
-      // duration: ['', [Validators.required]],
-      // authors: this.formBuilder.array([
-      //   this.formBuilder.group({
-      //     id: this.formBuilder.control(null),
-      //     name: this.formBuilder.control(null),
-      //     checked: this.formBuilder.control(false),
-      //   })
-      // ])
+      title: [formValues.name || '', [Validators.required, Validators.maxLength(50)]],
+      description: [formValues.description || '', [Validators.required, Validators.maxLength(500)]],
+      date: [dateFormat(formValues.date, 'dd/mm/yyyy') || '', [Validators.required, ValidateDate]],
+      duration: [formValues.duration || '', [Validators.required, Validators.pattern('[0-9]*')]],
     });
-    // this.courseFormControls = this.addCourseForm.get('authors') as FormArray;
-    this.duration = this.addCourseForm.controls['duration'];
   }
-
-  private onAddRequest() {
-    this.courseFormControls.push(this.formBuilder.control(null));
+  private clearFormArray(formArray: FormArray) {
+    while (formArray.length !== 0) {
+      formArray.removeAt(0);
+    }
   }
-
-  private onRemoveRequest(index) {
-    this.courseFormControls.removeAt(index);
-  }
-
   public onReset() {
     this.courseFormControls.reset();
   }
 
-  public onSubmit(form: FormGroup) {
-    this.addCourseForm.value.date = this.date || this.course.date;
-    this.addCourseForm.value.duration = this.duration || this.course.duration;
-    this.addCourseForm.value.authors = this.authors || this.course.authors;
+  public onSubmit() {
+    if (this.addCourseForm.valid) {
+      this.addedCourses.push(this.addCourseForm.value);
+      console.log('New courses: ', this.addedCourses);
 
-    this.addedCourses.push(form.value);
-    console.log('New courses: ', this.addedCourses);
+      this.clearFormArray(<FormArray>this.addCourseForm.get('authors'));
+      this.addCourseForm.reset(this.defaultValues);
+      this.selectedAuthors = [];
+      // this.applyValidators()
 
-    this.addCourseForm.reset();
-    this.formsService.clearForm$.next(true);
+      // TODO: call corresponding api method
+      // this.router.navigate(['/courses']);
+    }
 
-    // TODO: call corresponding api method
-    this.router.navigate(['/courses']);
   }
 
   public onDate(date): void {
     this.date = date;
-    this.checkForm();
   }
 
   public onDuration(duration): void {
     this.duration = duration;
-    this.checkForm();
   }
 
   public onCheck(authors): void {
     this.authors = authors;
-    this.checkForm();
   }
 
-  private checkForm(): boolean {
-    // debugger
-    this.isFormValid = this.addCourseForm.valid &&
-      !!this.addCourseForm.value.date &&
-      !!this.addCourseForm.value.duration &&
-      (!!this.addCourseForm.value.authors && !!this.addCourseForm.value.authors.length);
-    return this.isFormValid;
+  private checkValidationOfForm(): any {
+    const result = {};
+    Object.keys(this.addCourseForm.controls).forEach(control => {
+      result[control] = this.addCourseForm.get(control).valid;
+    });
+    return result;
   }
-
 }
 
 // http://brophy.org/post/nested-reactive-forms-in-angular2/

@@ -1,12 +1,12 @@
-<div class="row" [formGroup]="addCourseForm">
+<div class="row" [formGroup]="addCourseForm" *ngIf="addCourseForm.get('authors')">
   <label>Authors</label>
-  <div formArrayName="authors" class="authors" [class.invalid]="!addCourseForm.controls.selectedAuthors.valid">
-    <div *ngFor="let author of addCourseForm.controls.authors.controls; let i = index;" [formGroup]="author">
-      <input type="checkbox" [checked]="resetData ? false : author.controls.checked.value" formControlName="checked" id="{{ author.controls.id.value }}" (change)="toggleCheckbox($event.target.id)">
-      <label attr.for="{{ author.controls.id.value }}">{{ author.controls.name.value }}</label>
+  <div class="authors" [class.invalid]="!addCourseForm.get('authors').valid">
+    <div *ngFor="let author of authors; let i = index;">
+      <input type="checkbox" id="{{ author.id }}" [attr.checked]="isChecked(author)" (change)="toggleCheckbox(author)" />
+      <label attr.for="{{ author.id }}">{{ author.name }}</label>
     </div>
   </div>
-  <small class="error-text" *ngIf="showErrorMessage && !selectedAuthors.length">
+  <small class="error-text" *ngIf="showErrorMessage()">
     At least one author must be selected!
   </small>
 </div>
