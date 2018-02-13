@@ -57,7 +57,7 @@ export class CourseAddComponent implements OnInit {
     this.addCourseForm = this.formBuilder.group({
       title: [formValues.name || '', [Validators.required, Validators.maxLength(50)]],
       description: [formValues.description || '', [Validators.required, Validators.maxLength(500)]],
-      date: [dateFormat(formValues.date, 'dd/mm/yyyy') || '', [Validators.required, ValidateDate]],
+      date: [(formValues.date ? dateFormat(formValues.date, 'dd/mm/yyyy') : ''), [Validators.required, ValidateDate]],
       duration: [formValues.duration || '', [Validators.required, Validators.pattern('[0-9]*')]],
     });
   }
@@ -75,10 +75,10 @@ export class CourseAddComponent implements OnInit {
       this.addedCourses.push(this.addCourseForm.value);
       console.log('New courses: ', this.addedCourses);
 
-      this.clearFormArray(<FormArray>this.addCourseForm.get('authors'));
       this.addCourseForm.reset(this.defaultValues);
+      debugger
+      this.clearFormArray(<FormArray>this.addCourseForm.get('authors'));
       this.selectedAuthors = [];
-      // this.applyValidators()
 
       // TODO: call corresponding api method
       // this.router.navigate(['/courses']);
@@ -106,6 +106,3 @@ export class CourseAddComponent implements OnInit {
     return result;
   }
 }
-
-// http://brophy.org/post/nested-reactive-forms-in-angular2/
-// https://www.lynda.com/AngularJS-tutorials/FormControl/461451/570542-4.html?srchtrk=index%3a3%0alinktypeid%3a2%0aq%3aangular+forms%0apage%3a1%0as%3arelevance%0asa%3atrue%0aproducttypeid%3a2

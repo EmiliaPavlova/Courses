@@ -1,6 +1,9 @@
 <div class="row" [formGroup]="addCourseForm">
   <label>Date</label>
-  <input formControlName="date" [ngClass]="{'red-border': addCourseForm.get('date').errors}" (keyup)="onType(addCourseForm.get('date').value)" value="{{ resetData ? null : addCourseForm.get('date').value }}"/>
+  <input
+    formControlName="date"
+    [ngClass]="{'red-border': addCourseForm.get('date').errors}"
+    (keyup)="onType(addCourseForm.get('date').value)"/>
   <small class="error-text"
     *ngIf="addCourseForm.get('date').touched &&
     addCourseForm.get('date').hasError('required')">

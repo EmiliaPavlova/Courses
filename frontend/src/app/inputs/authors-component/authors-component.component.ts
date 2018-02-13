@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CourseService } from '../../services/course.service';
 import { Author } from '../../models/author';
+import { ValidateAuthors } from '../../validators/authors.validator';
 
 @Component({
   selector: 'app-authors-component',
@@ -12,12 +13,11 @@ import { Author } from '../../models/author';
 })
 export class AuthorsComponentComponent implements OnInit, OnDestroy {
   @Input() addCourseForm: FormGroup;
-  @Input() selected: Array<any>;
+  @Input() selected: Array<Author>;
   @Output() check = new EventEmitter();
 
-  public authors: Array<any> = [];
-  public resetData = false;
-
+  public authors: Array<Author> = [];
+  public authorChecked = false;
   private selectedAuthors: Array<Author> = [];
   private subscriptions: Array<Subscription> = [];
 
@@ -39,21 +39,7 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
         }));
       });
       // TODO: add custom validators for min length of authors
-      this.addCourseForm.addControl('authors', new FormArray(group));
-
-      // this.subscriptions.push(this.formsService.resetForm().subscribe(resetData => {
-      //   if (resetData) {
-      //     this.addCourseForm.controls.authors.value.forEach(author => author.checked = false);
-      //     this.showErrorMessage = false;
-      //     // this.addCourseForm.controls.selectedAuthors.reset();
-      //     this.selectedAuthors = [];
-      //   } else {
-      //     this.subscriptions.push(formControlArray.valueChanges.subscribe(result => {
-      //       this.addCourseForm.controls.selectedAuthors.setValue(this.mapAuthors(result));
-      //     }));
-      //   }
-      // }));
-
+      this.addCourseForm.addControl('authors', new FormArray(group, [Validators.required, ValidateAuthors]));
     }));
   }
 
@@ -62,27 +48,17 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
   }
 
   public isChecked(author) {
-    return this.selected.filter(this.arrIncludes(author)).length > 0
+    debugger
+    const a = this.selected.filter(this.arrIncludes(author)).length > 0
       ? true
       : null;
+    console.log(a);
+    return a;
   }
 
   public toggleCheckbox(author: Author) {
+    this.authorChecked = true;
     const id = author.id;
-    // this.authors
-    //   .filter(data => data.id === id)
-    //   .map(author => {
-    //     const index = this.selectedAuthors.findIndex(obj => obj.id === id);
-    //     index > -1
-    //       ? this.selectedAuthors.splice(index, 1)
-    //       : this.selectedAuthors.push({
-    //         id: author.id,
-    //         name: author.name
-    //       });
-    //     });
-
-    // this.check.emit(this.selectedAuthors);
-    // this.showErrorMessage = true;
     const authors = <FormArray>this.addCourseForm.get('authors');
     const checked = authors.value.filter(this.arrIncludes(author)).length > 0;
     if (checked) {
@@ -94,10 +70,6 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
         name: author.name,
       }));
     }
-  }
-
-  private showErrorMessage() {
-    return this.addCourseForm.get('authors').value.length === 0;
   }
 
   private arrIncludes(author): any {

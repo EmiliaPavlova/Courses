@@ -24,3 +24,8 @@ input[type='checkbox'] {
     border: none;
     box-shadow: none;
 }
+
+.red-border {
+    border: 1px solid #FF0000;
+    box-shadow: inset 0px 0px 4px #FF0000;
+}

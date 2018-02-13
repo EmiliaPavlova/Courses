@@ -1,7 +1,10 @@
 <div class="row" [formGroup]="addCourseForm">
   <label>Duration</label>
-  <input formControlName="duration" [ngClass]="{'red-border': addCourseForm.get('duration').errors}" (keyup)="onType(addCourseForm.get('duration').value)" />
-  <div class="duration">{{ duration && resetData ? null : (duration | hours) }}</div>
+  <input
+    formControlName="duration"
+    [ngClass]="{'red-border': addCourseForm.get('duration').errors}"
+    (keyup)="onType(addCourseForm.get('duration').value)" />
+  <div class="duration">{{ addCourseForm.get('duration').value | hours }}</div>
   <small class="error-text"
     *ngIf="addCourseForm.get('duration').touched &&
     addCourseForm.get('duration').hasError('required')">
