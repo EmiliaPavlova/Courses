@@ -23,6 +23,7 @@ export class CourseAddComponent implements OnInit {
   private date: string;
   private authors: Array<string>;
   private addedCourses: Array<Course> = [];
+  private isEditMode = false;
   private defaultValues: any = {
     title: '',
     description: '',
@@ -45,45 +46,31 @@ export class CourseAddComponent implements OnInit {
     if (id) {
       this.courseService.getCourseById(id).subscribe(course => {
         this.course = course[0];
-        // this.isEditMode = true;
+        this.isEditMode = true;
         this.buildForm(this.course);
         this.selectedAuthors = this.course.authors || [];
       });
     }
     this.buildForm();
   }
-
-  private buildForm(formValues: any = {}) {
-    this.addCourseForm = this.formBuilder.group({
-      title: [formValues.name || '', [Validators.required, Validators.maxLength(50)]],
-      description: [formValues.description || '', [Validators.required, Validators.maxLength(500)]],
-      date: [(formValues.date ? dateFormat(formValues.date, 'dd/mm/yyyy') : ''), [Validators.required, ValidateDate]],
-      duration: [formValues.duration || '', [Validators.required, Validators.pattern('[0-9]*')]],
-    });
-  }
-  private clearFormArray(formArray: FormArray) {
-    while (formArray.length !== 0) {
-      formArray.removeAt(0);
-    }
-  }
-  public onReset() {
+  public onReset(): void {
     this.courseFormControls.reset();
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     if (this.addCourseForm.valid) {
       this.addedCourses.push(this.addCourseForm.value);
+      this.isEditMode
+        ? this.courseService.editCourse(parseInt(this.route.snapshot.paramMap.get('id'), 10), this.addCourseForm.value)
+        : this.courseService.addCourse(this.addCourseForm.value);
       console.log('New courses: ', this.addedCourses);
 
-      this.addCourseForm.reset(this.defaultValues);
-      debugger
       this.clearFormArray(<FormArray>this.addCourseForm.get('authors'));
+      this.addCourseForm.reset(this.defaultValues);
       this.selectedAuthors = [];
 
-      // TODO: call corresponding api method
-      // this.router.navigate(['/courses']);
+      this.router.navigate(['/courses']);
     }
-
   }
 
   public onDate(date): void {
@@ -98,11 +85,26 @@ export class CourseAddComponent implements OnInit {
     this.authors = authors;
   }
 
-  private checkValidationOfForm(): any {
-    const result = {};
-    Object.keys(this.addCourseForm.controls).forEach(control => {
-      result[control] = this.addCourseForm.get(control).valid;
+  private buildForm(formValues: any = {}) {
+    this.addCourseForm = this.formBuilder.group({
+      title: [formValues.name || '', [Validators.required, Validators.maxLength(50)]],
+      description: [formValues.description || '', [Validators.required, Validators.maxLength(500)]],
+      date: [(formValues.date ? dateFormat(formValues.date, 'dd/mm/yyyy') : ''), [Validators.required, ValidateDate]],
+      duration: [formValues.duration || '', [Validators.required, Validators.pattern('[0-9]*')]],
     });
-    return result;
   }
+  private clearFormArray(formArray: FormArray): FormArray {
+    while (formArray.length !== 0) {
+      formArray.removeAt(0);
+    }
+    return formArray;
+  }
+
+  // private checkValidationOfForm(): any {
+  //   const result = {};
+  //   Object.keys(this.addCourseForm.controls).forEach(control => {
+  //     result[control] = this.addCourseForm.get(control).valid;
+  //   });
+  //   return result;
+  // }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -12,7 +13,10 @@ export class AuthService {
   changedUser$ = new BehaviorSubject<string>(this.getUserInfo());
   private authUrl = 'http://localhost:4204/login';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    public jwtHelper: JwtHelperService
+  ) {}
 
   login(user: User): any {
     const request = this.http.post(this.authUrl, user);
@@ -29,7 +33,8 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('Authorization');
+    const token = localStorage.getItem('Authorization');
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
   getUserInfo(): string {

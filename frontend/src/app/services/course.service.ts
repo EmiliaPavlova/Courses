@@ -47,7 +47,7 @@ export class CourseService  {
     return this.http.get(`${this.courseUrl}/${id}`);
   }
 
-  public addCourse(course: Course) {
+  public addCourse(course: Course): Observable<Object> {
     return this.http.post(this.courseUrl, course);
   }
 
@@ -57,12 +57,10 @@ export class CourseService  {
       .catch(this.handleError);
   }
 
-  public editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
-    const index = this.courses.findIndex(course => course.id === id);
-    this.courses[index].name = name;
-    this.courses[index].duration = duration;
-    this.courses[index].description = description;
-    return Observable.of(this.courses[index]);
+  public editCourse(id: number, course: Course): Observable<Object> {
+    return this.http.put(`${this.courseUrl}/${id}`, course)
+      .do(data => console.log('Edited: ' + JSON.stringify(data)))
+      .catch(this.handleError);
   }
 
   public deleteCourse(course: Course): Observable<Object> {

@@ -48,16 +48,14 @@ export class AuthorsComponentComponent implements OnInit, OnDestroy {
   }
 
   public isChecked(author) {
-    debugger
     const a = this.selected.filter(this.arrIncludes(author)).length > 0
       ? true
-      : null;
-    console.log(a);
+      : false;
     return a;
   }
 
   public toggleCheckbox(author: Author) {
-    this.authorChecked = true;
+    // this.authorChecked = true;
     const id = author.id;
     const authors = <FormArray>this.addCourseForm.get('authors');
     const checked = authors.value.filter(this.arrIncludes(author)).length > 0;
