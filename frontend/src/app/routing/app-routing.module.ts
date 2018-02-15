@@ -9,12 +9,9 @@ import { AuthGuardService as AuthGuard } from '../services/auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full'},
-  // { path: 'courses', component: CoursesListComponent, canActivate: [AuthGuard] },
-  // { path: 'courses/new', component: CourseAddComponent, canActivate: [AuthGuard] },
-  // { path: 'courses/:id', component: CourseAddComponent, canActivate: [AuthGuard] },
-  { path: 'courses', component: CoursesListComponent },
-  { path: 'courses/new', component: CourseAddComponent },
-  { path: 'courses/:id', component: CourseAddComponent },
+  { path: 'courses', component: CoursesListComponent, canActivate: [AuthGuard] },
+  { path: 'courses/new', component: CourseAddComponent, canActivate: [AuthGuard] },
+  { path: 'courses/:id', component: CourseAddComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: '**', component: NotFoundComponent }
 ];

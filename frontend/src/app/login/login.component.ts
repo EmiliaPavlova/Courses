@@ -40,8 +40,9 @@ export class LoginComponent implements OnInit {
     this.authService.changedUser$.next(this.username);
 
     console.log(`logged ${this.username}`);
+    this.loginForm.reset();
     this.init();
-    this.router.navigate(['/courses']);
+    this.router.navigate(['courses']);
   }
 
   init() {

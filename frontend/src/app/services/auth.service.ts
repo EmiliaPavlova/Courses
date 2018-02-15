@@ -22,7 +22,7 @@ export class AuthService {
     const request = this.http.post(this.authUrl, user);
     request.subscribe(data => {
       localStorage.setItem('User', data['user']);
-      localStorage.setItem('Authorization', data['token']);
+      localStorage.setItem('access_token', data['token']);
     });
     return request;
   }
@@ -33,8 +33,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('Authorization');
-    return !this.jwtHelper.isTokenExpired(token);
+    return !!localStorage.getItem('access_token');
   }
 
   getUserInfo(): string {
