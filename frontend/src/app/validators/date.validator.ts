@@ -14,11 +14,11 @@ export function ValidateDate(string: AbstractControl) {
         isValid = false;
     } else if (parseInt(results[3], 10) < 2000) {
         isValid = false;
-        message.message = 'Date can not be before year 2000!';
+        message = { 'message': 'Date can not be before year 2000!' };
     } else if (shortMonths.indexOf(results[2]) > -1 && parseInt(results[1], 10) > 30 ||
                 (results[2] === '02' && parseInt(results[3], 10) % 4 !== 0) && parseInt(results[1], 10) > 28) {
         isValid = false;
-        message.message = 'Date is invalid!';
+        message = { 'message': 'Date is invalid!' };
     } else {
         isValid = true;
     }

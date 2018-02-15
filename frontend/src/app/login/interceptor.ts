@@ -15,7 +15,7 @@ export class Interceptor implements HttpInterceptor {
 
     // Clone the request to add the new header.
     const authReq = req.clone({ headers: req.headers
-        .set('Authorization', (localStorage.getItem('Authorization') ? `Bearer ${localStorage.getItem('Authorization')}` : ''))
+        .set('access_token', (localStorage.getItem('access_token') ? `Bearer ${localStorage.getItem('access_token')}` : ''))
         .set('Content-Type', 'application/json; charset=utf-8')
         .set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
         .set('Access-Control-Allow-Origin', '*')

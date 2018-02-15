@@ -100,6 +100,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   private onEdit(course) {
     // TODO: implement edit
     console.log(`edited course with id ${course.id}`);
+    this.courseService.editCourse$.next(course.name);
   }
 
   private onDelete(course): void {

@@ -14,6 +14,7 @@ import { Author } from '../models/author';
 export class CourseService  {
   public courses$ = new Subject<any>();
   public search$ = new Subject<boolean>();
+  public editCourse$ = new Subject<string>();
 
   private courses: Array<Course> = [];
   private courseUrl = 'http://localhost:4204/courses';
@@ -42,12 +43,11 @@ export class CourseService  {
       .catch(this.handleError);
   }
 
-  public getCourseById(id: number): Observable<Course> {
-    this.courses.find(course => course.id === id);
-    return Observable.of(this.courses.find(course => course.id === id));
+  public getCourseById(id: number): Observable<Object> {
+    return this.http.get(`${this.courseUrl}/${id}`);
   }
 
-  public addCourse(course: Course) {
+  public addCourse(course: Course): Observable<Object> {
     return this.http.post(this.courseUrl, course);
   }
 
@@ -57,12 +57,10 @@ export class CourseService  {
       .catch(this.handleError);
   }
 
-  public editCourse(id: number, name: string, duration: number, description: string): Observable<Course> {
-    const index = this.courses.findIndex(course => course.id === id);
-    this.courses[index].name = name;
-    this.courses[index].duration = duration;
-    this.courses[index].description = description;
-    return Observable.of(this.courses[index]);
+  public editCourse(id: number, course: Course): Observable<Object> {
+    return this.http.put(`${this.courseUrl}/${id}`, course)
+      .do(data => console.log('Edited: ' + JSON.stringify(data)))
+      .catch(this.handleError);
   }
 
   public deleteCourse(course: Course): Observable<Object> {
@@ -79,6 +77,10 @@ export class CourseService  {
     return request
       // .do(data => console.log('search: ' + JSON.stringify(data)))
       .catch(this.handleError);
+  }
+
+  public showCourseName(): Observable<string> {
+    return this.editCourse$.asObservable();
   }
 
   private handleError(error: Response) {

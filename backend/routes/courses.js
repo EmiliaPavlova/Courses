@@ -52,7 +52,14 @@ api.delete('/delete/:id', (req, res) => {
 })
 
 api.post('/', (req, res) => {
-    courses.push(req.body);
+    data.courses.push(req.body);
+    res.sendStatus(200);
+})
+
+api.put('/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const index = data.courses.map(item => item.id).indexOf(id);
+    data.courses[index] = req.body;
     res.sendStatus(200);
 })
 

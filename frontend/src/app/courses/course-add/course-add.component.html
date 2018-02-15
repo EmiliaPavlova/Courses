@@ -1,41 +1,42 @@
-<div class="fill-height">
+<div class="fill-height" *ngIf="addCourseForm">
   <form [formGroup]="addCourseForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <label>Title</label>
-      <input formControlName="title" [ngClass]="{'red-border': addCourseForm.get('title').errors}" />
+      <input formControlName="title" [ngClass]="{'red-border': addCourseForm.controls.title.errors}" />
       <small class="error-text"
-        *ngIf="addCourseForm.get('title').touched &&
-        addCourseForm.get('title').hasError('required')">
+        *ngIf="addCourseForm.controls.title.touched &&
+        addCourseForm.controls.title.hasError('required')">
           Title is required!
       </small>
       <small class="error-text"
-        *ngIf="addCourseForm.get('title').touched &&
-        !addCourseForm.get('title').hasError('required') &&
+        *ngIf="addCourseForm.controls.title.touched &&
+        !addCourseForm.controls.title.hasError('required') &&
         addCourseForm.controls.title.invalid">
           Title must be no longer than 50 symbols!
       </small>
     </div>
     <div class="row">
       <label>Description</label>
-      <textarea formControlName="description" ></textarea>
+      <textarea formControlName="description"></textarea>
       <small class="error-text"
-        *ngIf="addCourseForm.get('description').touched &&
-        addCourseForm.get('description').hasError('required')">
+        *ngIf="addCourseForm.controls.description.touched &&
+        addCourseForm.controls.description.hasError('required')">
         Description is required!
       </small>
       <small class="error-text"
-        *ngIf="addCourseForm.get('description').touched &&
-        !addCourseForm.get('description').hasError('required') &&
+        *ngIf="addCourseForm.controls.description.touched &&
+        !addCourseForm.controls.description.hasError('required') &&
         addCourseForm.controls.description.invalid">
           Description must be no longer than 500 symbols!
       </small>
     </div>
-    <app-date-input [addCourseForm]="addCourseForm.controls.date" (type)="onDate($event)"></app-date-input>
-    <app-duration-input [addCourseForm]="addCourseForm.controls.duration" (type)="onDuration($event)"></app-duration-input>
-    <app-authors-component [addCourseForm]="addCourseForm.controls.authors" (check)="onCheck($event)"></app-authors-component>
+    <app-date-input [addCourseForm]="addCourseForm" (type)="onDate($event)"></app-date-input>
+    <app-duration-input [addCourseForm]="addCourseForm" (type)="onDuration($event)"></app-duration-input>
+    <app-authors-component [addCourseForm]="addCourseForm" [selected]="selectedAuthors" (check)="onCheck($event)"></app-authors-component>
     <div class="buttons-block">
-      <button type="reset" class="button button-cancel">Cancel</button>
-      <button type="submit" class="button" [disabled]="!isFormValid || !addCourseForm.valid" (click)="onSubmit(addCourseForm)">Save</button>
+      <a routerLink="/courses" type="reset" class="button button-cancel" (click)=onReset()>Cancel</a>
+      <button type="submit" class="button" [disabled]="!addCourseForm.valid">Save</button>
     </div>
+    <pre>{{addCourseForm.value | json}}</pre>
   </form>
 </div>

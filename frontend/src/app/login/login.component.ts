@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../services/auth.service';
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -38,7 +40,9 @@ export class LoginComponent implements OnInit {
     this.authService.changedUser$.next(this.username);
 
     console.log(`logged ${this.username}`);
+    this.loginForm.reset();
     this.init();
+    this.router.navigate(['courses']);
   }
 
   init() {
