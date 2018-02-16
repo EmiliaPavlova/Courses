@@ -22,7 +22,6 @@ import { CourseService } from './services/course.service';
 import { LoaderService } from './services/loader.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
-import { FormsService } from './services/forms.service';
 import { HoursPipe } from './pipes/hours.pipe';
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { BorderColorDirective } from './directives/border-color.directive';
@@ -71,7 +70,6 @@ export function getToken() {
     CourseService,
     AuthService,
     LoaderService,
-    FormsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,

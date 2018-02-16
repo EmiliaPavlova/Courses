@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { CourseService } from '../services/course.service';
 import { Observable } from 'rxjs/Observable';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   public title = 'Angular mentoring program Q4 2017';
   public username: string;
   public isLogged: Observable<boolean>;
@@ -40,6 +40,15 @@ export class HeaderComponent implements OnInit {
     this.username = this.authService.getUserInfo();
     this.isLogged = this.authService.isLoggedIn();
     this.authService.changedUser().subscribe(data => this.username = data);
+    this.subscription = this.courseService.showCourseName().subscribe(name => {
+      this.editedCourseName = name;
+      this.ref.detectChanges();
+    });
+    console.log('editedCourseName', this.editedCourseName);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

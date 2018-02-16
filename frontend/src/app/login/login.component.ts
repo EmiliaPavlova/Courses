@@ -1,3 +1,4 @@
+import { ActionReducer, Action } from '@ngrx/store';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
     console.log(`logged ${this.username}`);
     this.loginForm.reset();
     this.init();
-    this.router.navigate(['courses']);
+    this.router.navigate(['/courses']);
   }
 
   init() {
