@@ -2,10 +2,11 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestro
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { Course } from '../../models/course';
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
-import { Course } from '../../models/course';
+import { store } from '../../store';
 
 @Component({
   selector: 'app-courses-list',
@@ -55,10 +56,14 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
-      this.total = data.length;
-    }));
-    this.getCourses({ page: this.page, size: this.size });
+    // this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
+    //   this.total = data.length;
+    // }));
+    // this.getCourses({ page: this.page, size: this.size });
+    this.updateFromState();
+    store.subscribe(() => {
+      this.updateFromState();
+    });
   }
 
   ngOnDestroy(): void {
@@ -95,6 +100,11 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     });
 
     this.courseService.getCourses({ page, size });
+  }
+
+  private updateFromState() {
+    const allState = store.getState();
+    this.courses = allState.courses;
   }
 
   private onEdit(course) {
