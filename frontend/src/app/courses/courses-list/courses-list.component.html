@@ -5,7 +5,7 @@
     <div *ngIf="courses && courses.length; else no_results">
       <!-- <div> -->
       <!-- <div *ngIf="courses && courses.length; else no_results"> -->
-      <app-course-detail *ngFor="let course of courses" [course]="course" (edit)="onEdit($event)" (delete)="onDelete(course)"></app-course-detail>
+      <app-course-detail *ngFor="let course of courses" [course]="course" (edit)="onEdit($event)" (delete)="onDelete(course.id)"></app-course-detail>
     </div>
     <ng-template #no_results>
       <div class="no-data">No data. Feel free to add a new course.</div>

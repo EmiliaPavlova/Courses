@@ -6,7 +6,7 @@ import { Course } from '../../models/course';
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
-import { store } from '../../store';
+import { store, deleteCourse } from '../../store';
 
 @Component({
   selector: 'app-courses-list',
@@ -40,6 +40,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     */
   }
 
+  /*
   public goToPage(n: number): void {
     this.page = n;
     this.getCourses({ page: this.page, size: this.size });
@@ -54,6 +55,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.page--;
     this.getCourses({ page: this.page, size: this.size });
   }
+  */
 
   ngOnInit(): void {
     // this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
@@ -70,6 +72,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
+  /*
   private getCourses({ page, size }): void {
     const currentDate = new Date().getTime();
     const twoWeeks = 14 * 24 * 60 * 60 * 1000;
@@ -101,6 +104,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
     this.courseService.getCourses({ page, size });
   }
+  */
 
   private updateFromState() {
     const allState = store.getState();
@@ -113,10 +117,14 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.courseService.editCourse$.next(course.name);
   }
 
-  private onDelete(course): void {
-    console.log(`deleted course with id ${course.id}`);
+  private onDelete(id): void {
+    console.log(`deleted course with id ${id}`);
+    /*
     this.courseService.deleteCourse(course);
     this.courses = this.courses.filter(c => c !== course);
+    */
+
+   store.dispatch(deleteCourse(id));
   }
 
 }

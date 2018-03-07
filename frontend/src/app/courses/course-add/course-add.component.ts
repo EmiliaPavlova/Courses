@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import dateFormat from 'dateFormat';
+import dateFormat from 'dateformat';
 
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';

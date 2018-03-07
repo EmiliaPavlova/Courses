@@ -28,6 +28,7 @@ export class CourseService  {
       .catch(this.handleError);
   }
 
+  /*
   public getCourses(options?: any): Observable<Array<Course>> {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
     const params = new HttpParams().set('page', options.page).set('size', options.size);
@@ -42,6 +43,7 @@ export class CourseService  {
       // .do(data => console.log('By page: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
+  */
 
   public getCourseById(id: number): Observable<Object> {
     return this.http.get(`${this.courseUrl}/${id}`);
@@ -67,6 +69,7 @@ export class CourseService  {
     return this.http.delete(`${this.courseUrl}/delete/${course.id}`);
   }
 
+  /*
   public search(options?: any): Observable<any> {
     const url = this.courseUrl + this.queryUrl + options.term;
     const params = new HttpParams().set('q', options.term);
@@ -78,6 +81,7 @@ export class CourseService  {
       // .do(data => console.log('search: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
+  */
 
   public showCourseName(): Observable<string> {
     return this.editCourse$.asObservable();

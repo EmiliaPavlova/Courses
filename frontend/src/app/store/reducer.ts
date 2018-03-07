@@ -1,6 +1,10 @@
 import { AppState } from './appState';
 import { Course } from '../models/course';
-import { FILTER_COURSES, RESET_FILTER } from './actions';
+import {
+  DELETE_COURSE,
+  FILTER_COURSES,
+  RESET_FILTER
+} from './actions';
 
 const courses = [
   {
@@ -100,6 +104,12 @@ const initialState: AppState = {
   courses: courses
 };
 
+function deleteCourse(state, action): AppState {
+  return Object.assign({}, state, {
+    courses: state.courses.filter(course => course.id !== action.id)
+  });
+}
+
 function filterCourses(state, action): AppState {
   return Object.assign({}, state, {
     courses: state.courses.filter(course =>
@@ -109,6 +119,8 @@ function filterCourses(state, action): AppState {
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
+    case DELETE_COURSE:
+      return deleteCourse(state, action);
     case FILTER_COURSES:
       return filterCourses(state, action);
     case RESET_FILTER:

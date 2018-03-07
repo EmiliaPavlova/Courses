@@ -18,22 +18,28 @@ export class SearchToolboxComponent {
   constructor(private courseService: CourseService) { }
 
   public onSearch() {
-    // this.courseService.search({term: this.searchString})
-    //   .subscribe(results => {
-    //     this.courseService.courses$.next(results);
-    //     this.courseService.search$.next(true);
-    //   });
-    // }
+    /*
+    this.courseService.search({term: this.searchString})
+      .subscribe(results => {
+        this.courseService.courses$.next(results);
+        this.courseService.search$.next(true);
+      });
+    }
+    */
 
     store.dispatch(filterCourses(this.searchString));
 
   }
   clearString() {
     this.searchString = '';
-    // this.courseService.getCourses({});
-    // this.courseService.search$.next(false);
+
+    /*
+    this.courseService.getCourses({});
+    this.courseService.search$.next(false);
+    */
 
     store.dispatch(resetFilter());
   }
+}
 
 // https://alligator.io/angular/real-time-search-angular-rxjs/
