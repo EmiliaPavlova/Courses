@@ -1,7 +1,9 @@
 import { AppState } from './appState';
 import { Injectable } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
+import { Course } from '../models/course';
 
+export const ADD_COURSE = 'ADD_COURSE';
 export const DELETE_COURSE = 'DELETE_COURSE';
 export const FILTER_COURSES = 'FILTER_COURSES';
 export const RESET_FILTER = 'RESET_FILTER';
@@ -30,5 +32,9 @@ export class CourseActions {
       type: DELETE_COURSE,
       id,
     });
+  }
+
+  addCourse(course: Course) {
+
   }
 }

@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, FormControl, FormArray, Valida
 import { ActivatedRoute, Router } from '@angular/router';
 import dateFormat from 'dateformat';
 
+import { CourseActions } from '../../store/course.actions';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
 import { ValidateDate } from '../../validators/date.validator';
@@ -32,6 +33,7 @@ export class CourseAddComponent implements OnInit {
   };
 
   constructor(
+    private courseActions: CourseActions,,
     private route: ActivatedRoute,
     private courseService: CourseService,
     private formBuilder: FormBuilder,
@@ -57,10 +59,13 @@ export class CourseAddComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.addCourseForm.valid) {
+      /*
       this.addedCourses.push(this.addCourseForm.value);
       this.isEditMode
         ? this.courseService.editCourse(parseInt(this.route.snapshot.paramMap.get('id'), 10), this.addCourseForm.value)
         : this.courseService.addCourse(this.addCourseForm.value);
+      */
+      this.courseActions.addCourse(this.addCourseForm.value);
       console.log('New courses: ', this.addedCourses);
 
       this.clearFormArray(<FormArray>this.addCourseForm.get('authors'));
