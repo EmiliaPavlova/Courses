@@ -4,7 +4,7 @@ import {
   DELETE_COURSE,
   FILTER_COURSES,
   RESET_FILTER
-} from './actions';
+} from './course.actions';
 
 const courses = [
   {

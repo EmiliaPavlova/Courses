@@ -1,12 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { NgRedux, select } from 'ng2-redux';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Course } from '../../models/course';
+import { CourseActions } from '../../store/course.actions';
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
-import { store, deleteCourse } from '../../store';
+import { store, AppState } from '../../store';
 
 @Component({
   selector: 'app-courses-list',
@@ -16,6 +18,7 @@ import { store, deleteCourse } from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
+  @select('courses') courses$: Observable<Course>;
   public courses: Array<Course> = [];
   public total = 0;
   public page = 1;
@@ -25,6 +28,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   private subscriptions: Array<Subscription> = [];
 
   constructor(
+    private ngRedux: NgRedux<AppState>,
+    private courseActions: CourseActions,
     private courseService: CourseService,
     private loaderService: LoaderService,
     private orderBy: OrderByPipe,
@@ -58,10 +63,13 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   */
 
   ngOnInit(): void {
-    // this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
-    //   this.total = data.length;
-    // }));
-    // this.getCourses({ page: this.page, size: this.size });
+    /*
+    this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
+      this.total = data.length;
+    }));
+    this.getCourses({ page: this.page, size: this.size });
+    */
+
     this.updateFromState();
     store.subscribe(() => {
       this.updateFromState();
@@ -124,7 +132,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.courses = this.courses.filter(c => c !== course);
     */
 
-   store.dispatch(deleteCourse(id));
+   this.courseActions.deleteCourse(id);
   }
 
 }

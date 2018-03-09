@@ -1,9 +1,9 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
+import { CourseActions } from '../store/course.actions';
 import { CourseService } from '../services/course.service';
 import { OrderByPipe } from '../pipes/orderBy.pipe';
-import { store, filterCourses, resetFilter } from '../store';
 
 @Component({
   selector: 'app-search-toolbox',
@@ -15,7 +15,10 @@ import { store, filterCourses, resetFilter } from '../store';
 export class SearchToolboxComponent {
   @Input() searchString;
 
-  constructor(private courseService: CourseService) { }
+  constructor(
+    private courseActions: CourseActions,
+    // private courseService: CourseService
+  ) { }
 
   public onSearch() {
     /*
@@ -27,7 +30,7 @@ export class SearchToolboxComponent {
     }
     */
 
-    store.dispatch(filterCourses(this.searchString));
+    this.courseActions.filterCourses(this.searchString);
 
   }
   clearString() {
@@ -38,7 +41,7 @@ export class SearchToolboxComponent {
     this.courseService.search$.next(false);
     */
 
-    store.dispatch(resetFilter());
+    this.courseActions.resetFilter();
   }
 }
 
