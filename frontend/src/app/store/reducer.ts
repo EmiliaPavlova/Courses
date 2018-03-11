@@ -3,110 +3,25 @@ import { Course } from '../models/course';
 import {
   ADD_COURSE,
   DELETE_COURSE,
+  EDIT_COURSE,
   FILTER_COURSES,
-  RESET_FILTER
+  REQUEST_COURSES_SUCCESS,
+  RESET_FILTER,
 } from './course.actions';
 
-const courses = [
-  {
-    id: 1,
-    name: 'No name',
-    duration: 210,
-    topRated: true,
-    date: '2017-12-31',
-    description: 'Some description',
-    authors: [
-      {id: 2, name: 'Ritchie Blackmore'},
-      {id: 3, name: 'Bruce Dickinson'},
-      {id: 7, name: 'Kurt Cobain'}
-    ]
-  }, {
-    id: 2,
-    name: 'Video course 1',
-    duration: 88,
-    topRated: true,
-    date: '2018-02-6',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sollicitudin iaculis arcu sit amet lobortis. Donec vehicula urna bibendum tincidunt auctor. Praesent eu sem blandit, placerat purus et, facilisis metus. Vestibulum et ante lorem. Suspendisse et ultrices leo. Suspendisse sagittis varius orci pretium mattis. Duis congue eros consequat neque gravida finibus. Suspendisse tortor leo, mattis sed velit non, pulvinar mollis massa. Nunc a porttitor ipsum.',
-    authors: [
-      {id: 1, name: 'Jim Morrison'},
-      {id: 3, name: 'Bruce Dickinson'}
-    ]
-  },
-  {
-    id: 3,
-    name: 'Video course 2',
-    duration: 15,
-    topRated: false,
-    date: '2018-01-12',
-    description: 'Integer viverra urna et accumsan volutpat. Sed eget nisi aliquet, mattis nisl ac, feugiat arcu. Maecenas interdum ipsum et purus rhoncus, et porttitor odio tempor. Mauris malesuada congue accumsan. Quisque dignissim, magna at tincidunt efficitur, ipsum ligula mattis lacus, sit amet ullamcorper lorem justo quis sem. Proin nec purus purus. In hac habitasse platea dictumst. Donec lectus ipsum, vulputate quis tristique quis, pulvinar eget ante.',
-    authors: [
-      {id: 4, name: 'Alice Cooper'}
-    ]
-  },
-  {
-    id: 4,
-    name: 'Video course 3',
-    duration: 135,
-    topRated: true,
-    date: '2018-01-18',
-    description: 'Donec semper sem nec scelerisque mollis. Duis malesuada risus ut tincidunt rhoncus. Suspendisse eros nisl, imperdiet eget consequat eget, aliquam vel elit.',
-    authors: [
-      {id: 5, name: 'Jon Bon Jovi'},
-      {id: 6, name: 'Bruce Dickinson'}
-    ]
-  },
-  {
-    id: 5,
-    name: 'Video course with id = 5',
-    duration: 21,
-    topRated: true,
-    date: '2018-01-20',
-    description: 'Mauris venenatis nibh quis orci faucibus, sit amet congue risus semper. Maecenas vel malesuada lorem. Donec id consectetur massa. Aenean posuere libero id massa cursus tincidunt. Mauris laoreet neque sed nunc efficitur, vitae fringilla nunc gravida. Phasellus id ligula tempus dolor dictum facilisis quis sit amet libero. Ut suscipit orci magna, vitae elementum mi condimentum vel. ',
-    authors: [
-      {id: 8, name: 'Axl Rose'}
-    ]
-  },
-  {
-    id: 6,
-    name: 'The shortest video course with the longest name',
-    duration: 10,
-    topRated: false,
-    date: '2018-02-01',
-    description: 'Phasellus dictum magna at elementum auctor. Duis convallis semper tempor. Fusce at scelerisque orci. Fusce ac pharetra lacus. Morbi sed scelerisque ex. Nam sit amet augue nisl. Aliquam mollis augue lorem, nec maximus ipsum bibendum vitae. Aliquam ultricies erat vitae purus vehicula luctus.',
-    authors: [
-      {id: 3, name: 'Bruce Dickinson'}
-    ]
-  },
-  {
-    id: 7,
-    name: 'Video clip',
-    duration: 60,
-    topRated: false,
-    date: '2018-01-08',
-    description: 'Proin erat dolor, auctor nec elementum et, vestibulum vel mi. Phasellus id tincidunt leo.',
-    authors: [
-      {id: 2, name: 'Ritchie Blackmore'}
-    ]
-  },
-  {
-    id: 8,
-    name: 'Unwachable video course',
-    duration: 336,
-    topRated: true,
-    date: '2018-01-29',
-    description: 'Suspendisse quis mauris est. Morbi suscipit quam eu metus gravida, a mollis nisl suscipit. Sed tincidunt tortor ac lorem varius pulvinar. Cras sed ligula id turpis placerat hendrerit. Phasellus consectetur bibendum neque, malesuada molestie lacus finibus at. Curabitur quis urna at ante aliquam rhoncus ut auctor turpis.',
-    authors: [
-      {id: 5, name: 'Jon Bon Jovi'}
-    ]
-  }
-];
+const courses = [];
 
 const initialState: AppState = {
-  courses: courses
+  courses: courses,
 };
 
-function addCourse(state, action) {
-  return 'asd';
+function addCourse(state, action): AppState {
+  const course = action.course;
+  course.id = state.courses.length + 1;
+  course.topRated = false;
+  return Object.assign({}, state, {
+    courses: state.courses.push(course)
+  });
 }
 
 function deleteCourse(state, action): AppState {
@@ -115,10 +30,22 @@ function deleteCourse(state, action): AppState {
   });
 }
 
+function editCourse(state, action): AppState {
+    return Object.assign({}, state, {
+      courses: state.courses.splice(action.id - 1, 1, action.course)
+    });
+  }
+
 function filterCourses(state, action): AppState {
   return Object.assign({}, state, {
     courses: state.courses.filter(course =>
         course.name.toLowerCase().indexOf(action.searchString.toLowerCase()) > -1)
+  });
+}
+
+function storeCourses(state, action): AppState {
+  return Object.assign({}, state, {
+    courses: action.courses,
   });
 }
 
@@ -128,8 +55,12 @@ export function reducer(state = initialState, action) {
       return addCourse(state, action);
     case DELETE_COURSE:
       return deleteCourse(state, action);
+    case EDIT_COURSE:
+      return editCourse(state, action);
     case FILTER_COURSES:
       return filterCourses(state, action);
+    case REQUEST_COURSES_SUCCESS:
+      return storeCourses(state, action);
     case RESET_FILTER:
       return initialState;
     default:

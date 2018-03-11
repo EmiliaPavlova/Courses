@@ -25,15 +25,16 @@ export class CourseAddComponent implements OnInit {
   private addedCourses: Array<Course> = [];
   private isEditMode = false;
   private defaultValues: any = {
-    title: '',
+    name: '',
     description: '',
+    topRated: false,
     date: '',
     duration: null,
     authors: new FormArray([]),
   };
 
   constructor(
-    private courseActions: CourseActions,,
+    private courseActions: CourseActions,
     private route: ActivatedRoute,
     private courseService: CourseService,
     private formBuilder: FormBuilder,
@@ -59,13 +60,15 @@ export class CourseAddComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.addCourseForm.valid) {
-      /*
       this.addedCourses.push(this.addCourseForm.value);
+      /*
       this.isEditMode
         ? this.courseService.editCourse(parseInt(this.route.snapshot.paramMap.get('id'), 10), this.addCourseForm.value)
         : this.courseService.addCourse(this.addCourseForm.value);
       */
-      this.courseActions.addCourse(this.addCourseForm.value);
+      this.isEditMode
+        ? this.courseActions.editCourse(parseInt(this.route.snapshot.paramMap.get('id'), 10), this.addCourseForm.value)
+        : this.courseActions.addCourse(this.addCourseForm.value);
       console.log('New courses: ', this.addedCourses);
 
       this.clearFormArray(<FormArray>this.addCourseForm.get('authors'));
@@ -90,7 +93,7 @@ export class CourseAddComponent implements OnInit {
 
   private buildForm(formValues: any = {}) {
     this.addCourseForm = this.formBuilder.group({
-      title: [formValues.name || '', [Validators.required, Validators.maxLength(50)]],
+      name: [formValues.name || '', [Validators.required, Validators.maxLength(50)]],
       description: [formValues.description || '', [Validators.required, Validators.maxLength(500)]],
       date: [(formValues.date ? dateFormat(formValues.date, 'dd/mm/yyyy') : ''), [Validators.required, ValidateDate]],
       duration: [formValues.duration || '', [Validators.required, Validators.pattern('[0-9]*')]],

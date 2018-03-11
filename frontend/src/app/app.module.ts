@@ -10,8 +10,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing/app-routing.module';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { AuthorsComponentComponent } from './inputs/authors-component/authors-component.component';
+import { AuthActions } from './store/auth.actions';
 import { AuthService } from './services/auth.service';
 import { BorderColorDirective } from './directives/border-color.directive';
+import { CourseActions } from './store/course.actions';
 import { CourseAddComponent } from './courses/course-add/course-add.component';
 import { CourseDetailComponent } from './courses/course-detail/course-detail.component';
 import { CourseService } from './services/course.service';
@@ -30,7 +32,6 @@ import { OrderByPipe } from './pipes/orderBy.pipe';
 import { PaginationComponent } from './pagination/pagination.component';
 import { SearchToolboxComponent } from './search-toolbox/search-toolbox.component';
 import { store, AppState } from './store';
-import { CourseActions } from './store/course.actions';
 
 export function getToken() {
   return localStorage.getItem('access_token');
@@ -80,7 +81,8 @@ export function getToken() {
       multi: true
     },
     AuthGuard,
-    CourseActions
+    CourseActions,
+    AuthActions,
   ],
   bootstrap: [
     AppComponent

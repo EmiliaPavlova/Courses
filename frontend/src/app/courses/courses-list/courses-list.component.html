@@ -1,7 +1,7 @@
 <div>
   <div class="fill-height">
     <app-search-toolbox></app-search-toolbox>
-    <div *ngIf="courses$ && courses.length; else no_results">
+    <div *ngIf="courses$ && (courses$ | async).length; else no_results">
       <app-course-detail *ngFor="let course of courses$ | async" [course]="course" (edit)="onEdit($event)" (delete)="onDelete(course.id)"></app-course-detail>
     </div>
     <ng-template #no_results>

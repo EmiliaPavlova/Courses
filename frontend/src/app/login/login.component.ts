@@ -1,9 +1,11 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgRedux, select } from 'ng2-redux';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
+import { AuthActions, store, AppState, } from '../store';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
 
@@ -20,6 +22,8 @@ export class LoginComponent implements OnInit {
   public isLoggedIn: boolean;
 
   constructor(
+    private ngRedux: NgRedux<AppState>,
+    private authActions: AuthActions,
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router
@@ -37,6 +41,7 @@ export class LoginComponent implements OnInit {
       this.password
     );
     this.authService.login(user);
+    // this.authActions.login(user);
     this.authService.isLoggedUser$.next(true);
     this.authService.changedUser$.next(this.username);
 

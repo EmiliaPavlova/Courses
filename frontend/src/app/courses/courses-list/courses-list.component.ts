@@ -4,11 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Course } from '../../models/course';
-import { CourseActions } from '../../store/course.actions';
 import { CourseService } from '../../services/course.service';
 import { LoaderService } from '../../services/loader.service';
 import { OrderByPipe } from '../../pipes/orderBy.pipe';
-import { store, AppState } from '../../store';
+import { store, AppState, CourseActions } from '../../store';
 
 @Component({
   selector: 'app-courses-list',
@@ -45,35 +44,30 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     */
   }
 
-  /*
   public goToPage(n: number): void {
     this.page = n;
-    this.getCourses({ page: this.page, size: this.size });
+    this.courseActions.getCourses({ page: this.page, size: this.size });
   }
 
   public onNext(): void {
     this.page++;
-    this.getCourses({ page: this.page, size: this.size });
+    this.courseActions.getCourses({ page: this.page, size: this.size });
   }
 
   public onPrev(): void {
     this.page--;
-    this.getCourses({ page: this.page, size: this.size });
+    this.courseActions.getCourses({ page: this.page, size: this.size });
   }
-  */
 
   ngOnInit(): void {
-    /*
     this.subscriptions.push(this.courseService.getAllCourses().subscribe(data => {
       this.total = data.length;
     }));
+    /*
     this.getCourses({ page: this.page, size: this.size });
     */
 
-    this.updateFromState();
-    store.subscribe(() => {
-      this.updateFromState();
-    });
+    this.courseActions.getCourses({ page: this.page, size: this.size });
   }
 
   ngOnDestroy(): void {
@@ -120,8 +114,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   private onEdit(course) {
-    // TODO: implement edit
     console.log(`edited course with id ${course.id}`);
+    this.courseActions.editCourse(course.id, course);
     this.courseService.editCourse$.next(course.name);
   }
 

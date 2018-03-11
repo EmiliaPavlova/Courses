@@ -2,16 +2,16 @@
   <form [formGroup]="addCourseForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <label>Title</label>
-      <input formControlName="title" [ngClass]="{'red-border': addCourseForm.controls.title.errors}" />
+      <input formControlName="name" [ngClass]="{'red-border': addCourseForm.controls.name.errors}" />
       <small class="error-text"
-        *ngIf="addCourseForm.controls.title.touched &&
-        addCourseForm.controls.title.hasError('required')">
+        *ngIf="addCourseForm.controls.name.touched &&
+        addCourseForm.controls.name.hasError('required')">
           Title is required!
       </small>
       <small class="error-text"
-        *ngIf="addCourseForm.controls.title.touched &&
-        !addCourseForm.controls.title.hasError('required') &&
-        addCourseForm.controls.title.invalid">
+        *ngIf="addCourseForm.controls.name.touched &&
+        !addCourseForm.controls.name.hasError('required') &&
+        addCourseForm.controls.name.invalid">
           Title must be no longer than 50 symbols!
       </small>
     </div>
@@ -37,6 +37,6 @@
       <a routerLink="/courses" type="reset" class="button button-cancel" (click)=onReset()>Cancel</a>
       <button type="submit" class="button" [disabled]="!addCourseForm.valid">Save</button>
     </div>
-    <pre>{{addCourseForm.value | json}}</pre>
+    <!-- <pre>{{addCourseForm.value | json}}</pre> -->
   </form>
 </div>

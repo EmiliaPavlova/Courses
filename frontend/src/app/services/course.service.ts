@@ -28,7 +28,6 @@ export class CourseService  {
       .catch(this.handleError);
   }
 
-  /*
   public getCourses(options?: any): Observable<Array<Course>> {
     const url = `${this.courseUrl}?page=${options.page}&size=${options.size}`;
     const params = new HttpParams().set('page', options.page).set('size', options.size);
@@ -43,15 +42,16 @@ export class CourseService  {
       // .do(data => console.log('By page: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
-  */
 
   public getCourseById(id: number): Observable<Object> {
     return this.http.get(`${this.courseUrl}/${id}`);
   }
 
+  /*
   public addCourse(course: Course): Observable<Object> {
     return this.http.post(this.courseUrl, course);
   }
+  */
 
   public getAuthors(): Observable<Array<Author>> {
     return this.http.get(`${this.courseUrl}/authors`)
@@ -59,15 +59,19 @@ export class CourseService  {
       .catch(this.handleError);
   }
 
+  /*
   public editCourse(id: number, course: Course): Observable<Object> {
     return this.http.put(`${this.courseUrl}/${id}`, course)
       .do(data => console.log('Edited: ' + JSON.stringify(data)))
       .catch(this.handleError);
   }
+  */
 
+  /*
   public deleteCourse(course: Course): Observable<Object> {
     return this.http.delete(`${this.courseUrl}/delete/${course.id}`);
   }
+  */
 
   /*
   public search(options?: any): Observable<any> {
